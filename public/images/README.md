@@ -16,11 +16,14 @@ changes needed either way.
 | `why-vera/3/background`, `why-vera/3/accent` | 3rd "Why Vera" feature block |
 | `products/placeholder/<file>` | Product galleries (all products share this one folder — see below) |
 
-Product photos are throwaway placeholders until products pull from Shopify,
-so they all live flat in `products/placeholder/` instead of one folder per
-product. Current filenames: `linea-mini-front-view`, `linea-mini-side-view`,
-`linea-mini-steam-wand-detail`, `linea-mini-group-head-detail`,
-`linea-pb-main`, `gs3-main`, `kb90-main`, `grinder-main`, `accessory-main`.
+Product photos are throwaway placeholders until products pull from Shopify —
+accuracy doesn't matter, so they all live flat in `products/placeholder/`
+instead of one folder per product, and several products intentionally share
+or mismatch photos. Current filenames: `linea-mini-front-view`,
+`linea-mini-side-view`, `linea-mini-steam-wand-detail`,
+`linea-mini-group-head-detail`, `linea-pb-main`, `gs3-main`, `kb90-main`,
+`grinder-main`, `grinder-e65t`, `grinder-shotmaster`,
+`grinder-linea-mini-alt`, `accessory-portafilter`, `accessory-knockbox`.
 
 To add another product photo, add an entry to that product's `images` array
 in `src/lib/products.ts` (pick a unique `file` name) and drop a matching file

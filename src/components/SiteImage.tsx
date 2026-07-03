@@ -13,6 +13,7 @@ export function SiteImage({
   className = "",
   preload = false,
   sizes = "100vw",
+  fit = "cover",
 }: {
   src: string | null;
   alt: string;
@@ -24,6 +25,11 @@ export function SiteImage({
   className?: string;
   preload?: boolean;
   sizes?: string;
+  // "cover" bleeds the photo to the container's edges (backgrounds, hero
+  // shots). "contain" insets it with padding and never crops — for photos
+  // on a card, like a product tile, where the whole product should stay
+  // visible against the card background.
+  fit?: "cover" | "contain";
 }) {
   if (!src) {
     return <PlaceholderImage label={label} className={className} />;
@@ -31,7 +37,14 @@ export function SiteImage({
 
   return (
     <div className={`overflow-hidden bg-sand ${className}`}>
-      <Image src={src} alt={alt} fill sizes={sizes} preload={preload} className="object-cover" />
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        preload={preload}
+        className={fit === "contain" ? "object-contain p-8" : "object-cover"}
+      />
     </div>
   );
 }
