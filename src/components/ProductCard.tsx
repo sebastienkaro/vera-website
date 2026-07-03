@@ -1,14 +1,18 @@
 import Link from "next/link";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
-import { formatMoney } from "@/lib/products";
+import { SiteImage } from "@/components/SiteImage";
+import { formatMoney } from "@/lib/money";
 import type { Product } from "@/lib/types";
 
 export function ProductCard({ product }: { product: Product }) {
+  const image = product.images[0];
   return (
     <Link href={`/products/${product.handle}`} className="group block">
-      <PlaceholderImage
-        label={product.images[0]?.alt ?? product.title}
+      <SiteImage
+        src={image?.url || null}
+        alt={image?.alt ?? product.title}
+        label={image?.alt ?? product.title}
         className="aspect-square"
+        sizes="(min-width: 640px) 25vw, 50vw"
       />
       <p className="mt-4 text-xs font-medium tracking-wide text-taupe uppercase">
         {product.vendor}

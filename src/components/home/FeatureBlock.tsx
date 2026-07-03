@@ -1,14 +1,19 @@
-import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { SiteImage } from "@/components/SiteImage";
+import { resolveImage } from "@/lib/images";
 
 export function FeatureBlock({
+  bgSlot,
   bgLabel,
+  accentSlot,
   accentLabel,
   accentSide,
   textSide,
   heading,
   body,
 }: {
+  bgSlot: string;
   bgLabel: string;
+  accentSlot: string;
   accentLabel: string;
   accentSide: "left" | "right";
   textSide: "left" | "right";
@@ -17,7 +22,7 @@ export function FeatureBlock({
 }) {
   return (
     <div className="relative min-h-[560px] sm:min-h-[720px]">
-      <PlaceholderImage label={bgLabel} className="absolute inset-0" />
+      <SiteImage src={resolveImage(bgSlot)} alt={bgLabel} label={bgLabel} className="absolute inset-0" />
       <div className="absolute inset-0 bg-espresso/60" />
 
       <div
@@ -25,7 +30,13 @@ export function FeatureBlock({
           accentSide === "right" ? "right-8 sm:right-16" : "left-8 sm:left-16"
         }`}
       >
-        <PlaceholderImage label={accentLabel} className="aspect-[3/4] shadow-xl" />
+        <SiteImage
+          src={resolveImage(accentSlot)}
+          alt={accentLabel}
+          label={accentLabel}
+          className="aspect-[3/4] shadow-xl"
+          sizes="(min-width: 640px) 320px, 224px"
+        />
       </div>
 
       <div

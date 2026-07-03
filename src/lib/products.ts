@@ -1,12 +1,20 @@
+import { resolveImage } from "@/lib/images";
 import type { Product } from "@/lib/types";
+
+type ProductSource = Omit<Product, "images"> & {
+  images: { file: string; alt: string }[];
+};
 
 /**
  * Mock product catalog. This module is the only place that knows the data
  * is local — swap these functions for Shopify Storefront API calls (mapped
  * into the `Product` shape) and every component that imports from here
  * keeps working unchanged.
+ *
+ * Each `file` names an image slot under `public/images/products/<handle>/`;
+ * see that folder's README for the full list per product.
  */
-const products: Product[] = [
+const products: ProductSource[] = [
   {
     id: "linea-mini",
     handle: "linea-mini",
@@ -14,10 +22,10 @@ const products: Product[] = [
     title: "Linea Mini",
     price: { amount: 5590, currencyCode: "USD" },
     images: [
-      { url: "", alt: "La Marzocco Linea Mini — front view" },
-      { url: "", alt: "La Marzocco Linea Mini — side view" },
-      { url: "", alt: "La Marzocco Linea Mini — steam wand detail" },
-      { url: "", alt: "La Marzocco Linea Mini — group head detail" },
+      { file: "front-view", alt: "La Marzocco Linea Mini — front view" },
+      { file: "side-view", alt: "La Marzocco Linea Mini — side view" },
+      { file: "steam-wand-detail", alt: "La Marzocco Linea Mini — steam wand detail" },
+      { file: "group-head-detail", alt: "La Marzocco Linea Mini — group head detail" },
     ],
     descriptionHtml:
       "<p>The Linea Mini brings La Marzocco's commercial-grade engineering to a single-group format. Saturated group heads, a rotary pump, and precise PID temperature control deliver café-quality espresso at home or in a small-format bar.</p>",
@@ -41,7 +49,7 @@ const products: Product[] = [
     vendor: "La Marzocco",
     title: "Linea PB",
     price: { amount: 12900, currencyCode: "USD" },
-    images: [{ url: "", alt: "La Marzocco Linea PB" }],
+    images: [{ file: "main", alt: "La Marzocco Linea PB" }],
     descriptionHtml: "<p>The commercial standard for multi-group espresso bars.</p>",
     specs: [
       { label: "Boiler type", value: "Dual boiler" },
@@ -59,7 +67,7 @@ const products: Product[] = [
     vendor: "La Marzocco",
     title: "GS3",
     price: { amount: 7590, currencyCode: "USD" },
-    images: [{ url: "", alt: "La Marzocco GS3" }],
+    images: [{ file: "main", alt: "La Marzocco GS3" }],
     descriptionHtml: "<p>Prosumer espresso machine with full manual control.</p>",
     specs: [
       { label: "Boiler type", value: "Dual boiler" },
@@ -76,7 +84,7 @@ const products: Product[] = [
     vendor: "La Marzocco",
     title: "KB90",
     price: { amount: 16900, currencyCode: "USD" },
-    images: [{ url: "", alt: "La Marzocco KB90" }],
+    images: [{ file: "main", alt: "La Marzocco KB90" }],
     descriptionHtml: "<p>La Marzocco's flagship volumetric espresso machine.</p>",
     specs: [
       { label: "Boiler type", value: "Multi-boiler" },
@@ -88,18 +96,21 @@ const products: Product[] = [
   },
 ];
 
+function resolveProduct(product: ProductSource): Product {
+  return {
+    ...product,
+    images: product.images.map(({ file, alt }) => ({
+      url: resolveImage(`products/${product.handle}/${file}`) ?? "",
+      alt,
+    })),
+  };
+}
+
 export function getProducts(): Product[] {
-  return products;
+  return products.map(resolveProduct);
 }
 
 export function getProduct(handle: string): Product | undefined {
-  return products.find((product) => product.handle === handle);
-}
-
-export function formatMoney(money: { amount: number; currencyCode: string }): string {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: money.currencyCode,
-    maximumFractionDigits: 0,
-  }).format(money.amount);
+  const product = products.find((item) => item.handle === handle);
+  return product && resolveProduct(product);
 }

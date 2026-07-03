@@ -19,7 +19,9 @@ export function WhyVera() {
 
       <div className="flex flex-col">
         <FeatureBlock
+          bgSlot="why-vera/1/background"
           bgLabel="Grinder lineup on counter"
+          accentSlot="why-vera/1/accent"
           accentLabel="Barista pulling shot"
           accentSide="right"
           textSide="left"
@@ -27,7 +29,9 @@ export function WhyVera() {
           body={lorem}
         />
         <FeatureBlock
+          bgSlot="why-vera/2/background"
           bgLabel="Concrete counter with plants"
+          accentSlot="why-vera/2/accent"
           accentLabel="Machine detail"
           accentSide="right"
           textSide="left"
@@ -35,7 +39,9 @@ export function WhyVera() {
           body={lorem}
         />
         <FeatureBlock
+          bgSlot="why-vera/3/background"
           bgLabel="Wood slat wall with seating"
+          accentSlot="why-vera/3/accent"
           accentLabel="Machine servicing"
           accentSide="right"
           textSide="left"

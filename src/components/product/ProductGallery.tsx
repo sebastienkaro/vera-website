@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { SiteImage } from "@/components/SiteImage";
 import type { ProductImage } from "@/lib/types";
 
 export function ProductGallery({ images }: { images: ProductImage[] }) {
@@ -10,7 +10,13 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
 
   return (
     <div>
-      <PlaceholderImage label={active.alt} className="aspect-[4/5] w-full" />
+      <SiteImage
+        src={active.url || null}
+        alt={active.alt}
+        label={active.alt}
+        className="aspect-[4/5] w-full"
+        sizes="(min-width: 768px) 50vw, 100vw"
+      />
       {images.length > 1 && (
         <div className="mt-4 grid grid-cols-4 gap-4">
           {images.map((image, index) => (
@@ -24,7 +30,13 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
               aria-label={`Show image: ${image.alt}`}
               aria-pressed={index === activeIndex}
             >
-              <PlaceholderImage label={image.alt} className="aspect-square" />
+              <SiteImage
+                src={image.url || null}
+                alt={image.alt}
+                label={image.alt}
+                className="aspect-square"
+                sizes="25vw"
+              />
             </button>
           ))}
         </div>
