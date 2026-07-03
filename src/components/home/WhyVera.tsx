@@ -6,7 +6,7 @@ const lorem =
 
 export function WhyVera() {
   return (
-    <section className="border-t border-espresso/10">
+    <section>
       <div className="px-8 py-24 sm:px-12">
         <SectionHeading
           eyebrow="Why Vera"

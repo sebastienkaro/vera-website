@@ -5,7 +5,7 @@ export function ProductSpecs({ specs }: { specs: ProductSpec[] }) {
   if (specs.length === 0) return null;
 
   return (
-    <section className="border-t border-espresso/10 px-8 py-24 sm:px-12">
+    <section className="px-8 py-24 sm:px-12">
       <SectionHeading
         eyebrow="Specifications"
         segments={[

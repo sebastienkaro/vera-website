@@ -20,11 +20,14 @@ export type ProductSpec = {
   value: string;
 };
 
+export type ProductCategory = "machines" | "grinders" | "parts-accessories";
+
 export type Product = {
   id: string;
   handle: string;
   vendor: string;
   title: string;
+  category: ProductCategory;
   price: Money;
   compareAtPrice?: Money;
   images: ProductImage[];
