@@ -17,6 +17,10 @@ export function SiteImage({
   src: string | null;
   alt: string;
   label: string;
+  // Must include a position utility (`relative` or `absolute` + inset) —
+  // this component doesn't default to one, since combining `relative` and
+  // `absolute` in the same class list is ambiguous in Tailwind and can
+  // collapse the element to zero height.
   className?: string;
   preload?: boolean;
   sizes?: string;
@@ -26,7 +30,7 @@ export function SiteImage({
   }
 
   return (
-    <div className={`relative overflow-hidden ${className}`}>
+    <div className={`overflow-hidden ${className}`}>
       <Image src={src} alt={alt} fill sizes={sizes} preload={preload} className="object-cover" />
     </div>
   );

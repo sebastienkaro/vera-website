@@ -14,7 +14,7 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
         src={active.url || null}
         alt={active.alt}
         label={active.alt}
-        className="aspect-[4/5] w-full"
+        className="relative aspect-[4/5] w-full"
         sizes="(min-width: 768px) 50vw, 100vw"
       />
       {images.length > 1 && (
@@ -34,7 +34,7 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
                 src={image.url || null}
                 alt={image.alt}
                 label={image.alt}
-                className="aspect-square"
+                className="relative aspect-square"
                 sizes="25vw"
               />
             </button>

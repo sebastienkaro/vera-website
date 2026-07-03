@@ -8,7 +8,8 @@ changes needed either way.
 
 | Slot | Where it shows |
 | --- | --- |
-| `hero/cafe-interior` | Homepage hero background |
+| `hero/background` | Homepage hero background |
+| `hero/person` | Optional foreground cutout, layered in front of the hero text (needs real transparency — a PNG/WebP with alpha, not a flattened photo). Leave the slot empty to skip the layered effect. |
 | `about/roastery` | "About Vera" section background |
 | `why-vera/1/background`, `why-vera/1/accent` | 1st "Why Vera" feature block (background + accent photo) |
 | `why-vera/2/background`, `why-vera/2/accent` | 2nd "Why Vera" feature block |
