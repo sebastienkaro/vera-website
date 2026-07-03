@@ -8,6 +8,7 @@
   --color-espresso: #2a1f16;
   --color-taupe: #cbc1b8;
   --color-ink: #1e1e25;
+  --color-sand: #f0e6d6;
 }
 
 @theme inline {
@@ -17,6 +18,7 @@
   --color-espresso: var(--color-espresso);
   --color-taupe: var(--color-taupe);
   --color-ink: var(--color-ink);
+  --color-sand: var(--color-sand);
   --font-sans: var(--font-host-grotesk);
 }
 
