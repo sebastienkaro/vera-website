@@ -8,7 +8,7 @@ export function Hero() {
   const personSrc = resolveImage("hero/person");
 
   return (
-    <section className="relative flex min-h-[92vh] flex-col overflow-hidden">
+    <section className="relative flex h-screen flex-col overflow-hidden">
       <SiteImage
         src={resolveImage("hero/background")}
         alt="Vera Coffee Solutions café interior"
@@ -16,7 +16,6 @@ export function Hero() {
         className="absolute inset-0"
         preload
       />
-      <div className="absolute inset-0 bg-espresso/55" />
 
       <Header />
 
