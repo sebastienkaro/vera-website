@@ -6,7 +6,7 @@ export function RelatedProducts({ products }: { products: Product[] }) {
   if (products.length === 0) return null;
 
   return (
-    <section className="border-t border-espresso/10 px-8 py-24 sm:px-12">
+    <section className="px-8 py-24 sm:px-12">
       <SectionHeading
         eyebrow="Keep Exploring"
         segments={[

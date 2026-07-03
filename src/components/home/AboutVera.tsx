@@ -5,7 +5,7 @@ import { resolveImage } from "@/lib/images";
 
 export function AboutVera() {
   return (
-    <section className="border-t border-espresso/10 px-8 py-24 sm:px-12">
+    <section className="px-8 py-24 sm:px-12">
       <SectionHeading
         eyebrow="About Vera"
         segments={[
