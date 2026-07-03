@@ -11,8 +11,10 @@ type ProductSource = Omit<Product, "images"> & {
  * into the `Product` shape) and every component that imports from here
  * keeps working unchanged.
  *
- * Each `file` names an image slot under `public/images/products/<handle>/`;
- * see that folder's README for the full list per product.
+ * Each `file` names an image under `public/images/products/placeholder/`,
+ * shared across every product — these are throwaway placeholders and get
+ * replaced once products pull from Shopify, so there's no per-product
+ * folder. See that folder's README for naming.
  */
 const products: ProductSource[] = [
   {
@@ -23,10 +25,10 @@ const products: ProductSource[] = [
     title: "Linea Mini",
     price: { amount: 5590, currencyCode: "USD" },
     images: [
-      { file: "front-view", alt: "La Marzocco Linea Mini — front view" },
-      { file: "side-view", alt: "La Marzocco Linea Mini — side view" },
-      { file: "steam-wand-detail", alt: "La Marzocco Linea Mini — steam wand detail" },
-      { file: "group-head-detail", alt: "La Marzocco Linea Mini — group head detail" },
+      { file: "linea-mini-front-view", alt: "La Marzocco Linea Mini — front view" },
+      { file: "linea-mini-side-view", alt: "La Marzocco Linea Mini — side view" },
+      { file: "linea-mini-steam-wand-detail", alt: "La Marzocco Linea Mini — steam wand detail" },
+      { file: "linea-mini-group-head-detail", alt: "La Marzocco Linea Mini — group head detail" },
     ],
     descriptionHtml:
       "<p>The Linea Mini brings La Marzocco's commercial-grade engineering to a single-group format. Saturated group heads, a rotary pump, and precise PID temperature control deliver café-quality espresso at home or in a small-format bar.</p>",
@@ -51,7 +53,7 @@ const products: ProductSource[] = [
     category: "machines",
     title: "Linea PB",
     price: { amount: 12900, currencyCode: "USD" },
-    images: [{ file: "main", alt: "La Marzocco Linea PB" }],
+    images: [{ file: "linea-pb-main", alt: "La Marzocco Linea PB" }],
     descriptionHtml: "<p>The commercial standard for multi-group espresso bars.</p>",
     specs: [
       { label: "Boiler type", value: "Dual boiler" },
@@ -70,7 +72,7 @@ const products: ProductSource[] = [
     category: "machines",
     title: "GS3",
     price: { amount: 7590, currencyCode: "USD" },
-    images: [{ file: "main", alt: "La Marzocco GS3" }],
+    images: [{ file: "gs3-main", alt: "La Marzocco GS3" }],
     descriptionHtml: "<p>Prosumer espresso machine with full manual control.</p>",
     specs: [
       { label: "Boiler type", value: "Dual boiler" },
@@ -88,7 +90,7 @@ const products: ProductSource[] = [
     category: "machines",
     title: "KB90",
     price: { amount: 16900, currencyCode: "USD" },
-    images: [{ file: "main", alt: "La Marzocco KB90" }],
+    images: [{ file: "kb90-main", alt: "La Marzocco KB90" }],
     descriptionHtml: "<p>La Marzocco's flagship volumetric espresso machine.</p>",
     specs: [
       { label: "Boiler type", value: "Multi-boiler" },
@@ -98,13 +100,47 @@ const products: ProductSource[] = [
       { id: "kb90-2gr", title: "2 Group", price: { amount: 16900, currencyCode: "USD" }, available: true },
     ],
   },
+  {
+    id: "atom-grinder",
+    handle: "atom-grinder",
+    vendor: "Eureka",
+    category: "grinders",
+    title: "Atom Grinder",
+    price: { amount: 1690, currencyCode: "USD" },
+    images: [{ file: "grinder-main", alt: "Eureka Atom grinder" }],
+    descriptionHtml: "<p>On-demand espresso grinder with stepless adjustment for fast, consistent dosing.</p>",
+    specs: [
+      { label: "Burr type", value: "65mm flat" },
+      { label: "Hopper capacity", value: "1.5 lbs" },
+    ],
+    variants: [
+      { id: "atom-grinder-black", title: "Black", price: { amount: 1690, currencyCode: "USD" }, available: true },
+    ],
+  },
+  {
+    id: "bottomless-portafilter",
+    handle: "bottomless-portafilter",
+    vendor: "La Marzocco",
+    category: "parts-accessories",
+    title: "Bottomless Portafilter",
+    price: { amount: 129, currencyCode: "USD" },
+    images: [{ file: "accessory-main", alt: "La Marzocco bottomless portafilter" }],
+    descriptionHtml: "<p>Naked portafilter for dialing in shots and diagnosing extraction issues.</p>",
+    specs: [
+      { label: "Fit", value: "58mm group" },
+      { label: "Material", value: "Chrome-plated brass" },
+    ],
+    variants: [
+      { id: "bottomless-portafilter-58", title: "58mm", price: { amount: 129, currencyCode: "USD" }, available: true },
+    ],
+  },
 ];
 
 function resolveProduct(product: ProductSource): Product {
   return {
     ...product,
     images: product.images.map(({ file, alt }) => ({
-      url: resolveImage(`products/${product.handle}/${file}`) ?? "",
+      url: resolveImage(`products/placeholder/${file}`) ?? "",
       alt,
     })),
   };

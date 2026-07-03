@@ -14,17 +14,17 @@ changes needed either way.
 | `why-vera/1/background`, `why-vera/1/accent` | 1st "Why Vera" feature block (background + accent photo) |
 | `why-vera/2/background`, `why-vera/2/accent` | 2nd "Why Vera" feature block |
 | `why-vera/3/background`, `why-vera/3/accent` | 3rd "Why Vera" feature block |
-| `products/linea-mini/front-view` | Linea Mini gallery |
-| `products/linea-mini/side-view` | Linea Mini gallery |
-| `products/linea-mini/steam-wand-detail` | Linea Mini gallery |
-| `products/linea-mini/group-head-detail` | Linea Mini gallery |
-| `products/linea-pb/main` | Linea PB gallery |
-| `products/gs3/main` | GS3 gallery |
-| `products/kb90/main` | KB90 gallery |
+| `products/placeholder/<file>` | Product galleries (all products share this one folder — see below) |
+
+Product photos are throwaway placeholders until products pull from Shopify,
+so they all live flat in `products/placeholder/` instead of one folder per
+product. Current filenames: `linea-mini-front-view`, `linea-mini-side-view`,
+`linea-mini-steam-wand-detail`, `linea-mini-group-head-detail`,
+`linea-pb-main`, `gs3-main`, `kb90-main`, `grinder-main`, `accessory-main`.
 
 To add another product photo, add an entry to that product's `images` array
-in `src/lib/products.ts` (pick a `file` name) and drop a matching file in
-its `products/<handle>/` folder.
+in `src/lib/products.ts` (pick a unique `file` name) and drop a matching file
+in `products/placeholder/`.
 
 The `.gitkeep` files just keep these empty folders in git — delete one once
 you've added a real image to that folder.

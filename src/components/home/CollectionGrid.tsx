@@ -28,7 +28,7 @@ export function CollectionGrid({ products }: { products: Product[] }) {
               type="button"
               onClick={() => setFilter(item.value)}
               aria-pressed={filter === item.value}
-              className={`transition-colors ${
+              className={`cursor-pointer uppercase transition-colors ${
                 filter === item.value ? "text-espresso" : "text-taupe hover:text-espresso/70"
               }`}
             >
