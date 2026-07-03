@@ -1,13 +1,16 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Header } from "@/components/Header";
 import { SiteImage } from "@/components/SiteImage";
 import { resolveImage } from "@/lib/images";
 
 export function Hero() {
+  const personSrc = resolveImage("hero/person");
+
   return (
     <section className="relative flex min-h-[92vh] flex-col overflow-hidden">
       <SiteImage
-        src={resolveImage("hero/cafe-interior")}
+        src={resolveImage("hero/background")}
         alt="Vera Coffee Solutions café interior"
         label="Café interior — hero photo"
         className="absolute inset-0"
@@ -44,6 +47,17 @@ export function Hero() {
           </div>
         </div>
       </div>
+
+      {personSrc && (
+        <Image
+          src={personSrc}
+          alt=""
+          fill
+          sizes="100vw"
+          preload
+          className="pointer-events-none absolute inset-0 z-[15] object-cover"
+        />
+      )}
     </section>
   );
 }

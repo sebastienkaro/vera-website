@@ -34,7 +34,7 @@ export function FeatureBlock({
           src={resolveImage(accentSlot)}
           alt={accentLabel}
           label={accentLabel}
-          className="aspect-[3/4] shadow-xl"
+          className="relative aspect-[3/4] shadow-xl"
           sizes="(min-width: 640px) 320px, 224px"
         />
       </div>
