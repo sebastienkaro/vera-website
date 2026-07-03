@@ -20,12 +20,10 @@ export function Hero() {
       <Header />
 
       <div className="relative z-10 flex flex-1 flex-col justify-between px-8 pt-40 pb-16 sm:px-12">
-        <h1 className="text-[clamp(2.5rem,9vw,10rem)] leading-[0.95] font-normal tracking-[-0.04em] text-cream uppercase">
-          Equipment built for
-          <br />
-          those who demand
-          <br />
-          the best
+        <h1 className="flex flex-col text-[clamp(2.5rem,9vw,10rem)] leading-[0.95] font-normal tracking-[-0.04em] text-cream uppercase">
+          <span>Equipment built for</span>
+          <span className="pl-[10vw]">those who demand</span>
+          <span className="pl-[50vw]">the best</span>
         </h1>
 
         <div className="flex flex-col items-end gap-6 self-end text-right">
