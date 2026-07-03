@@ -11,8 +11,9 @@ export function ProductCard({ product }: { product: Product }) {
         src={image?.url || null}
         alt={image?.alt ?? product.title}
         label={image?.alt ?? product.title}
-        className="relative aspect-square"
+        className="relative aspect-[4/5]"
         sizes="(min-width: 640px) 25vw, 50vw"
+        fit="contain"
       />
       <p className="mt-4 text-xs font-medium tracking-wide text-taupe uppercase">
         {product.vendor}

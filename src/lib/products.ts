@@ -118,13 +118,64 @@ const products: ProductSource[] = [
     ],
   },
   {
+    id: "e65t-grinder",
+    handle: "e65t-grinder",
+    vendor: "Mahlkonig",
+    category: "grinders",
+    title: "E65T Grinder",
+    price: { amount: 2190, currencyCode: "USD" },
+    images: [{ file: "grinder-e65t", alt: "Mahlkonig E65T grinder" }],
+    descriptionHtml: "<p>High-throughput commercial grinder built for consistent dosing behind a busy bar.</p>",
+    specs: [
+      { label: "Burr type", value: "65mm flat" },
+      { label: "Hopper capacity", value: "2.5 lbs" },
+    ],
+    variants: [
+      { id: "e65t-grinder-black", title: "Black", price: { amount: 2190, currencyCode: "USD" }, available: true },
+    ],
+  },
+  {
+    id: "mythos-grinder",
+    handle: "mythos-grinder",
+    vendor: "Eureka",
+    category: "grinders",
+    title: "Mythos Grinder",
+    price: { amount: 3290, currencyCode: "USD" },
+    images: [{ file: "grinder-shotmaster", alt: "Eureka Mythos grinder" }],
+    descriptionHtml: "<p>Temperature-controlled grind chamber for shot-to-shot consistency in high-volume cafés.</p>",
+    specs: [
+      { label: "Burr type", value: "71mm flat" },
+      { label: "Hopper capacity", value: "3 lbs" },
+    ],
+    variants: [
+      { id: "mythos-grinder-black", title: "Black", price: { amount: 3290, currencyCode: "USD" }, available: true },
+    ],
+  },
+  {
+    id: "sette-grinder",
+    handle: "sette-grinder",
+    vendor: "Baratza",
+    category: "grinders",
+    title: "Sette Grinder",
+    price: { amount: 599, currencyCode: "USD" },
+    images: [{ file: "grinder-linea-mini-alt", alt: "Baratza Sette grinder" }],
+    descriptionHtml: "<p>Compact conical burr grinder with stepped adjustment, sized for a home bar.</p>",
+    specs: [
+      { label: "Burr type", value: "40mm conical" },
+      { label: "Hopper capacity", value: "1 lb" },
+    ],
+    variants: [
+      { id: "sette-grinder-black", title: "Black", price: { amount: 599, currencyCode: "USD" }, available: true },
+    ],
+  },
+  {
     id: "bottomless-portafilter",
     handle: "bottomless-portafilter",
     vendor: "La Marzocco",
     category: "parts-accessories",
     title: "Bottomless Portafilter",
     price: { amount: 129, currencyCode: "USD" },
-    images: [{ file: "accessory-main", alt: "La Marzocco bottomless portafilter" }],
+    images: [{ file: "accessory-portafilter", alt: "La Marzocco bottomless portafilter" }],
     descriptionHtml: "<p>Naked portafilter for dialing in shots and diagnosing extraction issues.</p>",
     specs: [
       { label: "Fit", value: "58mm group" },
@@ -132,6 +183,57 @@ const products: ProductSource[] = [
     ],
     variants: [
       { id: "bottomless-portafilter-58", title: "58mm", price: { amount: 129, currencyCode: "USD" }, available: true },
+    ],
+  },
+  {
+    id: "knock-box",
+    handle: "knock-box",
+    vendor: "Vera",
+    category: "parts-accessories",
+    title: "Knock Box",
+    price: { amount: 59, currencyCode: "USD" },
+    images: [{ file: "accessory-knockbox", alt: "Espresso knock box" }],
+    descriptionHtml: "<p>Stainless knock box with a removable, dishwasher-safe bar for fast puck disposal.</p>",
+    specs: [
+      { label: "Material", value: "Stainless steel" },
+      { label: "Capacity", value: "~150 pucks" },
+    ],
+    variants: [
+      { id: "knock-box-steel", title: "Steel", price: { amount: 59, currencyCode: "USD" }, available: true },
+    ],
+  },
+  {
+    id: "precision-tamper",
+    handle: "precision-tamper",
+    vendor: "Vera",
+    category: "parts-accessories",
+    title: "Precision Tamper",
+    price: { amount: 89, currencyCode: "USD" },
+    images: [{ file: "grinder-main", alt: "Espresso tamper" }],
+    descriptionHtml: "<p>Calibrated tamper with a flat base for even, repeatable extraction.</p>",
+    specs: [
+      { label: "Base", value: "58mm flat" },
+      { label: "Handle", value: "Anodized aluminum" },
+    ],
+    variants: [
+      { id: "precision-tamper-58", title: "58mm", price: { amount: 89, currencyCode: "USD" }, available: true },
+    ],
+  },
+  {
+    id: "cleaning-kit",
+    handle: "cleaning-kit",
+    vendor: "Vera",
+    category: "parts-accessories",
+    title: "Cleaning Kit",
+    price: { amount: 45, currencyCode: "USD" },
+    images: [{ file: "linea-mini-front-view", alt: "Espresso machine cleaning kit" }],
+    descriptionHtml: "<p>Backflush detergent, brushes, and a group-head cleaning disc for weekly maintenance.</p>",
+    specs: [
+      { label: "Contents", value: "Detergent, brush, disc" },
+      { label: "Fit", value: "Universal" },
+    ],
+    variants: [
+      { id: "cleaning-kit-standard", title: "Standard", price: { amount: 45, currencyCode: "USD" }, available: true },
     ],
   },
 ];
