@@ -1,15 +1,41 @@
-// Central place for placeholder brand content.
-// Replace these values once real brand assets (logo, colors, fonts, copy) are provided.
 export const siteConfig = {
   name: "Vera Coffee Solutions",
   shortName: "Vera",
-  tagline: "Placeholder tagline — replace with the real brand tagline.",
   description:
-    "Placeholder description for Vera Coffee Solutions. Replace with real marketing copy once available.",
-  nav: [
-    { label: "Home", href: "/" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
+    "Commercial espresso equipment sold, installed and serviced by Vera Coffee Solutions. Long Island City, NY.",
+  navLeft: [
+    { label: "Machines", href: "/machines" },
+    { label: "Grinders", href: "/grinders" },
+    { label: "Parts & Accessories", href: "/parts-accessories" },
   ],
-  contactEmail: "hello@example.com",
+  navRight: [
+    { label: "Resources", href: "/resources" },
+    { label: "White Label", href: "/white-label" },
+    { label: "Get a Quote", href: "/quote" },
+  ],
+  contact: {
+    phone: "615.397.3005",
+    phoneNote: "Text us — Long Island City, NY",
+  },
+  footer: {
+    blurb: "Commercial espresso equipment — sold, installed & serviced. Long Island City, NY.",
+    tag: "Authorized dealer · Financing available",
+    shop: [
+      { label: "Machines", href: "/machines" },
+      { label: "Grinders", href: "/grinders" },
+      { label: "Parts & Accessories", href: "/parts-accessories" },
+      { label: "La Marzocco Parts", href: "/la-marzocco-parts" },
+    ],
+    company: [
+      { label: "Services", href: "/services" },
+      { label: "White Label", href: "/white-label" },
+      { label: "Blog", href: "/blog" },
+      { label: "Request a Quote", href: "/quote" },
+    ],
+    legal: [
+      { label: "Privacy", href: "/privacy" },
+      { label: "Shipping", href: "/shipping" },
+      { label: "Refund", href: "/refund" },
+    ],
+  },
 };

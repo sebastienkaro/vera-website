@@ -1,31 +1,23 @@
 @import "tailwindcss";
 
-/*
- * PLACEHOLDER BRAND THEME
- * These colors and fonts are stand-ins for a coffee brand.
- * Replace with real brand colors/fonts once assets are provided.
- */
 :root {
-  --background: #faf6f0;
-  --foreground: #2c1c12;
+  --background: #fffcf5;
+  --foreground: #2a1f16;
 
-  --color-espresso: #3b2417;
-  --color-espresso-light: #5c3a26;
-  --color-cream: #f5ede1;
-  --color-amber: #c08a4e;
-  --color-amber-dark: #9c6b35;
+  --color-cream: #fffcf5;
+  --color-espresso: #2a1f16;
+  --color-taupe: #cbc1b8;
+  --color-ink: #1e1e25;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-espresso: var(--color-espresso);
-  --color-espresso-light: var(--color-espresso-light);
   --color-cream: var(--color-cream);
-  --color-amber: var(--color-amber);
-  --color-amber-dark: var(--color-amber-dark);
-  --font-sans: var(--font-body);
-  --font-display: var(--font-display);
+  --color-espresso: var(--color-espresso);
+  --color-taupe: var(--color-taupe);
+  --color-ink: var(--color-ink);
+  --font-sans: var(--font-host-grotesk);
 }
 
 body {

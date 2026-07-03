@@ -1,19 +1,13 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
+import { Footer } from "@/components/Footer";
 
-// Placeholder fonts — swap for brand typefaces once provided.
-const bodyFont = Inter({
-  variable: "--font-body",
-  subsets: ["latin"],
-});
-
-const displayFont = Fraunces({
-  variable: "--font-display",
-  subsets: ["latin"],
+const hostGrotesk = localFont({
+  src: "../fonts/HostGrotesk-Variable.ttf",
+  variable: "--font-host-grotesk",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -27,12 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col font-sans">
-        <Header />
+    <html lang="en" className={`${hostGrotesk.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col bg-cream font-sans text-espresso">
         <main className="flex-1">{children}</main>
         <Footer />
       </body>
