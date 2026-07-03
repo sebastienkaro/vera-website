@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { formatMoney } from "@/lib/products";
+import { formatMoney } from "@/lib/money";
 import type { Product } from "@/lib/types";
 
 export function ProductInfo({ product }: { product: Product }) {

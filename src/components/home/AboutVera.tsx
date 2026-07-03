@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { SiteImage } from "@/components/SiteImage";
+import { resolveImage } from "@/lib/images";
 
 export function AboutVera() {
   return (
@@ -14,7 +15,12 @@ export function AboutVera() {
       />
 
       <div className="relative mx-auto mt-16 min-h-[420px] max-w-6xl sm:min-h-[520px]">
-        <PlaceholderImage label="Roastery — Long Island City" className="absolute inset-0" />
+        <SiteImage
+          src={resolveImage("about/roastery")}
+          alt="Vera Coffee Solutions roastery — Long Island City"
+          label="Roastery — Long Island City"
+          className="absolute inset-0"
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/10 to-transparent" />
 
         <div className="absolute right-0 bottom-0 left-0 p-8 sm:p-12">

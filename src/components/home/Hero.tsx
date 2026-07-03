@@ -1,11 +1,18 @@
 import Link from "next/link";
 import { Header } from "@/components/Header";
-import { PlaceholderImage } from "@/components/PlaceholderImage";
+import { SiteImage } from "@/components/SiteImage";
+import { resolveImage } from "@/lib/images";
 
 export function Hero() {
   return (
     <section className="relative flex min-h-[92vh] flex-col overflow-hidden">
-      <PlaceholderImage label="Café interior — hero photo" className="absolute inset-0" />
+      <SiteImage
+        src={resolveImage("hero/cafe-interior")}
+        alt="Vera Coffee Solutions café interior"
+        label="Café interior — hero photo"
+        className="absolute inset-0"
+        preload
+      />
       <div className="absolute inset-0 bg-espresso/55" />
 
       <Header />
