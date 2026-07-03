@@ -30,7 +30,7 @@ export function SiteImage({
   }
 
   return (
-    <div className={`overflow-hidden ${className}`}>
+    <div className={`overflow-hidden bg-sand ${className}`}>
       <Image src={src} alt={alt} fill sizes={sizes} preload={preload} className="object-cover" />
     </div>
   );
