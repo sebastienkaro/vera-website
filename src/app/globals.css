@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+:root {
+  --background: #fffcf5;
+  --foreground: #2a1f16;
+
+  --color-cream: #fffcf5;
+  --color-espresso: #2a1f16;
+  --color-taupe: #cbc1b8;
+  --color-ink: #1e1e25;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-cream: var(--color-cream);
+  --color-espresso: var(--color-espresso);
+  --color-taupe: var(--color-taupe);
+  --color-ink: var(--color-ink);
+  --font-sans: var(--font-host-grotesk);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
