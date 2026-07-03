@@ -1,18 +1,17 @@
 import { SectionHeading } from "@/components/SectionHeading";
 import { ProductCard } from "@/components/ProductCard";
-import { getProducts } from "@/lib/products";
+import type { Product } from "@/lib/types";
 
-export function Collection() {
-  const products = getProducts();
+export function RelatedProducts({ products }: { products: Product[] }) {
+  if (products.length === 0) return null;
 
   return (
     <section className="border-t border-espresso/10 px-8 py-24 sm:px-12">
       <SectionHeading
-        eyebrow="The Collection"
+        eyebrow="Keep Exploring"
         segments={[
-          { text: "All,", tone: "dark" },
-          { text: "Machines, Grinders,", tone: "muted" },
-          { text: "Parts & Accessories", tone: "muted" },
+          { text: "You May", tone: "muted" },
+          { text: "Also Like", tone: "dark" },
         ]}
       />
 
