@@ -21,7 +21,7 @@ export function AboutVera() {
           label="Roastery — Long Island City"
           className="absolute inset-0"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-espresso/60 from-0% to-transparent to-50%" />
 
         <div className="absolute right-0 bottom-0 left-0 p-8 sm:p-12">
           <p className="max-w-2xl text-sm text-cream sm:text-base">
