@@ -44,7 +44,7 @@ export function CollectionGrid({ products }: { products: Product[] }) {
         </h2>
       </div>
 
-      <div className="mx-auto mt-16 grid max-w-6xl grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
+      <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-4">
         {filtered.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
