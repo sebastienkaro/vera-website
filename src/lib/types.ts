@@ -8,9 +8,15 @@ export type ProductImage = {
   alt: string;
 };
 
+export type ProductOption = {
+  name: string;
+  values: string[];
+};
+
 export type ProductVariant = {
   id: string;
   title: string;
+  selectedOptions: Record<string, string>;
   price: Money;
   available: boolean;
 };
@@ -33,5 +39,6 @@ export type Product = {
   images: ProductImage[];
   descriptionHtml: string;
   specs: ProductSpec[];
+  options: ProductOption[];
   variants: ProductVariant[];
 };

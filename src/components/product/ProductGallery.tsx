@@ -16,6 +16,8 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
         label={active.alt}
         className="relative aspect-[4/5] w-full"
         sizes="(min-width: 768px) 50vw, 100vw"
+        fit="contain"
+        padding="p-12 sm:p-20"
       />
       {images.length > 1 && (
         <div className="mt-4 grid grid-cols-4 gap-4">
