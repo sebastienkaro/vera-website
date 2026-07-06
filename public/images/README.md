@@ -10,6 +10,7 @@ changes needed either way.
 | --- | --- |
 | `hero/background` | Homepage hero background |
 | `hero/person` | Optional foreground cutout, layered in front of the hero text (needs real transparency — a PNG/WebP with alpha, not a flattened photo). Leave the slot empty to skip the layered effect. |
+| `hero/machine` | Optional cutout of the espresso machine on the counter, layered above a looping steam animation and below the hero text (needs real transparency, same as `hero/person`). Position it so it lines up with the machine already baked into `hero/background` — see the `top`/`left` on `SteamPuff` in `Hero.tsx` if the machine's on-screen position changes and the steam needs to be re-anchored. Leave empty to skip both the cutout and the steam. |
 | `about/roastery` | "About Vera" section background |
 | `why-vera/1/background`, `why-vera/1/accent` | 1st "Why Vera" feature block (background + accent photo) |
 | `why-vera/2/background`, `why-vera/2/accent` | 2nd "Why Vera" feature block |

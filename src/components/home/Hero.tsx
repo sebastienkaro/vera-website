@@ -2,10 +2,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { Header } from "@/components/Header";
 import { SiteImage } from "@/components/SiteImage";
+import { SteamPuff } from "@/components/home/SteamPuff";
 import { resolveImage } from "@/lib/images";
 
 export function Hero() {
   const personSrc = resolveImage("hero/person");
+  const machineSrc = resolveImage("hero/machine");
 
   return (
     <section className="relative flex h-screen flex-col overflow-hidden">
@@ -16,6 +18,22 @@ export function Hero() {
         className="absolute inset-0"
         preload
       />
+
+      {machineSrc && (
+        <>
+          {/* Roughly where the group head sits on the machine cutout below —
+              rises up from behind it so the machine hides the puff's origin. */}
+          <SteamPuff className="top-[41%] left-[68%] z-[6] h-28 w-20" />
+          <Image
+            src={machineSrc}
+            alt=""
+            fill
+            sizes="100vw"
+            preload
+            className="pointer-events-none absolute inset-0 z-[8] object-cover"
+          />
+        </>
+      )}
 
       <Header />
 

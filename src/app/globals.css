@@ -26,3 +26,20 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+@keyframes steam-rise {
+  0% {
+    transform: translate(-50%, 0) scale(0.6);
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.25;
+  }
+  75% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -170px) scale(2);
+    opacity: 0;
+  }
+}
