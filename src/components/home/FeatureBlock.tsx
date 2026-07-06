@@ -1,4 +1,5 @@
 import { SiteImage } from "@/components/SiteImage";
+import { ParallaxBackground } from "@/components/home/ParallaxBackground";
 import { resolveImage } from "@/lib/images";
 
 export function FeatureBlock({
@@ -21,8 +22,10 @@ export function FeatureBlock({
   body: string;
 }) {
   return (
-    <div className="relative h-screen">
-      <SiteImage src={resolveImage(bgSlot)} alt={bgLabel} label={bgLabel} className="absolute inset-0" />
+    <div className="relative h-screen overflow-hidden">
+      <ParallaxBackground>
+        <SiteImage src={resolveImage(bgSlot)} alt={bgLabel} label={bgLabel} className="absolute inset-0" />
+      </ParallaxBackground>
 
       <div className="relative mx-auto h-full max-w-6xl">
         <div
@@ -40,12 +43,12 @@ export function FeatureBlock({
         </div>
 
         <div
-          className={`absolute bottom-12 max-w-sm ${
+          className={`absolute top-1/2 max-w-sm -translate-y-1/2 ${
             textSide === "left" ? "left-8 text-left sm:left-12" : "right-8 text-right sm:right-12"
           }`}
         >
-          <h3 className="text-2xl font-medium text-cream">{heading}</h3>
-          <p className="mt-4 text-sm text-cream/85">{body}</p>
+          <h3 className="text-3xl font-medium text-cream sm:text-4xl">{heading}</h3>
+          <p className="mt-4 text-base text-cream/85">{body}</p>
         </div>
       </div>
     </div>
