@@ -40,10 +40,53 @@ const products: ProductSource[] = [
       { label: "Weight", value: "55 lbs" },
       { label: "Power", value: "110V / 120V, 1500W" },
     ],
+    options: [
+      { name: "Color", values: ["Red", "White", "Black"] },
+      { name: "Steam Wand", values: ["Standard", "Cool Touch"] },
+    ],
     variants: [
-      { id: "linea-mini-red", title: "Red", price: { amount: 5590, currencyCode: "USD" }, available: true },
-      { id: "linea-mini-white", title: "White", price: { amount: 5590, currencyCode: "USD" }, available: true },
-      { id: "linea-mini-black", title: "Black", price: { amount: 5690, currencyCode: "USD" }, available: false },
+      {
+        id: "linea-mini-red-standard",
+        title: "Red / Standard",
+        selectedOptions: { Color: "Red", "Steam Wand": "Standard" },
+        price: { amount: 5590, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "linea-mini-red-cool-touch",
+        title: "Red / Cool Touch",
+        selectedOptions: { Color: "Red", "Steam Wand": "Cool Touch" },
+        price: { amount: 5790, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "linea-mini-white-standard",
+        title: "White / Standard",
+        selectedOptions: { Color: "White", "Steam Wand": "Standard" },
+        price: { amount: 5590, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "linea-mini-white-cool-touch",
+        title: "White / Cool Touch",
+        selectedOptions: { Color: "White", "Steam Wand": "Cool Touch" },
+        price: { amount: 5790, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "linea-mini-black-standard",
+        title: "Black / Standard",
+        selectedOptions: { Color: "Black", "Steam Wand": "Standard" },
+        price: { amount: 5690, currencyCode: "USD" },
+        available: false,
+      },
+      {
+        id: "linea-mini-black-cool-touch",
+        title: "Black / Cool Touch",
+        selectedOptions: { Color: "Black", "Steam Wand": "Cool Touch" },
+        price: { amount: 5890, currencyCode: "USD" },
+        available: false,
+      },
     ],
   },
   {
@@ -60,9 +103,22 @@ const products: ProductSource[] = [
       { label: "Group heads", value: "2–3" },
       { label: "Pump", value: "Rotary" },
     ],
+    options: [{ name: "Group Heads", values: ["2 Group", "3 Group"] }],
     variants: [
-      { id: "linea-pb-2gr", title: "2 Group", price: { amount: 12900, currencyCode: "USD" }, available: true },
-      { id: "linea-pb-3gr", title: "3 Group", price: { amount: 15900, currencyCode: "USD" }, available: true },
+      {
+        id: "linea-pb-2gr",
+        title: "2 Group",
+        selectedOptions: { "Group Heads": "2 Group" },
+        price: { amount: 12900, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "linea-pb-3gr",
+        title: "3 Group",
+        selectedOptions: { "Group Heads": "3 Group" },
+        price: { amount: 15900, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -78,9 +134,22 @@ const products: ProductSource[] = [
       { label: "Boiler type", value: "Dual boiler" },
       { label: "Group heads", value: "1" },
     ],
+    options: [{ name: "Control", values: ["Auto Volumetric", "Manual Paddle"] }],
     variants: [
-      { id: "gs3-av", title: "Auto Volumetric", price: { amount: 7590, currencyCode: "USD" }, available: true },
-      { id: "gs3-mp", title: "Manual Paddle", price: { amount: 7990, currencyCode: "USD" }, available: true },
+      {
+        id: "gs3-av",
+        title: "Auto Volumetric",
+        selectedOptions: { Control: "Auto Volumetric" },
+        price: { amount: 7590, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "gs3-mp",
+        title: "Manual Paddle",
+        selectedOptions: { Control: "Manual Paddle" },
+        price: { amount: 7990, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -96,8 +165,15 @@ const products: ProductSource[] = [
       { label: "Boiler type", value: "Multi-boiler" },
       { label: "Group heads", value: "2–3" },
     ],
+    options: [],
     variants: [
-      { id: "kb90-2gr", title: "2 Group", price: { amount: 16900, currencyCode: "USD" }, available: true },
+      {
+        id: "kb90-2gr",
+        title: "2 Group",
+        selectedOptions: {},
+        price: { amount: 16900, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -113,8 +189,39 @@ const products: ProductSource[] = [
       { label: "Burr type", value: "65mm flat" },
       { label: "Hopper capacity", value: "1.5 lbs" },
     ],
+    options: [
+      { name: "Finish", values: ["Black", "Silver"] },
+      { name: "Hopper", values: ["Standard", "Large"] },
+    ],
     variants: [
-      { id: "atom-grinder-black", title: "Black", price: { amount: 1690, currencyCode: "USD" }, available: true },
+      {
+        id: "atom-grinder-black-standard",
+        title: "Black / Standard",
+        selectedOptions: { Finish: "Black", Hopper: "Standard" },
+        price: { amount: 1690, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "atom-grinder-black-large",
+        title: "Black / Large",
+        selectedOptions: { Finish: "Black", Hopper: "Large" },
+        price: { amount: 1790, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "atom-grinder-silver-standard",
+        title: "Silver / Standard",
+        selectedOptions: { Finish: "Silver", Hopper: "Standard" },
+        price: { amount: 1750, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "atom-grinder-silver-large",
+        title: "Silver / Large",
+        selectedOptions: { Finish: "Silver", Hopper: "Large" },
+        price: { amount: 1850, currencyCode: "USD" },
+        available: false,
+      },
     ],
   },
   {
@@ -130,8 +237,15 @@ const products: ProductSource[] = [
       { label: "Burr type", value: "65mm flat" },
       { label: "Hopper capacity", value: "2.5 lbs" },
     ],
+    options: [],
     variants: [
-      { id: "e65t-grinder-black", title: "Black", price: { amount: 2190, currencyCode: "USD" }, available: true },
+      {
+        id: "e65t-grinder-black",
+        title: "Black",
+        selectedOptions: {},
+        price: { amount: 2190, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -147,8 +261,15 @@ const products: ProductSource[] = [
       { label: "Burr type", value: "71mm flat" },
       { label: "Hopper capacity", value: "3 lbs" },
     ],
+    options: [],
     variants: [
-      { id: "mythos-grinder-black", title: "Black", price: { amount: 3290, currencyCode: "USD" }, available: true },
+      {
+        id: "mythos-grinder-black",
+        title: "Black",
+        selectedOptions: {},
+        price: { amount: 3290, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -164,8 +285,15 @@ const products: ProductSource[] = [
       { label: "Burr type", value: "40mm conical" },
       { label: "Hopper capacity", value: "1 lb" },
     ],
+    options: [],
     variants: [
-      { id: "sette-grinder-black", title: "Black", price: { amount: 599, currencyCode: "USD" }, available: true },
+      {
+        id: "sette-grinder-black",
+        title: "Black",
+        selectedOptions: {},
+        price: { amount: 599, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -181,8 +309,22 @@ const products: ProductSource[] = [
       { label: "Fit", value: "58mm group" },
       { label: "Material", value: "Chrome-plated brass" },
     ],
+    options: [{ name: "Size", values: ["53mm", "58mm"] }],
     variants: [
-      { id: "bottomless-portafilter-58", title: "58mm", price: { amount: 129, currencyCode: "USD" }, available: true },
+      {
+        id: "bottomless-portafilter-53",
+        title: "53mm",
+        selectedOptions: { Size: "53mm" },
+        price: { amount: 119, currencyCode: "USD" },
+        available: true,
+      },
+      {
+        id: "bottomless-portafilter-58",
+        title: "58mm",
+        selectedOptions: { Size: "58mm" },
+        price: { amount: 129, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -198,8 +340,15 @@ const products: ProductSource[] = [
       { label: "Material", value: "Stainless steel" },
       { label: "Capacity", value: "~150 pucks" },
     ],
+    options: [],
     variants: [
-      { id: "knock-box-steel", title: "Steel", price: { amount: 59, currencyCode: "USD" }, available: true },
+      {
+        id: "knock-box-steel",
+        title: "Steel",
+        selectedOptions: {},
+        price: { amount: 59, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -215,8 +364,15 @@ const products: ProductSource[] = [
       { label: "Base", value: "58mm flat" },
       { label: "Handle", value: "Anodized aluminum" },
     ],
+    options: [],
     variants: [
-      { id: "precision-tamper-58", title: "58mm", price: { amount: 89, currencyCode: "USD" }, available: true },
+      {
+        id: "precision-tamper-58",
+        title: "58mm",
+        selectedOptions: {},
+        price: { amount: 89, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
   {
@@ -232,8 +388,15 @@ const products: ProductSource[] = [
       { label: "Contents", value: "Detergent, brush, disc" },
       { label: "Fit", value: "Universal" },
     ],
+    options: [],
     variants: [
-      { id: "cleaning-kit-standard", title: "Standard", price: { amount: 45, currencyCode: "USD" }, available: true },
+      {
+        id: "cleaning-kit-standard",
+        title: "Standard",
+        selectedOptions: {},
+        price: { amount: 45, currencyCode: "USD" },
+        available: true,
+      },
     ],
   },
 ];

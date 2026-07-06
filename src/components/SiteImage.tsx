@@ -14,6 +14,7 @@ export function SiteImage({
   preload = false,
   sizes = "100vw",
   fit = "cover",
+  padding = "p-8",
 }: {
   src: string | null;
   alt: string;
@@ -30,6 +31,10 @@ export function SiteImage({
   // on a card, like a product tile, where the whole product should stay
   // visible against the card background.
   fit?: "cover" | "contain";
+  // Only used when fit="contain" — how much breathing room to leave around
+  // the photo. Bigger cards (a product detail gallery) want more than a
+  // small grid tile.
+  padding?: string;
 }) {
   if (!src) {
     return <PlaceholderImage label={label} className={className} />;
@@ -43,7 +48,7 @@ export function SiteImage({
         fill
         sizes={sizes}
         preload={preload}
-        className={fit === "contain" ? "object-contain p-8" : "object-cover"}
+        className={fit === "contain" ? `object-contain ${padding}` : "object-cover"}
       />
     </div>
   );
