@@ -1,26 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
 
+function subscribeNever() {
+  return () => {};
+}
+
+function useMounted() {
+  return useSyncExternalStore(
+    subscribeNever,
+    () => true,
+    () => false,
+  );
+}
+
 export function Header({ variant = "overlay" }: { variant?: "overlay" | "solid" }) {
   const isOverlay = variant === "overlay";
   const [open, setOpen] = useState(false);
-  const textColor = isOverlay ? "text-cream" : "text-espresso";
-  const barColor = isOverlay ? "bg-cream" : "bg-espresso";
+  const mounted = useMounted();
+  const light = isOverlay || open;
+  const textColor = light ? "text-cream" : "text-espresso";
+  const barColor = light ? "bg-cream" : "bg-espresso";
   const mobileNavItems = [...siteConfig.navLeft, ...siteConfig.navRight];
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
 
   return (
     <header
       className={
         isOverlay
-          ? "absolute inset-x-0 top-0 z-20"
-          : "sticky top-0 z-20 border-b border-espresso/10 bg-cream"
+          ? "absolute inset-x-0 top-0 z-50"
+          : `sticky top-0 z-50 ${open ? "" : "border-b border-espresso/10 bg-cream"}`
       }
     >
-      <div className="mx-auto flex max-w-[1800px] items-center justify-between px-8 py-8 sm:px-12">
+      <div className="relative z-50 mx-auto flex max-w-[1800px] items-center justify-between px-8 py-8 sm:px-12">
         <nav className={`hidden gap-8 text-xs font-medium tracking-wide uppercase md:flex ${textColor}`}>
           {siteConfig.navLeft.map((item) => (
             <Link key={item.href} href={item.href} className="transition-opacity hover:opacity-70">
@@ -31,7 +55,7 @@ export function Header({ variant = "overlay" }: { variant?: "overlay" | "solid" 
 
         <Link href="/" className="shrink-0 md:hidden" onClick={() => setOpen(false)}>
           <Image
-            src={isOverlay ? "/logo/vera-icon-light.svg" : "/logo/vera-icon-dark.svg"}
+            src={light ? "/logo/vera-icon-light.svg" : "/logo/vera-icon-dark.svg"}
             alt={siteConfig.shortName}
             width={26}
             height={26}
@@ -77,26 +101,29 @@ export function Header({ variant = "overlay" }: { variant?: "overlay" | "solid" 
         </button>
       </div>
 
-      <nav
-        className={`grid overflow-hidden bg-espresso transition-[grid-template-rows] duration-300 ease-out md:hidden ${
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        }`}
-      >
-        <div className="min-h-0">
-          <div className="flex flex-col px-8 py-2 text-sm font-medium tracking-wide text-cream uppercase sm:px-12">
-            {mobileNavItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="border-b border-cream/10 py-4 transition-opacity hover:opacity-70"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </nav>
+      {mounted &&
+        createPortal(
+          <div
+            aria-hidden={!open}
+            className={`fixed inset-0 z-40 bg-espresso transition-opacity duration-300 ease-out md:hidden ${
+              open ? "opacity-100" : "pointer-events-none opacity-0"
+            }`}
+          >
+            <nav className="flex h-full flex-col overflow-y-auto px-8 pt-28 pb-8 text-sm font-medium tracking-wide text-cream uppercase sm:px-12 sm:pt-32">
+              {mobileNavItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className="border-b border-cream/10 py-4 transition-opacity hover:opacity-70"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+          </div>,
+          document.body,
+        )}
     </header>
   );
 }
