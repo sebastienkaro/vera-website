@@ -20,14 +20,14 @@ export function Hero() {
       <Header />
 
       <div className="flex flex-1 flex-col justify-between px-8 pt-40 pb-16 sm:px-12">
-        <h1 className="relative z-10 flex flex-col text-[max(2rem,7vw)] leading-[0.95] font-normal tracking-[-0.04em] text-cream uppercase">
+        <h1 className="relative z-10 flex flex-col text-[max(2.25rem,7vw)] leading-[0.95] font-normal tracking-[-0.04em] text-cream uppercase">
           <span>Equipment built for</span>
           <span className="sm:pl-[10vw]">those who demand</span>
           <span className="sm:pl-[50vw]">the best</span>
         </h1>
 
         <div className="relative z-20 flex flex-col items-start gap-6 self-start text-left sm:items-end sm:self-end sm:text-right">
-          <p className="text-sm font-medium tracking-wide text-cream uppercase">
+          <p className="text-base font-medium tracking-wide text-cream uppercase sm:text-sm">
             Take a look at our collection
             <br />
             or get a custom quote
@@ -35,13 +35,13 @@ export function Hero() {
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
             <Link
               href="/machines"
-              className="bg-cream px-6 py-3.5 text-center text-xs font-medium tracking-wide whitespace-nowrap text-espresso uppercase transition-opacity hover:opacity-90"
+              className="bg-cream px-6 py-3.5 text-center text-sm font-medium tracking-wide whitespace-nowrap text-espresso uppercase transition-opacity hover:opacity-90 sm:text-xs"
             >
               Browse Machines
             </Link>
             <Link
               href="/quote"
-              className="border border-cream px-6 py-3.5 text-center text-xs font-medium tracking-wide whitespace-nowrap text-cream uppercase transition-colors hover:bg-cream hover:text-espresso"
+              className="border border-cream px-6 py-3.5 text-center text-sm font-medium tracking-wide whitespace-nowrap text-cream uppercase transition-colors hover:bg-cream hover:text-espresso sm:text-xs"
             >
               Get a Quote
             </Link>
