@@ -33,8 +33,8 @@ export function WhyVera() {
           bgLabel="Concrete counter with plants"
           accentSlot="why-vera/2/accent"
           accentLabel="Machine detail"
-          accentSide="right"
-          textSide="left"
+          accentSide="left"
+          textSide="right"
           heading="Lorem ipsum dolor sit"
           body={lorem}
         />
