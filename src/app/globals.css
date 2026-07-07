@@ -27,19 +27,42 @@ body {
   color: var(--foreground);
 }
 
-@keyframes steam-rise {
+@keyframes steam-core {
   0% {
-    transform: translate(-50%, 0) scale(0.6);
+    transform: translate(-50%, 0) scale(0.4);
     opacity: 0;
   }
-  40% {
-    opacity: 0.25;
+  10% {
+    opacity: 1;
   }
-  75% {
-    opacity: 0.8;
+  50% {
+    transform: translate(-50%, -30px) scale(1.05);
+    opacity: 0.95;
   }
   100% {
-    transform: translate(-50%, -170px) scale(2);
+    transform: translate(-50%, -55px) scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes steam-plume {
+  0% {
+    transform: translate(-50%, 0) scale(0.5);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  35% {
+    transform: translate(calc(-50% + 6px), -38px) scale(1.15);
+    opacity: 0.95;
+  }
+  65% {
+    transform: translate(calc(-50% - 10px), -80px) scale(1.6);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate(calc(-50% + 5px), -125px) scale(2.1);
     opacity: 0;
   }
 }
