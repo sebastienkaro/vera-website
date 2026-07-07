@@ -22,8 +22,10 @@ export function Hero() {
       {machineSrc && (
         <>
           {/* Roughly where the group head sits on the machine cutout below —
-              rises up from behind it so the machine hides the puff's origin. */}
-          <SteamPuff className="top-[41%] left-[68%] z-[6] h-28 w-20" />
+              rises up from behind it so the machine hides the puff's origin.
+              Anchored to where the desktop crop shows the machine; hidden on
+              mobile, where the narrower crop doesn't bring it into frame. */}
+          <SteamPuff className="top-[41%] left-[81%] z-[6] hidden h-12 w-14 sm:block" />
           <Image
             src={machineSrc}
             alt=""
