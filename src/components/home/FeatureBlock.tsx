@@ -22,15 +22,15 @@ export function FeatureBlock({
   body: string;
 }) {
   return (
-    <div className="relative h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden sm:h-screen">
       <ParallaxBackground>
         <SiteImage src={resolveImage(bgSlot)} alt={bgLabel} label={bgLabel} className="absolute inset-0" />
       </ParallaxBackground>
 
-      <div className="relative mx-auto h-full max-w-6xl">
+      <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-8 px-8 py-20 sm:block sm:h-full sm:px-0 sm:py-0">
         <div
-          className={`absolute top-1/2 w-56 -translate-y-1/2 sm:w-80 ${
-            accentSide === "right" ? "right-8 sm:right-12" : "left-8 sm:left-12"
+          className={`w-56 sm:absolute sm:top-1/2 sm:w-80 sm:-translate-y-1/2 ${
+            accentSide === "right" ? "sm:right-12" : "sm:left-12"
           }`}
         >
           <SiteImage
@@ -43,8 +43,8 @@ export function FeatureBlock({
         </div>
 
         <div
-          className={`absolute top-1/2 max-w-sm -translate-y-1/2 ${
-            textSide === "left" ? "left-8 text-left sm:left-12" : "right-8 text-right sm:right-12"
+          className={`max-w-sm text-center sm:absolute sm:top-1/2 sm:-translate-y-1/2 ${
+            textSide === "left" ? "sm:left-12 sm:text-left" : "sm:right-12 sm:text-right"
           }`}
         >
           <h3 className="text-3xl font-medium text-cream sm:text-4xl">{heading}</h3>
