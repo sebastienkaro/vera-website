@@ -34,6 +34,13 @@ export const CATEGORY_LABELS: Record<ProductCategory, string> = {
   "parts-accessories": "Parts & Accessories",
 };
 
+/**
+ * How many products the homepage collection grid shows at once — three rows of
+ * four. It is a featured selection, not the whole catalog, and the count
+ * applies per filter so every tab fills the grid.
+ */
+export const FEATURED_LIMIT = 12;
+
 export type Product = {
   id: string;
   handle: string;

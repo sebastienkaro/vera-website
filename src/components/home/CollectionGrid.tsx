@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
-import type { Product, ProductCategory } from "@/lib/types";
+import { FEATURED_LIMIT, type Product, type ProductCategory } from "@/lib/types";
 
 type Filter = "all" | ProductCategory;
 
@@ -15,9 +15,14 @@ const FILTERS: { label: string; value: Filter }[] = [
 
 const FILTER_ROWS = [FILTERS.slice(0, 3), FILTERS.slice(3)];
 
-export function CollectionGrid({ products }: { products: Product[] }) {
+export function CollectionGrid({ products, limit = FEATURED_LIMIT }: { products: Product[]; limit?: number }) {
   const [filter, setFilter] = useState<Filter>("all");
-  const filtered = filter === "all" ? products : products.filter((product) => product.category === filter);
+  // Capped after filtering, so switching tabs fills the grid rather than
+  // showing whatever few of the featured set happen to be in that category.
+  const filtered = (filter === "all" ? products : products.filter((product) => product.category === filter)).slice(
+    0,
+    limit,
+  );
 
   return (
     <div>
