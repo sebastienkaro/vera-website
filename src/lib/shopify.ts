@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { cache } from "react";
 import type {
   Money,
@@ -301,4 +302,136 @@ export const getShopifyProducts = cache(async (): Promise<Product[]> => {
   return [...byHandle.values()].sort(
     (a, b) => CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category),
   );
+});
+
+/**
+ * How many products must share one image before it is judged a stock graphic
+ * rather than a photo of any particular product.
+ *
+ * Most of the spare-parts catalog has no photography yet and carries a Vera
+ * "image coming soon" card instead. Shopify offers nothing to distinguish that
+ * from a real photo — it is not tagged, has no alt text, and shares its 1000 x
+ * 1000 dimensions with genuine photos — but it is the same picture, re-uploaded
+ * per product, so the products using it all fingerprint alike.
+ *
+ * Real photos are shared too, legitimately: one Eversys shot covers the six
+ * products in a variant family. The threshold sits above that and well below
+ * the placeholder's clusters (54 products and 12). The cost of getting it
+ * wrong is small and one-sided — a product only drops out of the featured
+ * grid, and still has its own page.
+ */
+const STOCK_IMAGE_MIN_PRODUCTS = 10;
+
+/**
+ * Products whose primary image is a placeholder the sharing rule cannot see,
+ * because that copy of it was uploaded for one product only and so is shared
+ * with nothing.
+ *
+ * Keep this short. The durable fix for an entry here is in Shopify, not in
+ * code: delete the placeholder image from the product and it drops out
+ * automatically, since a product with no image is never featured. Re-check the
+ * list when the catalog gains real photography.
+ */
+const ONE_OFF_STOCK_IMAGE_HANDLES = new Set(["lm-f-1-021-gs3-paddle-group-cap-lower-ring"]);
+
+/**
+ * Width, in pixels, of the thumbnail used to fingerprint an image. Small
+ * enough that probing the whole catalog moves about 175 KB, large enough that
+ * genuinely different products never collide.
+ */
+const STOCK_IMAGE_PROBE_WIDTH = 32;
+
+/**
+ * Fingerprints an image by hashing a thumbnail of it rendered by Shopify's
+ * CDN.
+ *
+ * Hashing the full-size bytes does not work: the placeholder was re-uploaded
+ * per product, and the copies differ enough in encoding that 66 of them split
+ * into three byte-distinct groups, one of them a single product. Downscaling
+ * collapses encoding differences, merging those into two large groups the
+ * threshold catches, while still separating products that genuinely differ.
+ *
+ * It does not merge all of them: one product's copy is a different rendering
+ * of the same design and stays unique at any width, which is what
+ * ONE_OFF_STOCK_IMAGE_HANDLES is for.
+ */
+async function fingerprintImage(image: ProductImage): Promise<string | null> {
+  const url = new URL(image.url);
+  url.searchParams.set("width", String(STOCK_IMAGE_PROBE_WIDTH));
+
+  try {
+    const response = await fetch(url.toString(), {
+      next: { revalidate: REVALIDATE_SECONDS, tags: [PRODUCTS_CACHE_TAG] },
+    });
+    if (!response.ok) return null;
+    return createHash("sha1").update(Buffer.from(await response.arrayBuffer())).digest("hex");
+  } catch {
+    // An image we can't fingerprint is treated as unique, so a transient
+    // network failure hides nothing that deserves to be shown.
+    return null;
+  }
+}
+
+/**
+ * Handles whose primary image is a stock graphic shared across many products,
+ * rather than a photo of the product itself.
+ */
+const getStockImageHandles = cache(async (): Promise<Set<string>> => {
+  const products = await getShopifyProducts();
+  const withImages = products.filter((product) => product.images.length > 0);
+
+  const fingerprints = await Promise.all(
+    withImages.map((product) => fingerprintImage(product.images[0])),
+  );
+
+  const shareCount = new Map<string, number>();
+  for (const fingerprint of fingerprints) {
+    if (fingerprint) shareCount.set(fingerprint, (shareCount.get(fingerprint) ?? 0) + 1);
+  }
+
+  return new Set([
+    ...ONE_OFF_STOCK_IMAGE_HANDLES,
+    ...withImages
+      .filter((_, index) => {
+        const fingerprint = fingerprints[index];
+        return fingerprint !== null && (shareCount.get(fingerprint) ?? 0) >= STOCK_IMAGE_MIN_PRODUCTS;
+      })
+      .map((product) => product.handle),
+  ]);
+});
+
+/**
+ * The homepage's featured selection: products that have a photo of their own,
+ * capped per category so every filter tab fills the grid without the section
+ * turning into the entire catalog.
+ */
+export const getFeaturedShopifyProducts = cache(async (perCategory: number): Promise<Product[]> => {
+  const [products, stockImages] = await Promise.all([
+    getShopifyProducts(),
+    getStockImageHandles(),
+  ]);
+
+  const taken = new Map<ProductCategory, number>();
+  const eligible = products.filter((product) => {
+    if (product.images.length === 0 || stockImages.has(product.handle)) return false;
+    const count = taken.get(product.category) ?? 0;
+    if (count >= perCategory) return false;
+    taken.set(product.category, count + 1);
+    return true;
+  });
+
+  // Interleave the categories so the unfiltered grid shows the range rather
+  // than the first N of whichever category sorts first. Filtering by a single
+  // category still yields that category's own order, since interleaving
+  // preserves the relative order within each one.
+  const queues = CATEGORY_ORDER.map((category) =>
+    eligible.filter((product) => product.category === category),
+  );
+  const featured: Product[] = [];
+  for (let round = 0; featured.length < eligible.length; round++) {
+    for (const queue of queues) {
+      if (round < queue.length) featured.push(queue[round]);
+    }
+  }
+  return featured;
 });
