@@ -6,7 +6,9 @@ import type { ProductImage } from "@/lib/types";
 
 export function ProductGallery({ images }: { images: ProductImage[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const active = images[activeIndex];
+  // A Shopify product can have no media at all, and the active index can point
+  // past the end if the gallery re-renders with a shorter list.
+  const active = images[activeIndex] ?? images[0] ?? { url: "", alt: "" };
 
   return (
     <div>
@@ -23,7 +25,9 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
         <div className="mt-4 grid grid-cols-4 gap-4">
           {images.map((image, index) => (
             <button
-              key={image.alt}
+              // Shopify images often share alt text (it defaults to the
+              // product title), so the URL is the stable identifier here.
+              key={`${image.url}-${index}`}
               type="button"
               onClick={() => setActiveIndex(index)}
               className={`transition-opacity ${

@@ -7,8 +7,9 @@ import { ProductSpecs } from "@/components/product/ProductSpecs";
 import { RelatedProducts } from "@/components/product/RelatedProducts";
 import { getProduct, getProducts } from "@/lib/products";
 
-export function generateStaticParams() {
-  return getProducts().map((product) => ({ handle: product.handle }));
+export async function generateStaticParams() {
+  const products = await getProducts();
+  return products.map((product) => ({ handle: product.handle }));
 }
 
 export async function generateMetadata({
@@ -17,7 +18,7 @@ export async function generateMetadata({
   params: Promise<{ handle: string }>;
 }): Promise<Metadata> {
   const { handle } = await params;
-  const product = getProduct(handle);
+  const product = await getProduct(handle);
   if (!product) return {};
   return {
     title: `${product.title} — Vera Coffee Solutions`,
@@ -31,10 +32,16 @@ export default async function ProductPage({
   params: Promise<{ handle: string }>;
 }) {
   const { handle } = await params;
-  const product = getProduct(handle);
+  const product = await getProduct(handle);
   if (!product) notFound();
 
-  const related = getProducts().filter((item) => item.handle !== product.handle);
+  const catalog = await getProducts();
+  // Same category first, so a machine page recommends machines rather than
+  // whatever happens to come back first from the store.
+  const related = catalog
+    .filter((item) => item.handle !== product.handle)
+    .sort((a, b) => Number(b.category === product.category) - Number(a.category === product.category))
+    .slice(0, 4);
 
   return (
     <>
