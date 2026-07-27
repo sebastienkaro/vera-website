@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { formatMoney } from "@/lib/money";
-import type { Product } from "@/lib/types";
+import { CATEGORY_LABELS, type Product } from "@/lib/types";
 
 export function ProductInfo({ product }: { product: Product }) {
   const initialVariant = product.variants.find((variant) => variant.available) ?? product.variants[0];
@@ -32,8 +32,10 @@ export function ProductInfo({ product }: { product: Product }) {
   return (
     <div>
       <nav className="text-xs font-medium tracking-wide text-taupe uppercase">
-        <Link href="/machines" className="hover:text-espresso">
-          Machines
+        {/* The catalog is browsed from the filterable grid on the homepage;
+            there are no per-category routes to link to yet. */}
+        <Link href="/" className="hover:text-espresso">
+          {CATEGORY_LABELS[product.category]}
         </Link>
         <span className="mx-2">/</span>
         <span className="text-espresso">{product.title}</span>

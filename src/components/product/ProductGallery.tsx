@@ -6,14 +6,16 @@ import type { ProductImage } from "@/lib/types";
 
 export function ProductGallery({ images }: { images: ProductImage[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const active = images[activeIndex];
+  // Products come from Shopify, where a photo is not guaranteed — fall back to
+  // the striped placeholder rather than indexing into an empty array.
+  const active = images[activeIndex] ?? null;
 
   return (
     <div>
       <SiteImage
-        src={active.url || null}
-        alt={active.alt}
-        label={active.alt}
+        src={active?.url || null}
+        alt={active?.alt ?? ""}
+        label={active?.alt ?? "Product photo"}
         className="relative aspect-[4/5] w-full"
         sizes="(min-width: 768px) 50vw, 100vw"
         fit="contain"
@@ -23,13 +25,15 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
         <div className="mt-4 grid grid-cols-4 gap-4">
           {images.map((image, index) => (
             <button
-              key={image.alt}
+              // Most Shopify images carry no alt text and fall back to the
+              // product title, so alt is not unique across a gallery.
+              key={`${image.url}-${index}`}
               type="button"
               onClick={() => setActiveIndex(index)}
               className={`transition-opacity ${
                 index === activeIndex ? "opacity-100" : "opacity-50 hover:opacity-80"
               }`}
-              aria-label={`Show image: ${image.alt}`}
+              aria-label={`Show image ${index + 1} of ${images.length}`}
               aria-pressed={index === activeIndex}
             >
               <SiteImage
