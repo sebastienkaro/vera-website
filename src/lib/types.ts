@@ -28,6 +28,12 @@ export type ProductSpec = {
 
 export type ProductCategory = "machines" | "grinders" | "parts-accessories";
 
+export const CATEGORY_LABELS: Record<ProductCategory, string> = {
+  machines: "Machines",
+  grinders: "Grinders",
+  "parts-accessories": "Parts & Accessories",
+};
+
 export type Product = {
   id: string;
   handle: string;

@@ -15,20 +15,15 @@ changes needed either way.
 | `why-vera/1/background`, `why-vera/1/accent` | 1st "Why Vera" feature block (background + accent photo) |
 | `why-vera/2/background`, `why-vera/2/accent` | 2nd "Why Vera" feature block |
 | `why-vera/3/background`, `why-vera/3/accent` | 3rd "Why Vera" feature block |
-| `products/placeholder/<file>` | Product galleries (all products share this one folder — see below) |
 
-Product photos are throwaway placeholders until products pull from Shopify —
-accuracy doesn't matter, so they all live flat in `products/placeholder/`
-instead of one folder per product, and several products intentionally share
-or mismatch photos. Current filenames: `linea-mini-front-view`,
-`linea-mini-side-view`, `linea-mini-steam-wand-detail`,
-`linea-mini-group-head-detail`, `linea-pb-main`, `gs3-main`, `kb90-main`,
-`grinder-main`, `grinder-e65t`, `grinder-shotmaster`,
-`grinder-linea-mini-alt`, `accessory-portafilter`, `accessory-knockbox`.
+Product photos are **not** in this folder. They come from Shopify and are
+served from `cdn.shopify.com` — to change one, change it on the product in
+the Shopify admin. Alt text comes from the image's alt field in Shopify and
+falls back to the product title when it's blank (most of the catalog).
 
-To add another product photo, add an entry to that product's `images` array
-in `src/lib/products.ts` (pick a unique `file` name) and drop a matching file
-in `products/placeholder/`.
+`products/placeholder/` holds the throwaway photos the site used before it
+was wired to Shopify. Nothing references them any more and the folder can be
+deleted.
 
 The `.gitkeep` files just keep these empty folders in git — delete one once
 you've added a real image to that folder.
