@@ -4,20 +4,24 @@ import { ParallaxBackground } from "@/components/home/ParallaxBackground";
 export function FeatureBlock({
   bgSrc,
   bgLabel,
+  bgAlt,
   accentSrc,
   accentLabel,
+  accentAlt,
   accentSide,
   textSide,
   heading,
   body,
 }: {
-  // Already resolved by the caller — `resolveImage` for a fixed slot,
-  // `resolveAsset` for one out of the shared pool. Either way `null` means
-  // "no file there", and `SiteImage` shows the placeholder.
+  // Already resolved by the caller — see `resolveRef` in `lib/content`. `null`
+  // means "no file there", and `SiteImage` shows the placeholder.
   bgSrc: string | null;
+  // `label` names the empty placeholder, `alt` describes the real photo.
   bgLabel: string;
+  bgAlt: string;
   accentSrc: string | null;
   accentLabel: string;
+  accentAlt: string;
   accentSide: "left" | "right";
   textSide: "left" | "right";
   heading: string;
@@ -26,7 +30,7 @@ export function FeatureBlock({
   return (
     <div className="relative min-h-screen overflow-hidden sm:h-screen">
       <ParallaxBackground>
-        <SiteImage src={bgSrc} alt={bgLabel} label={bgLabel} className="absolute inset-0" />
+        <SiteImage src={bgSrc} alt={bgAlt} label={bgLabel} className="absolute inset-0" />
       </ParallaxBackground>
 
       <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-8 px-8 py-20 sm:block sm:h-full sm:px-0 sm:py-0">
@@ -37,7 +41,7 @@ export function FeatureBlock({
         >
           <SiteImage
             src={accentSrc}
-            alt={accentLabel}
+            alt={accentAlt}
             label={accentLabel}
             className="relative aspect-[3/4] shadow-xl"
             sizes="(min-width: 640px) 320px, 224px"

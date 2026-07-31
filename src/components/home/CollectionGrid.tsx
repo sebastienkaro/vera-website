@@ -15,7 +15,18 @@ const FILTERS: { label: string; value: Filter }[] = [
 
 const FILTER_ROWS = [FILTERS.slice(0, 3), FILTERS.slice(3)];
 
-export function CollectionGrid({ products, limit = FEATURED_LIMIT }: { products: Product[]; limit?: number }) {
+// `eyebrow` is passed in rather than read from `lib/content` directly: this is
+// a client component, and the content module reaches for the filesystem to
+// resolve images, which only works on the server.
+export function CollectionGrid({
+  products,
+  eyebrow,
+  limit = FEATURED_LIMIT,
+}: {
+  products: Product[];
+  eyebrow: string;
+  limit?: number;
+}) {
   const [filter, setFilter] = useState<Filter>("all");
   // Capped after filtering, so switching tabs fills the grid rather than
   // showing whatever few of the featured set happen to be in that category.
@@ -27,7 +38,7 @@ export function CollectionGrid({ products, limit = FEATURED_LIMIT }: { products:
   return (
     <div>
       <div className="text-center">
-        <p className="text-xs font-semibold tracking-[-0.02em] text-espresso uppercase">The Collection</p>
+        <p className="text-xs font-semibold tracking-[-0.02em] text-espresso uppercase">{eyebrow}</p>
         <h2 className="mt-4 flex flex-col items-center text-3xl leading-tight font-semibold tracking-[-0.02em] uppercase sm:text-5xl">
           {FILTER_ROWS.map((row, i) => (
             <div key={i} className="flex flex-wrap justify-center gap-x-3">
