@@ -55,7 +55,7 @@
         "heading": "Lorem ipsum dolor sit",
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elddmdodit.",
         "background": {
-          "ref": "asset:espresso-machine",
+          "ref": "asset:barista-cafe-lamarzocco",
           "alt": "La Marzocco espresso machine",
           "label": "La Marzocco espresso machine"
         },
@@ -71,7 +71,7 @@
         "heading": "Lorem ipsum dolor sit",
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         "background": {
-          "ref": "slot:why-vera/2/background",
+          "ref": "asset:espresso-machine-2",
           "alt": "Concrete counter with plants",
           "label": "Concrete counter with plants"
         },
@@ -87,12 +87,12 @@
         "heading": "Lorem ipsum dolor sit",
         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         "background": {
-          "ref": "slot:why-vera/3/background",
+          "ref": "asset:barista-making-espresso-coffee-shop",
           "alt": "Wood slat wall with seating",
           "label": "Wood slat wall with seating"
         },
         "accent": {
-          "ref": "slot:why-vera/3/accent",
+          "ref": "asset:office-coffee-3",
           "alt": "Machine servicing",
           "label": "Machine servicing"
         },
