@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ProductCard } from "@/components/ProductCard";
+import { Editable } from "@/components/edit/Editable";
 import { FEATURED_LIMIT, type Product, type ProductCategory } from "@/lib/types";
 
 type Filter = "all" | ProductCategory;
@@ -38,7 +39,9 @@ export function CollectionGrid({
   return (
     <div>
       <div className="text-center">
-        <p className="text-xs font-semibold tracking-[-0.02em] text-espresso uppercase">{eyebrow}</p>
+        <p className="text-xs font-semibold tracking-[-0.02em] text-espresso uppercase">
+          <Editable path="collection.eyebrow">{eyebrow}</Editable>
+        </p>
         <h2 className="mt-4 flex flex-col items-center text-3xl leading-tight font-semibold tracking-[-0.02em] uppercase sm:text-5xl">
           {FILTER_ROWS.map((row, i) => (
             <div key={i} className="flex flex-wrap justify-center gap-x-3">
