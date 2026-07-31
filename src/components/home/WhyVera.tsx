@@ -1,54 +1,32 @@
 import { SectionHeading } from "@/components/SectionHeading";
 import { FeatureBlock } from "@/components/home/FeatureBlock";
-import { resolveAsset, resolveImage } from "@/lib/images";
-
-const lorem =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+import { homeContent, resolveRef } from "@/lib/content";
 
 export function WhyVera() {
+  const { eyebrow, heading, blocks } = homeContent.whyVera;
+
   return (
     <section>
       <div className="px-8 py-24 sm:px-12">
-        <SectionHeading
-          eyebrow="Why Vera"
-          segments={[
-            { text: "We don't just sell the machine.", tone: "muted" },
-            { text: "We engineer the whole bar.", tone: "dark" },
-          ]}
-        />
+        <SectionHeading eyebrow={eyebrow} segments={heading} />
       </div>
 
       <div className="flex flex-col">
-        <FeatureBlock
-          bgSrc={resolveAsset("espresso-machine")}
-          bgLabel="La Marzocco espresso machine"
-          accentSrc={resolveAsset("Sipping-Espresso-LaMarzocco")}
-          accentLabel="Sipping an espresso"
-          accentSide="right"
-          textSide="left"
-          heading="Lorem ipsum dolor sit"
-          body={lorem}
-        />
-        <FeatureBlock
-          bgSrc={resolveImage("why-vera/2/background")}
-          bgLabel="Concrete counter with plants"
-          accentSrc={resolveAsset("barista-espresso-eversys")}
-          accentLabel="Barista at an Eversys machine"
-          accentSide="left"
-          textSide="right"
-          heading="Lorem ipsum dolor sit"
-          body={lorem}
-        />
-        <FeatureBlock
-          bgSrc={resolveImage("why-vera/3/background")}
-          bgLabel="Wood slat wall with seating"
-          accentSrc={resolveImage("why-vera/3/accent")}
-          accentLabel="Machine servicing"
-          accentSide="right"
-          textSide="left"
-          heading="Lorem ipsum dolor sit"
-          body={lorem}
-        />
+        {blocks.map((block, i) => (
+          <FeatureBlock
+            key={i}
+            bgSrc={resolveRef(block.background)}
+            bgLabel={block.background.label}
+            bgAlt={block.background.alt}
+            accentSrc={resolveRef(block.accent)}
+            accentLabel={block.accent.label}
+            accentAlt={block.accent.alt}
+            accentSide={block.accentSide}
+            textSide={block.textSide}
+            heading={block.heading}
+            body={block.body}
+          />
+        ))}
       </div>
     </section>
   );
