@@ -9,13 +9,14 @@ export function WhyVera() {
   return (
     <section>
       <div className="px-8 py-24 sm:px-12">
-        <SectionHeading eyebrow={eyebrow} segments={heading} />
+        <SectionHeading eyebrow={eyebrow} segments={heading} path="whyVera" />
       </div>
 
       <div className="flex flex-col">
         {blocks.map((block, i) => (
           <FeatureBlock
             key={i}
+            path={`whyVera.blocks.${i}`}
             bgSrc={resolveRef(block.background)}
             bgLabel={block.background.label}
             bgAlt={block.background.alt}

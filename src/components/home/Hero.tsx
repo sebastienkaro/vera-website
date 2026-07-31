@@ -3,6 +3,8 @@ import Image from "next/image";
 import { Header } from "@/components/Header";
 import { SiteImage } from "@/components/SiteImage";
 import { SteamPuff } from "@/components/home/SteamPuff";
+import { Editable } from "@/components/edit/Editable";
+import { EditableImage } from "@/components/edit/EditableImage";
 import { resolveRef } from "@/lib/content";
 import { getHomeContent } from "@/lib/content-store";
 
@@ -13,13 +15,15 @@ export function Hero() {
 
   return (
     <section className="relative flex h-screen flex-col overflow-hidden">
-      <SiteImage
-        src={resolveRef(background)}
-        alt={background.alt}
-        label={background.label}
-        className="absolute inset-0"
-        preload
-      />
+      <EditableImage path="hero.background" previewClassName="absolute inset-0 h-full w-full object-cover">
+        <SiteImage
+          src={resolveRef(background)}
+          alt={background.alt}
+          label={background.label}
+          className="absolute inset-0"
+          preload
+        />
+      </EditableImage>
 
       {machineSrc && (
         <>
@@ -43,7 +47,7 @@ export function Hero() {
         <h1 className="relative z-10 text-[7.5vw] leading-[1.05] font-normal tracking-[-0.02em] text-cream uppercase sm:hidden">
           {headline.map((line, i) => (
             <span key={i} className="block">
-              {line}
+              <Editable path={`hero.headline.${i}`}>{line}</Editable>
             </span>
           ))}
         </h1>
@@ -53,7 +57,7 @@ export function Hero() {
         <h1 className="relative z-10 hidden text-[max(2rem,7vw)] leading-[0.95] font-normal tracking-[-0.04em] text-cream uppercase sm:flex sm:flex-col">
           {headline.map((line, i) => (
             <span key={i} className={["", "pl-[10vw]", "pl-[50vw]"][i] ?? ""}>
-              {line}
+              <Editable path={`hero.headline.${i}`}>{line}</Editable>
             </span>
           ))}
         </h1>
@@ -63,7 +67,7 @@ export function Hero() {
             {kicker.map((line, i) => (
               <span key={i}>
                 {i > 0 && <br />}
-                {line}
+                <Editable path={`hero.kicker.${i}`}>{line}</Editable>
               </span>
             ))}
           </p>
