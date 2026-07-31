@@ -19,9 +19,13 @@ changes needed either way.
 | `hero/person` | Optional foreground cutout, layered in front of the hero text (needs real transparency — a PNG/WebP with alpha, not a flattened photo). Leave the slot empty to skip the layered effect. |
 | `hero/machine` | Optional cutout of the espresso machine on the counter, layered above a looping steam animation and below the hero text (needs real transparency, same as `hero/person`). Position it so it lines up with the machine already baked into `hero/background` — see the `top`/`left` on `SteamPuff` in `Hero.tsx` if the machine's on-screen position changes and the steam needs to be re-anchored. Leave empty to skip both the cutout and the steam. |
 | `about/roastery` | "About Vera" section background |
-| `why-vera/1/background`, `why-vera/1/accent` | 1st "Why Vera" feature block (background + accent photo) |
-| `why-vera/2/background`, `why-vera/2/accent` | 2nd "Why Vera" feature block |
+| `why-vera/2/background` | 2nd "Why Vera" feature block background |
 | `why-vera/3/background`, `why-vera/3/accent` | 3rd "Why Vera" feature block |
+
+The rest of the "Why Vera" photos come out of the shared pool instead of a
+slot — the 1st block's background and accent, and the 2nd block's accent.
+They're picked in `WhyVera.tsx` by name, so to change one, change the name
+there rather than moving files around.
 
 ## Shared pool (`assets/`)
 
