@@ -1,10 +1,11 @@
 import Link from "next/link";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SiteImage } from "@/components/SiteImage";
-import { homeContent, resolveRef } from "@/lib/content";
+import { resolveRef } from "@/lib/content";
+import { getHomeContent } from "@/lib/content-store";
 
 export function AboutVera() {
-  const { eyebrow, heading, body, image, buttons } = homeContent.about;
+  const { eyebrow, heading, body, image, buttons } = getHomeContent().about;
 
   return (
     <section className="px-8 py-24 sm:px-12">
