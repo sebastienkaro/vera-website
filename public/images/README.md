@@ -1,6 +1,13 @@
-# Image slots
+# Images
 
-Every real photo on the site lives under one of the folders below, under an
+Photos come in two kinds: **slots**, which are fixed spots on the site that
+each take one specific image, and the **shared pool** in `assets/`, which is
+a bag of images any spot can pull from. Slots are below; the pool is at the
+bottom of this file.
+
+## Slots
+
+Every slot image lives under one of the folders below, under an
 exact filename the code already expects. Drop a file in with that name (any
 of `.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`) and it appears on the site —
 delete it and that spot goes back to the striped placeholder. No code
@@ -15,6 +22,36 @@ changes needed either way.
 | `why-vera/1/background`, `why-vera/1/accent` | 1st "Why Vera" feature block (background + accent photo) |
 | `why-vera/2/background`, `why-vera/2/accent` | 2nd "Why Vera" feature block |
 | `why-vera/3/background`, `why-vera/3/accent` | 3rd "Why Vera" feature block |
+
+## Shared pool (`assets/`)
+
+`assets/` is the general-purpose folder: images that aren't tied to one spot
+and can be used anywhere, or moved between spots, without being renamed to
+match a slot. Drop files in with whatever descriptive name you like — no
+fixed filenames here — and organise them into subfolders if it helps.
+
+In code, reach for them by name, without the extension:
+
+```tsx
+import { SiteImage } from "@/components/SiteImage";
+import { resolveAsset } from "@/lib/images";
+
+<SiteImage
+  src={resolveAsset("bar-lady")}          // public/images/assets/bar-lady.avif
+  alt="Barista pulling a shot"
+  label="Barista"
+  className="relative h-96"
+/>
+```
+
+Leaving the extension off means a `.webp` can later be replaced by an `.avif`
+without touching the code. A name that doesn't match any file resolves to
+`null`, and `SiteImage` shows the striped placeholder instead of breaking the
+page — the same behaviour as an empty slot.
+
+`listAssets()` from the same module returns everything in the pool (`name`
+plus public URL, subfolders included), for anywhere that wants to render the
+whole set rather than pick one out by name.
 
 Product photos are **not** in this folder. They come from Shopify and are
 served from `cdn.shopify.com` — to change one, change it on the product in
