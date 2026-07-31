@@ -1,9 +1,10 @@
 import { SectionHeading } from "@/components/SectionHeading";
 import { FeatureBlock } from "@/components/home/FeatureBlock";
-import { homeContent, resolveRef } from "@/lib/content";
+import { resolveRef } from "@/lib/content";
+import { getHomeContent } from "@/lib/content-store";
 
 export function WhyVera() {
-  const { eyebrow, heading, blocks } = homeContent.whyVera;
+  const { eyebrow, heading, blocks } = getHomeContent().whyVera;
 
   return (
     <section>

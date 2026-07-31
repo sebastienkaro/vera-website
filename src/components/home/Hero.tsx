@@ -3,10 +3,11 @@ import Image from "next/image";
 import { Header } from "@/components/Header";
 import { SiteImage } from "@/components/SiteImage";
 import { SteamPuff } from "@/components/home/SteamPuff";
-import { homeContent, resolveRef } from "@/lib/content";
+import { resolveRef } from "@/lib/content";
+import { getHomeContent } from "@/lib/content-store";
 
 export function Hero() {
-  const { headline, kicker, buttons, background, person, machine } = homeContent.hero;
+  const { headline, kicker, buttons, background, person, machine } = getHomeContent().hero;
   const personSrc = resolveRef(person);
   const machineSrc = resolveRef(machine);
 
