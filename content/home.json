@@ -1,0 +1,133 @@
+{
+  "hero": {
+    "headline": [
+      "Equipment built for",
+      "those who demand",
+      "the best"
+    ],
+    "kicker": [
+      "Take a look at our collection",
+      "or get a custom quote"
+    ],
+    "buttons": [
+      {
+        "label": "Browse Machines",
+        "href": "/machines"
+      },
+      {
+        "label": "Get a Quote",
+        "href": "/quote"
+      }
+    ],
+    "background": {
+      "ref": "slot:hero/background",
+      "alt": "Vera Coffee Solutions café interior",
+      "label": "Café interior — hero photo"
+    },
+    "person": {
+      "ref": "slot:hero/person",
+      "alt": "",
+      "label": "Foreground cutout"
+    },
+    "machine": {
+      "ref": "slot:hero/machine",
+      "alt": "",
+      "label": "Espresso machine cutout"
+    }
+  },
+  "collection": {
+    "eyebrow": "The Collection"
+  },
+  "whyVera": {
+    "eyebrow": "Why Vera",
+    "heading": [
+      {
+        "text": "We don't just sell the machine.",
+        "tone": "muted"
+      },
+      {
+        "text": "We engineer the whole bar.",
+        "tone": "dark"
+      }
+    ],
+    "blocks": [
+      {
+        "heading": "Lorem ipsum dolor sit",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elddmdodit.",
+        "background": {
+          "ref": "asset:espresso-machine",
+          "alt": "La Marzocco espresso machine",
+          "label": "La Marzocco espresso machine"
+        },
+        "accent": {
+          "ref": "asset:Sipping-Espresso-LaMarzocco",
+          "alt": "Sipping an espresso",
+          "label": "Sipping an espresso"
+        },
+        "accentSide": "right",
+        "textSide": "left"
+      },
+      {
+        "heading": "Lorem ipsum dolor sit",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "background": {
+          "ref": "slot:why-vera/2/background",
+          "alt": "Concrete counter with plants",
+          "label": "Concrete counter with plants"
+        },
+        "accent": {
+          "ref": "asset:barista-espresso-eversys",
+          "alt": "Barista at an Eversys machine",
+          "label": "Barista at an Eversys machine"
+        },
+        "accentSide": "left",
+        "textSide": "right"
+      },
+      {
+        "heading": "Lorem ipsum dolor sit",
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "background": {
+          "ref": "slot:why-vera/3/background",
+          "alt": "Wood slat wall with seating",
+          "label": "Wood slat wall with seating"
+        },
+        "accent": {
+          "ref": "slot:why-vera/3/accent",
+          "alt": "Machine servicing",
+          "label": "Machine servicing"
+        },
+        "accentSide": "right",
+        "textSide": "left"
+      }
+    ]
+  },
+  "about": {
+    "eyebrow": "About Vera",
+    "heading": [
+      {
+        "text": "Equipment, Roastery,",
+        "tone": "muted"
+      },
+      {
+        "text": "and the People Behind Both",
+        "tone": "dark"
+      }
+    ],
+    "body": "Vera Coffee Solutions is built by operators, for operators. From our Long Island City facility we sell, install and service the world's best commercial espresso equipment — and we roast coffee for cafés, restaurants and corporate accounts who want a program built around their brand.",
+    "image": {
+      "ref": "slot:about/roastery",
+      "alt": "Vera Coffee Solutions roastery — Long Island City",
+      "label": "Roastery — Long Island City"
+    },
+    "buttons": [
+      {
+        "label": "Read Our Story",
+        "href": "/about"
+      },
+      {
+        "label": "White Label Program",
+        "href": "/white-label"
+      }
+    ]
+  }
+}
