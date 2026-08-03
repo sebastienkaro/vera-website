@@ -1,5 +1,5 @@
 import { getFeaturedShopifyProducts, getShopifyProducts } from "@/lib/shopify";
-import { FEATURED_LIMIT, type Product } from "@/lib/types";
+import { FEATURED_LIMIT, HERO_DECK_LIMIT, type Product } from "@/lib/types";
 
 /**
  * The app's view of the catalog. Everything here is backed by the Shopify
@@ -18,6 +18,17 @@ export async function getProducts(): Promise<Product[]> {
  */
 export async function getFeaturedProducts(): Promise<Product[]> {
   return getFeaturedShopifyProducts(FEATURED_LIMIT);
+}
+
+/**
+ * The machines the hero's card deck rotates through. Drawn from the same
+ * featured selection as the collection grid — so every card is guaranteed a
+ * photo of its own rather than the catalog's stock graphic — and narrowed to
+ * Machines, which is what the hero is selling.
+ */
+export async function getHeroMachines(limit = HERO_DECK_LIMIT): Promise<Product[]> {
+  const featured = await getFeaturedShopifyProducts(FEATURED_LIMIT);
+  return featured.filter((product) => product.category === "machines").slice(0, limit);
 }
 
 export async function getProduct(handle: string): Promise<Product | undefined> {
