@@ -41,6 +41,13 @@ export const CATEGORY_LABELS: Record<ProductCategory, string> = {
  */
 export const FEATURED_LIMIT = 12;
 
+/**
+ * How many machines the hero's rotating card deck cycles through. One card is
+ * always parked out of sight behind the stack, so the deck shows one fewer
+ * than this at rest.
+ */
+export const HERO_DECK_LIMIT = 4;
+
 export type Product = {
   id: string;
   handle: string;

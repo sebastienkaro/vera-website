@@ -41,6 +41,9 @@ export type HomeContent = {
     headline: string[];
     kicker: string[];
     buttons: LinkButton[];
+    // Label above the rotating deck of featured machines. The cards themselves
+    // come from Shopify, so only this heading is content.
+    featured: { eyebrow: string };
     background: ImageRef;
     // Both optional cutouts: leave the referenced image missing to skip them.
     person: ImageRef;
@@ -72,6 +75,7 @@ export const homeContent: HomeContent = {
       { label: "Browse Machines", href: "/machines" },
       { label: "Get a Quote", href: "/quote" },
     ],
+    featured: { eyebrow: "Featured Machines" },
     background: {
       ref: "slot:hero/background",
       alt: "Vera Coffee Solutions café interior",

@@ -19,6 +19,9 @@
         "href": "/quote"
       }
     ],
+    "featured": {
+      "eyebrow": "Featured Machines"
+    },
     "background": {
       "ref": "slot:hero/background",
       "alt": "Vera Coffee Solutions café interior",
