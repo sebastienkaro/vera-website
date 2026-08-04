@@ -49,6 +49,11 @@ export type HomeContent = {
     background: ImageRef;
   };
   collection: { eyebrow: string };
+  // The machine itself — name, photo, link — comes from Shopify, so only the
+  // words around it live here. Keep the body true of any La Marzocco espresso
+  // machine: which one is featured is decided in `getFeaturedMachine`, and can
+  // change without anyone editing this copy.
+  featuredMachine: { eyebrow: string; body: string; buttonLabel: string };
   whyVera: {
     eyebrow: string;
     heading: HeadingSegment[];
@@ -83,6 +88,12 @@ export const homeContent: HomeContent = {
   },
 
   collection: { eyebrow: "The Collection" },
+
+  featuredMachine: {
+    eyebrow: "Featured Machine",
+    body: "Built in Florence and specified bar by bar, a La Marzocco is the machine most cafés end up building their program around — saturated groups, temperature that holds through a rush, and parts we stock and service ourselves. Tell us your volume and we'll spec the configuration to match.",
+    buttonLabel: "Learn More",
+  },
 
   whyVera: {
     eyebrow: "Why Vera",
@@ -148,7 +159,7 @@ export const homeContent: HomeContent = {
       { text: "Equipment, Roastery,", tone: "muted" },
       { text: "and the People Behind Both", tone: "dark" },
     ],
-    body: "Vera Coffee Solutions is built by operators, for operators. From our Long Island City facility we sell, install and service the world's best commercial espresso equipment — and we roast coffee for cafés, restaurants and corporate accounts who want a program built around their brand.",
+    body: "Vera Coffee Solutions is built by operators, for operators. From our Bridgeport, CT facility we sell, install and service the world's best commercial espresso equipment — and at our Long Island City roastery we roast coffee for cafés, restaurants and corporate accounts who want a program built around their brand.",
     image: {
       ref: "slot:about/roastery",
       alt: "Vera Coffee Solutions roastery — Long Island City",

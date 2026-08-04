@@ -75,6 +75,22 @@ export function parseHomeContent(value: unknown): HomeContent | null {
 
   if (!isString(collection.eyebrow)) return null;
 
+  // Added after the first files were stored — same reasoning as `hero.featured`
+  // above: an older save falls back to the defaults for this section rather
+  // than failing validation and taking the rest of the file down with it.
+  const featuredMachine = isRecord(value.featuredMachine) ? value.featuredMachine : null;
+  const featuredMachineContent =
+    featuredMachine &&
+    isString(featuredMachine.eyebrow) &&
+    isString(featuredMachine.body) &&
+    isString(featuredMachine.buttonLabel)
+      ? {
+          eyebrow: featuredMachine.eyebrow,
+          body: featuredMachine.body,
+          buttonLabel: featuredMachine.buttonLabel,
+        }
+      : homeContent.featuredMachine;
+
   const whyHeading = parseSegments(whyVera.heading);
   const whyBlocks = parseBlocks(whyVera.blocks);
   if (!isString(whyVera.eyebrow) || !whyHeading || !whyBlocks) return null;
@@ -95,6 +111,7 @@ export function parseHomeContent(value: unknown): HomeContent | null {
       background: heroBackground,
     },
     collection: { eyebrow: collection.eyebrow },
+    featuredMachine: featuredMachineContent,
     whyVera: { eyebrow: whyVera.eyebrow, heading: whyHeading, blocks: whyBlocks },
     about: {
       eyebrow: about.eyebrow,
