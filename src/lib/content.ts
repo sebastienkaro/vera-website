@@ -41,9 +41,8 @@ export type HomeContent = {
     headline: string[];
     kicker: string[];
     buttons: LinkButton[];
-    // Label above the rotating deck of featured machines. The cards themselves
-    // come from Shopify, so only this heading is content.
-    featured: { eyebrow: string };
+    // The deck of featured machines beside the buttons is entirely Shopify's —
+    // the cards carry their own names and prices — so it has no content here.
     // The still behind the hero video — first paint, and the fallback whenever
     // the video doesn't play. See `resolveVideo` for the footage itself.
     background: ImageRef;
@@ -79,7 +78,6 @@ export const homeContent: HomeContent = {
       { label: "Browse Machines", href: "/machines" },
       { label: "Get a Quote", href: "/quote" },
     ],
-    featured: { eyebrow: "Featured Machines" },
     background: {
       ref: "slot:hero/background",
       alt: "Vera Coffee Solutions café interior",
