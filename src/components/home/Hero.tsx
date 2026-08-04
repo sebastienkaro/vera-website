@@ -46,7 +46,11 @@ export async function Hero() {
 
       <Header />
 
-      <div className="flex flex-1 flex-col justify-between px-8 pt-40 pb-16 sm:px-12">
+      {/* The section is exactly one screen tall and clips the overflow, so the
+          padding here is what the headline, the deck and the buttons have to
+          share — it is deliberately tighter than the space under the header
+          suggests. */}
+      <div className="flex flex-1 flex-col justify-between px-8 pt-32 pb-16 sm:px-12">
         <h1 className="relative z-10 text-[7.5vw] leading-[1.05] font-normal tracking-[-0.02em] text-cream uppercase sm:hidden">
           {headline.map((line, i) => (
             <span key={i} className="block">
@@ -67,7 +71,7 @@ export async function Hero() {
 
         {/* The deck sits opposite the kicker so the two share the bottom band:
             cards on the left, the call to action on the right. */}
-        <div className="relative z-20 flex flex-col items-start gap-8 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
+        <div className="relative z-20 flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
           <HeroProductDeck products={machines} eyebrow={featured.eyebrow} />
 
           <div className="flex flex-col items-start gap-6 text-left sm:ml-auto sm:items-end sm:text-right">
