@@ -11,7 +11,7 @@ import { resolveVideo } from "@/lib/images";
 import { getHeroMachines } from "@/lib/products";
 
 export async function Hero() {
-  const { headline, kicker, buttons, featured, background } = getHomeContent().hero;
+  const { headline, kicker, buttons, background } = getHomeContent().hero;
   const videoSrc = resolveVideo("hero");
   const machines = await getHeroMachines();
 
@@ -61,7 +61,7 @@ export async function Hero() {
         {/* The deck sits opposite the kicker so the two share the bottom band:
             cards on the left, the call to action on the right. */}
         <div className="relative z-20 flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
-          <HeroProductDeck products={machines} eyebrow={featured.eyebrow} />
+          <HeroProductDeck products={machines} />
 
           <div className="flex flex-col items-start gap-6 text-left sm:ml-auto sm:items-end sm:text-right">
             <p className="text-base font-medium tracking-wide text-cream uppercase sm:text-sm">

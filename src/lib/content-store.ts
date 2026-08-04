@@ -65,18 +65,10 @@ export function parseHomeContent(value: unknown): HomeContent | null {
     return null;
   }
 
-  // Added after the first files were stored, so its absence is not a malformed
-  // file: an older save falls back to the default label rather than failing
-  // validation and taking every other edit in the file down with it.
-  const heroFeatured =
-    isRecord(hero.featured) && isString(hero.featured.eyebrow)
-      ? { eyebrow: hero.featured.eyebrow }
-      : homeContent.hero.featured;
-
   if (!isString(collection.eyebrow)) return null;
 
-  // Added after the first files were stored — same reasoning as `hero.featured`
-  // above: an older save falls back to the defaults for this section rather
+  // Added after the first files were stored, so its absence is not a malformed
+  // file: an older save falls back to the defaults for this section rather
   // than failing validation and taking the rest of the file down with it.
   const featuredMachine = isRecord(value.featuredMachine) ? value.featuredMachine : null;
   const featuredMachineContent =
@@ -107,7 +99,6 @@ export function parseHomeContent(value: unknown): HomeContent | null {
       headline: heroHeadline,
       kicker: heroKicker,
       buttons: heroButtons,
-      featured: heroFeatured,
       background: heroBackground,
     },
     collection: { eyebrow: collection.eyebrow },
