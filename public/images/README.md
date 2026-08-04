@@ -15,9 +15,7 @@ changes needed either way.
 
 | Slot | Where it shows |
 | --- | --- |
-| `hero/background` | Homepage hero background |
-| `hero/person` | Optional foreground cutout, layered in front of the hero text (needs real transparency — a PNG/WebP with alpha, not a flattened photo). Leave the slot empty to skip the layered effect. |
-| `hero/machine` | Optional cutout of the espresso machine on the counter, layered above a looping steam animation and below the hero text (needs real transparency, same as `hero/person`). Position it so it lines up with the machine already baked into `hero/background` — see the `top`/`left` on `SteamPuff` in `Hero.tsx` if the machine's on-screen position changes and the steam needs to be re-anchored. Leave empty to skip both the cutout and the steam. |
+| `hero/background` | Homepage hero — the still behind the hero video. It is what paints first, and what stays on screen whenever the video doesn't play: no footage in `public/videos/`, a video that fails to load, or a visitor who has asked for reduced motion. Worth keeping it a frame the hero reads well on. |
 | `about/roastery` | "About Vera" section background |
 | `why-vera/2/background` | 2nd "Why Vera" feature block background |
 | `why-vera/3/background`, `why-vera/3/accent` | 3rd "Why Vera" feature block |

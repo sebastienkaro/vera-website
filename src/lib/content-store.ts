@@ -61,9 +61,7 @@ export function parseHomeContent(value: unknown): HomeContent | null {
   const heroKicker = parseStrings(hero.kicker);
   const heroButtons = parseButtons(hero.buttons);
   const heroBackground = parseImage(hero.background);
-  const heroPerson = parseImage(hero.person);
-  const heroMachine = parseImage(hero.machine);
-  if (!heroHeadline || !heroKicker || !heroButtons || !heroBackground || !heroPerson || !heroMachine) {
+  if (!heroHeadline || !heroKicker || !heroButtons || !heroBackground) {
     return null;
   }
 
@@ -95,8 +93,6 @@ export function parseHomeContent(value: unknown): HomeContent | null {
       buttons: heroButtons,
       featured: heroFeatured,
       background: heroBackground,
-      person: heroPerson,
-      machine: heroMachine,
     },
     collection: { eyebrow: collection.eyebrow },
     whyVera: { eyebrow: whyVera.eyebrow, heading: whyHeading, blocks: whyBlocks },

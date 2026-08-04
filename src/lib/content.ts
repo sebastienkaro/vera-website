@@ -44,10 +44,9 @@ export type HomeContent = {
     // Label above the rotating deck of featured machines. The cards themselves
     // come from Shopify, so only this heading is content.
     featured: { eyebrow: string };
+    // The still behind the hero video — first paint, and the fallback whenever
+    // the video doesn't play. See `resolveVideo` for the footage itself.
     background: ImageRef;
-    // Both optional cutouts: leave the referenced image missing to skip them.
-    person: ImageRef;
-    machine: ImageRef;
   };
   collection: { eyebrow: string };
   whyVera: {
@@ -81,8 +80,6 @@ export const homeContent: HomeContent = {
       alt: "Vera Coffee Solutions café interior",
       label: "Café interior — hero photo",
     },
-    person: { ref: "slot:hero/person", alt: "", label: "Foreground cutout" },
-    machine: { ref: "slot:hero/machine", alt: "", label: "Espresso machine cutout" },
   },
 
   collection: { eyebrow: "The Collection" },

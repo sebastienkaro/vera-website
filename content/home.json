@@ -26,16 +26,6 @@
       "ref": "slot:hero/background",
       "alt": "Vera Coffee Solutions café interior",
       "label": "Café interior — hero photo"
-    },
-    "person": {
-      "ref": "slot:hero/person",
-      "alt": "",
-      "label": "Foreground cutout"
-    },
-    "machine": {
-      "ref": "slot:hero/machine",
-      "alt": "",
-      "label": "Espresso machine cutout"
     }
   },
   "collection": {
