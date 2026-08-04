@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { SiteImage } from "@/components/SiteImage";
 import { Editable } from "@/components/edit/Editable";
 import { formatMoney } from "@/lib/money";
 import type { Product } from "@/lib/types";
+import { usePrefersReducedMotion } from "@/lib/use-reduced-motion";
 
 /** How long a card holds the front of the deck before the next one steps up. */
 const ROTATE_MS = 4200;
@@ -34,24 +35,6 @@ function placementStyle({ step, rotate, scale, opacity }: (typeof DEPTHS)[number
     transform: `translate(calc(var(--deck-x) * ${step}), calc(var(--deck-y) * ${step})) rotate(${rotate}deg) scale(${scale})`,
     opacity,
   };
-}
-
-const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
-
-function subscribeToReducedMotion(onChange: () => void) {
-  const query = window.matchMedia(REDUCED_MOTION_QUERY);
-  query.addEventListener("change", onChange);
-  return () => query.removeEventListener("change", onChange);
-}
-
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(
-    subscribeToReducedMotion,
-    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
-    // The server has no opinion on the visitor's motion preference; assuming
-    // "no preference" matches the markup the client renders on first paint.
-    () => false,
-  );
 }
 
 /**

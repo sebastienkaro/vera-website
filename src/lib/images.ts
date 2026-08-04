@@ -3,7 +3,9 @@ import path from "node:path";
 
 const IMAGES_DIR = path.join(process.cwd(), "public", "images");
 const ASSETS_DIR = path.join(IMAGES_DIR, "assets");
+const VIDEOS_DIR = path.join(process.cwd(), "public", "videos");
 const EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"];
+const VIDEO_EXTENSIONS = ["mp4", "webm"];
 
 /**
  * Looks up `public/images/<slot>.{jpg,png,webp,avif,...}` and returns its
@@ -15,6 +17,21 @@ export function resolveImage(slot: string): string | null {
   for (const ext of EXTENSIONS) {
     if (fs.existsSync(path.join(IMAGES_DIR, `${slot}.${ext}`))) {
       return `/images/${slot}.${ext}`;
+    }
+  }
+  return null;
+}
+
+/**
+ * Looks up `public/videos/<slot>.{mp4,webm}` and returns its public URL, or
+ * null if there is no footage in that slot. Same idea as `resolveImage`: drop
+ * a file in to use it, delete it to go back to the still behind it — the hero
+ * keeps its background photo underneath the video for exactly that reason.
+ */
+export function resolveVideo(slot: string): string | null {
+  for (const ext of VIDEO_EXTENSIONS) {
+    if (fs.existsSync(path.join(VIDEOS_DIR, `${slot}.${ext}`))) {
+      return `/videos/${slot}.${ext}`;
     }
   }
   return null;

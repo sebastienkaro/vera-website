@@ -1,23 +1,26 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Header } from "@/components/Header";
 import { SiteImage } from "@/components/SiteImage";
-import { SteamPuff } from "@/components/home/SteamPuff";
 import { HeroProductDeck } from "@/components/home/HeroProductDeck";
+import { HeroVideo } from "@/components/home/HeroVideo";
 import { Editable } from "@/components/edit/Editable";
 import { EditableImage } from "@/components/edit/EditableImage";
 import { resolveRef } from "@/lib/content";
 import { getHomeContent } from "@/lib/content-store";
+import { resolveVideo } from "@/lib/images";
 import { getHeroMachines } from "@/lib/products";
 
 export async function Hero() {
-  const { headline, kicker, buttons, featured, background, person, machine } = getHomeContent().hero;
-  const personSrc = resolveRef(person);
-  const machineSrc = resolveRef(machine);
+  const { headline, kicker, buttons, featured, background } = getHomeContent().hero;
+  const videoSrc = resolveVideo("hero");
   const machines = await getHeroMachines();
 
   return (
     <section className="relative flex h-screen flex-col overflow-hidden">
+      {/* The still is the floor the hero stands on: it is what the server
+          sends, what paints first, and what stays if the footage is missing,
+          fails, or is held back for a visitor who asked for less motion. The
+          video plays over it. */}
       <EditableImage path="hero.background" previewClassName="absolute inset-0 h-full w-full object-cover">
         <SiteImage
           src={resolveRef(background)}
@@ -28,21 +31,7 @@ export async function Hero() {
         />
       </EditableImage>
 
-      {machineSrc && (
-        <>
-          {/* Roughly where the group head sits on the machine cutout below —
-              rises up from behind it so the machine hides the puff's origin. */}
-          <SteamPuff className="top-[41%] left-[68%] z-[6] h-28 w-20" />
-          <Image
-            src={machineSrc}
-            alt=""
-            fill
-            sizes="100vw"
-            preload
-            className="pointer-events-none absolute inset-0 z-[8] object-cover"
-          />
-        </>
-      )}
+      {videoSrc && <HeroVideo src={videoSrc} />}
 
       <Header />
 
@@ -102,17 +91,6 @@ export async function Hero() {
           </div>
         </div>
       </div>
-
-      {personSrc && (
-        <Image
-          src={personSrc}
-          alt=""
-          fill
-          sizes="100vw"
-          preload
-          className="pointer-events-none absolute inset-0 z-[15] object-cover"
-        />
-      )}
     </section>
   );
 }
