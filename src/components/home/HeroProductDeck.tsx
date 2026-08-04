@@ -17,17 +17,17 @@ const ROTATE_MS = 4200;
  * deck always keeps one card out of sight so a card can travel back to the
  * bottom of the stack without flying across the others in view.
  *
- * `step` counts offsets rather than fixing a distance, because how far apart
- * the cards fan is a `--deck-x` / `--deck-y` pair set in the markup: the deck
- * is wide and short on phones, tall and narrow above that.
+ * `step` counts offsets rather than fixing a distance, because the deck is
+ * sized off the viewport height (see `--deck-x` / `--deck-y` in the markup) so
+ * that a short window shrinks it instead of pushing it out of the hero.
  */
 const DEPTHS = [
-  { step: 0, rotate: 0, scale: 1, opacity: 1 },
-  { step: 1, rotate: 3, scale: 0.95, opacity: 1 },
-  { step: 2, rotate: 6, scale: 0.9, opacity: 1 },
+  { step: 0, rotate: -3, scale: 1, opacity: 1 },
+  { step: 1, rotate: 2, scale: 0.97, opacity: 1 },
+  { step: 2, rotate: 7, scale: 0.94, opacity: 1 },
 ];
 
-const PARKED = { step: 2.8, rotate: 9, scale: 0.86, opacity: 0 };
+const PARKED = { step: 2.9, rotate: 11, scale: 0.92, opacity: 0 };
 
 function placementStyle({ step, rotate, scale, opacity }: (typeof DEPTHS)[number]) {
   return {
@@ -59,6 +59,10 @@ function usePrefersReducedMotion() {
  * takes its turn at the front. Every card links to its product page; the ones
  * behind the front card are inert, since they are decoration until their turn
  * comes round.
+ *
+ * The cards carry nothing but the photograph — the name and price sit under
+ * the stack, for the card in front — so the deck reads as a pile of prints
+ * rather than a stack of spec sheets.
  *
  * The products come from Shopify (see `getHeroMachines`) — this component only
  * decides how they are shown.
@@ -94,27 +98,40 @@ export function HeroProductDeck({ products, eyebrow }: { products: Product[]; ey
   // card at a time and a full deck shows three. A lone card has nowhere to
   // rotate to and simply stays at the front.
   const visibleDepths = Math.max(1, Math.min(products.length - 1, DEPTHS.length));
+  const current = products[front];
 
   return (
     <div
-      // The hero is a fixed-height section, so on phones the deck lies down —
-      // wide, short cards with the photo beside the name — and only stands up
-      // into full tiles once there is height to spare.
-      className="w-[13.5rem] shrink-0 [--deck-x:0.75rem] [--deck-y:-0.5rem] sm:w-60 sm:[--deck-x:1.25rem] sm:[--deck-y:-0.85rem]"
+      // The hero is exactly one screen tall and clips what doesn't fit, so the
+      // deck is measured in `vh` between a floor and a ceiling: a short window
+      // shrinks the cards rather than pushing the stack out of view.
+      //
+      // Past a point that stops being enough. The headline is sized in `vw`,
+      // so a wide, short window spends the hero's height on type and leaves
+      // the deck nothing — and the deck is the tallest thing in the bottom
+      // band, so it is what spills. The three queries below are where
+      // measurement put that edge, per width, and drop the deck rather than
+      // show a card sliced off at the fold.
+      // `--deck-x` / `--deck-y` are percentages so the fan scales with the
+      // cards: a translate percentage resolves against the element's own size,
+      // and the cards are sized off the viewport.
+      className="w-[clamp(6rem,16vh,9.5rem)] shrink-0 [--deck-x:10%] [--deck-y:-4.5%] [@media(max-height:660px)]:hidden [@media(min-width:1400px)_and_(max-height:700px)]:hidden [@media(min-width:1700px)_and_(max-height:800px)]:hidden"
       onMouseEnter={() => setHeld(true)}
       onMouseLeave={() => setHeld(false)}
       onFocus={() => setHeld(true)}
       onBlur={() => setHeld(false)}
     >
-      {/* Cream on a photograph that is bright in places, so both the label and
-          the dots below carry a shadow to stay legible wherever they land. */}
-      <p className="mb-3 hidden text-xs font-medium tracking-wide text-cream uppercase [text-shadow:0_1px_12px_rgba(20,12,6,0.9)] sm:block">
+      {/* Cream on a photograph that is bright in places, so the label, the
+          caption and the dots all carry a shadow to stay legible. */}
+      {/* The label and the caption are wider than the cards and run on past
+          them, rather than wrapping inside a stack only a few inches across. */}
+      <p className="mb-3 hidden text-xs font-medium tracking-wide whitespace-nowrap text-cream uppercase [text-shadow:0_1px_12px_rgba(20,12,6,0.9)] sm:block">
         <Editable path="hero.featured.eyebrow">{eyebrow}</Editable>
       </p>
 
-      {/* Fixed height because the cards are stacked on top of each other, so
-          none of them is in the flow to give the stack its size. */}
-      <div className="relative h-[5.5rem] sm:h-[18.5rem]">
+      {/* Square, because the catalog's product shots are square — so the photo
+          fills the card edge to edge without cropping anything off it. */}
+      <div className="relative aspect-square">
         {products.map((product, index) => {
           const depth = (index - front + products.length) % products.length;
           const isFront = depth === 0;
@@ -126,38 +143,32 @@ export function HeroProductDeck({ products, eyebrow }: { products: Product[]; ey
               key={product.id}
               href={`/products/${product.handle}`}
               inert={!isFront}
+              // The card is all photograph, so the link needs a name of its own.
+              aria-label={`${product.vendor} ${product.title}`}
               style={{ ...placementStyle(placement), zIndex: products.length - depth }}
-              className="absolute inset-0 flex overflow-hidden bg-cream shadow-[0_1.5rem_3rem_-1rem_rgba(20,12,6,0.55)] transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] hover:shadow-[0_1.75rem_3.5rem_-1rem_rgba(20,12,6,0.65)] sm:flex-col"
+              className="absolute inset-0 overflow-hidden rounded-xl bg-cream shadow-[0_0.6rem_1.75rem_-0.35rem_rgba(20,12,6,0.6)] transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]"
             >
               <SiteImage
-                // The card names the product right beside it, so the photo
-                // adds nothing for a screen reader to read out again.
                 src={image?.url ?? null}
                 alt=""
                 label={product.title}
-                className="relative aspect-square h-full shrink-0 sm:aspect-[5/4] sm:h-auto sm:w-full"
-                sizes="(min-width: 640px) 240px, 88px"
-                fit="contain"
-                padding="p-2 sm:p-4"
+                className="absolute inset-0"
+                sizes="(min-width: 640px) 160px, 120px"
               />
-              <div className="flex flex-1 flex-col justify-center gap-0.5 px-3 py-2 sm:px-4 sm:py-3">
-                <p className="truncate text-[0.625rem] font-medium tracking-wide text-taupe uppercase">
-                  {product.vendor}
-                </p>
-                <p className="line-clamp-2 text-xs leading-snug font-medium text-espresso sm:text-sm">
-                  {product.title}
-                </p>
-                <p className="text-[0.6875rem] text-espresso/60 sm:text-xs">
-                  From {formatMoney(product.price)}
-                </p>
-              </div>
             </Link>
           );
         })}
       </div>
 
+      <div className="mt-2.5 w-[11rem] sm:w-[13rem] [text-shadow:0_1px_10px_rgba(20,12,6,0.85)]">
+        <p className="truncate text-xs font-medium text-cream sm:text-[0.8125rem]">
+          {current.title}
+        </p>
+        <p className="text-[0.6875rem] text-cream/70">From {formatMoney(current.price)}</p>
+      </div>
+
       {products.length > 1 && (
-        <div className="mt-3 flex gap-1.5 sm:mt-4 sm:gap-2">
+        <div className="mt-2.5 flex gap-1.5">
           {products.map((product, index) => (
             <button
               key={product.id}
@@ -168,7 +179,7 @@ export function HeroProductDeck({ products, eyebrow }: { products: Product[]; ey
               }}
               aria-label={`Show ${product.title}`}
               aria-current={index === front}
-              className={`h-[3px] w-5 cursor-pointer shadow-[0_1px_5px_rgba(20,12,6,0.8)] transition-colors sm:w-6 ${
+              className={`h-[3px] w-4 cursor-pointer shadow-[0_1px_5px_rgba(20,12,6,0.8)] transition-colors sm:w-5 ${
                 index === front ? "bg-cream" : "bg-cream/40 hover:bg-cream/70"
               }`}
             />
