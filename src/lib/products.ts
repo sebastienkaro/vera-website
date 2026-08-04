@@ -1,5 +1,10 @@
 import { getFeaturedShopifyProducts, getShopifyProducts } from "@/lib/shopify";
-import { FEATURED_LIMIT, HERO_MARQUEE_LIMIT, type Product } from "@/lib/types";
+import {
+  FEATURED_LIMIT,
+  HERO_MARQUEE_LIMIT,
+  type Product,
+  type ProductCategory,
+} from "@/lib/types";
 
 /**
  * The app's view of the catalog. Everything here is backed by the Shopify
@@ -29,6 +34,20 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 export async function getHeroMachines(limit = HERO_MARQUEE_LIMIT): Promise<Product[]> {
   const featured = await getFeaturedShopifyProducts(FEATURED_LIMIT);
   return featured.filter((product) => product.category === "machines").slice(0, limit);
+}
+
+/**
+ * Everything published in one category, in the order Shopify's collection puts
+ * it — so merchandising done in the admin carries through to the page.
+ *
+ * Unlike `getFeaturedProducts` this is the whole category, photo or no photo:
+ * the featured selection screens out products wearing the catalog's shared
+ * stock graphic, which is right for a shop window and wrong for a shelf. A part
+ * nobody has photographed still has to be findable.
+ */
+export async function getProductsByCategory(category: ProductCategory): Promise<Product[]> {
+  const products = await getShopifyProducts();
+  return products.filter((product) => product.category === category);
 }
 
 /**

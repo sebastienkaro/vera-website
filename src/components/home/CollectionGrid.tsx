@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ProductCard } from "@/components/ProductCard";
+import { ProductGrid } from "@/components/ProductGrid";
 import { Editable } from "@/components/edit/Editable";
 import { FEATURED_LIMIT, type Product, type ProductCategory } from "@/lib/types";
 
@@ -63,10 +63,8 @@ export function CollectionGrid({
         </h2>
       </div>
 
-      <div className="mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-4">
-        {filtered.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <div className="mt-16">
+        <ProductGrid products={filtered} />
       </div>
     </div>
   );

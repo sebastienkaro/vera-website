@@ -38,6 +38,32 @@ Pages revalidate hourly. To push a change through sooner, call
 `revalidateTag(PRODUCTS_CACHE_TAG, 'max')` from a Server Action or Route
 Handler — for example from a Shopify `products/update` webhook.
 
+## Cart and checkout
+
+The cart lives on Shopify. This site holds only its id, in an `httpOnly`
+cookie, and changes it through the Server Actions in `src/lib/cart-actions.ts`
+— the Storefront token is server-only, so the browser never talks to Shopify
+directly. Checkout is Shopify's hosted one: the drawer's Checkout button is a
+plain link to the cart's `checkoutUrl`, and payment, shipping and tax are
+settled there rather than here.
+
+Catalog reads are cached for an hour; cart requests never are. Both go through
+`src/lib/shopify.ts`, which keeps one request builder and two caching policies
+— they can't be mixed, since Next ignores `revalidate` and `cache: "no-store"`
+when both are set.
+
+After changing anything in `src/lib/shopify-cart.ts`, or bumping the Storefront
+API version, run the cart against the real store:
+
+```bash
+node scripts/cart-smoke.mjs
+```
+
+It creates a cart, adds a line, reads it back, changes the quantity and empties
+it, then prints the checkout URL. Nothing is bought. It is the only check that
+proves the GraphQL still matches the store's schema — everything else about the
+cart can be exercised without credentials.
+
 ## Project structure
 
 - `src/app` — pages and layout (Next.js App Router)

@@ -149,7 +149,26 @@ function requireEnv(name: string): string {
   return value;
 }
 
-async function storefront<T>(query: string, variables: Record<string, unknown>): Promise<T> {
+/**
+ * One Storefront round-trip. `caching` is the only thing that varies between
+ * the two callers below, and the two settings are mutually exclusive: passing
+ * `revalidate` alongside `cache: "no-store"` makes Next ignore both, so they
+ * are never combined.
+ */
+/**
+ * Whether the store is wired up at all. The catalog throws without these — the
+ * build is meant to fail loudly — but the cart runs at request time, where a
+ * misconfigured deploy should refuse politely rather than take the page down.
+ */
+export function shopifyConfigured(): boolean {
+  return Boolean(process.env.SHOPIFY_STORE_DOMAIN && process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN);
+}
+
+async function request<T>(
+  query: string,
+  variables: Record<string, unknown>,
+  caching: RequestInit & { next?: { revalidate?: number; tags?: string[] } },
+): Promise<T> {
   const domain = requireEnv("SHOPIFY_STORE_DOMAIN");
   const token = requireEnv("SHOPIFY_STOREFRONT_ACCESS_TOKEN");
 
@@ -160,10 +179,7 @@ async function storefront<T>(query: string, variables: Record<string, unknown>):
       "X-Shopify-Storefront-Access-Token": token,
     },
     body: JSON.stringify({ query, variables }),
-    // Next.js only caches a fetch when an explicit positive `revalidate` is
-    // set, and it keys POSTs on the request body — so each distinct GraphQL
-    // query/variables pair gets its own cache entry.
-    next: { revalidate: REVALIDATE_SECONDS, tags: [PRODUCTS_CACHE_TAG] },
+    ...caching,
   });
 
   if (!response.ok) {
@@ -178,6 +194,29 @@ async function storefront<T>(query: string, variables: Record<string, unknown>):
     throw new Error("Shopify Storefront API returned no data");
   }
   return body.data;
+}
+
+/** The catalog: cached, since it is the same for every visitor. */
+async function storefront<T>(query: string, variables: Record<string, unknown>): Promise<T> {
+  // Next.js only caches a fetch when an explicit positive `revalidate` is set,
+  // and it keys POSTs on the request body — so each distinct GraphQL
+  // query/variables pair gets its own cache entry.
+  return request<T>(query, variables, {
+    next: { revalidate: REVALIDATE_SECONDS, tags: [PRODUCTS_CACHE_TAG] },
+  });
+}
+
+/**
+ * A visitor's own cart: never cached. Every request here is either a mutation
+ * or a read of one person's basket, so a shared cache entry would be wrong in
+ * both directions — serving someone else's cart, or serving a stale copy of
+ * theirs straight after they changed it.
+ */
+export async function storefrontUncached<T>(
+  query: string,
+  variables: Record<string, unknown>,
+): Promise<T> {
+  return request<T>(query, variables, { cache: "no-store" });
 }
 
 async function fetchCollectionProducts(handle: string): Promise<ShopifyProduct[]> {
