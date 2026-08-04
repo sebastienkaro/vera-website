@@ -26,7 +26,7 @@
     }
   },
   "collection": {
-    "eyebrow": "The Collection"
+    "eyebrow": "FEATURED PRODUCTS"
   },
   "featuredMachine": {
     "eyebrow": "Featured Machine",
@@ -63,8 +63,8 @@
         "textSide": "left"
       },
       {
-        "heading": "Lorem ipsum dolor sit",
-        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "heading": "4 hour emergency response window",
+        "body": "We provide a 4 hour emergency response window for contract customers across our full service area.",
         "background": {
           "ref": "asset:espresso-machine-2",
           "alt": "Concrete counter with plants",
@@ -79,8 +79,8 @@
         "textSide": "right"
       },
       {
-        "heading": "Lorem ipsum dolor sit",
-        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "heading": "85+ parts on the shelf",
+        "body": "La Marzocco service kits, gaskets, sensors, boilers, electronics, stocked in Long Island City. No factory wait.",
         "background": {
           "ref": "asset:barista-making-espresso-coffee-shop",
           "alt": "Wood slat wall with seating",
