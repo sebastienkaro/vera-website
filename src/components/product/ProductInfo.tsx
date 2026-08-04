@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useCart } from "@/components/cart/CartProvider";
 import { formatMoney } from "@/lib/money";
 import { CATEGORY_LABELS, type Product } from "@/lib/types";
 
 export function ProductInfo({ product }: { product: Product }) {
+  const { add, pending } = useCart();
   const initialVariant = product.variants.find((variant) => variant.available) ?? product.variants[0];
   const [selected, setSelected] = useState<Record<string, string>>(initialVariant?.selectedOptions ?? {});
 
@@ -32,9 +34,9 @@ export function ProductInfo({ product }: { product: Product }) {
   return (
     <div>
       <nav className="text-xs font-medium tracking-wide text-taupe uppercase">
-        {/* The catalog is browsed from the filterable grid on the homepage;
-            there are no per-category routes to link to yet. */}
-        <Link href="/" className="hover:text-espresso">
+        {/* The category slugs are the `ProductCategory` values themselves, so
+            the breadcrumb needs no mapping table — see `CATEGORY_LABELS`. */}
+        <Link href={`/${product.category}`} className="hover:text-espresso">
           {CATEGORY_LABELS[product.category]}
         </Link>
         <span className="mx-2">/</span>
@@ -84,10 +86,11 @@ export function ProductInfo({ product }: { product: Product }) {
       <div className="mt-8 flex flex-wrap gap-4">
         <button
           type="button"
-          disabled={!selectedVariant?.available}
+          disabled={!selectedVariant?.available || pending}
+          onClick={() => selectedVariant && add(selectedVariant.id)}
           className="bg-espresso px-6 py-3.5 text-xs font-medium tracking-wide text-cream uppercase transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
-          {selectedVariant?.available ? "Add to Cart" : "Sold Out"}
+          {!selectedVariant?.available ? "Sold Out" : pending ? "Adding…" : "Add to Cart"}
         </button>
         <Link
           href="/quote"
