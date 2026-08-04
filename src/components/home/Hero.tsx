@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Header } from "@/components/Header";
 import { SiteImage } from "@/components/SiteImage";
-import { HeroProductDeck } from "@/components/home/HeroProductDeck";
+import { HeroProductMarquee } from "@/components/home/HeroProductMarquee";
 import { HeroVideo } from "@/components/home/HeroVideo";
 import { Editable } from "@/components/edit/Editable";
 import { EditableImage } from "@/components/edit/EditableImage";
@@ -36,34 +36,33 @@ export async function Hero() {
       <Header />
 
       {/* The section is exactly one screen tall and clips the overflow, so the
-          padding here is what the headline, the deck and the buttons have to
-          share — it is deliberately tighter than the space under the header
-          suggests. */}
-      <div className="flex flex-1 flex-col justify-between px-8 pt-32 pb-16 sm:px-12">
-        <h1 className="relative z-10 text-[7.5vw] leading-[1.05] font-normal tracking-[-0.02em] text-cream uppercase sm:hidden">
-          {headline.map((line, i) => (
-            <span key={i} className="block">
-              <Editable path={`hero.headline.${i}`}>{line}</Editable>
-            </span>
-          ))}
-        </h1>
+          padding here is what the headline, the call to action and the strip
+          have to share — it is deliberately tighter than the space under the
+          header suggests. The horizontal padding is per-block rather than on
+          the column, because the strip at the bottom runs edge to edge. */}
+      <div className="flex flex-1 flex-col justify-between pt-32 pb-10">
+        <div className="px-8 sm:px-12">
+          <h1 className="relative z-10 text-[7.5vw] leading-[1.05] font-normal tracking-[-0.02em] text-cream uppercase sm:hidden">
+            {headline.map((line, i) => (
+              <span key={i} className="block">
+                <Editable path={`hero.headline.${i}`}>{line}</Editable>
+              </span>
+            ))}
+          </h1>
 
-        {/* Same lines, staggered left-to-right — the indents are per-line, so
-            they're keyed off position rather than living in the content. */}
-        <h1 className="relative z-10 hidden text-[max(2rem,7vw)] leading-[0.95] font-normal tracking-[-0.04em] text-cream uppercase sm:flex sm:flex-col">
-          {headline.map((line, i) => (
-            <span key={i} className={["", "pl-[10vw]", "pl-[50vw]"][i] ?? ""}>
-              <Editable path={`hero.headline.${i}`}>{line}</Editable>
-            </span>
-          ))}
-        </h1>
+          {/* Same lines, staggered left-to-right — the indents are per-line, so
+              they're keyed off position rather than living in the content. */}
+          <h1 className="relative z-10 hidden text-[max(2rem,7vw)] leading-[0.95] font-normal tracking-[-0.04em] text-cream uppercase sm:flex sm:flex-col">
+            {headline.map((line, i) => (
+              <span key={i} className={["", "pl-[10vw]", "pl-[50vw]"][i] ?? ""}>
+                <Editable path={`hero.headline.${i}`}>{line}</Editable>
+              </span>
+            ))}
+          </h1>
 
-        {/* The deck sits opposite the kicker so the two share the bottom band:
-            cards on the left, the call to action on the right. */}
-        <div className="relative z-20 flex flex-col items-start gap-6 sm:flex-row sm:items-end sm:justify-between sm:gap-12">
-          <HeroProductDeck products={machines} />
-
-          <div className="flex flex-col items-start gap-6 text-left sm:ml-auto sm:items-end sm:text-right">
+          {/* Under the headline and hard left, so the eye runs down the same
+              edge the type starts from rather than crossing the frame. */}
+          <div className="relative z-20 mt-[clamp(1.75rem,4.5vh,3rem)] flex flex-col items-start gap-6">
             <p className="text-base font-medium tracking-wide text-cream uppercase sm:text-sm">
               {kicker.map((line, i) => (
                 <span key={i}>
@@ -90,6 +89,8 @@ export async function Hero() {
             </div>
           </div>
         </div>
+
+        <HeroProductMarquee products={machines} />
       </div>
     </section>
   );
