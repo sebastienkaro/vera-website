@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { SiteImage } from "@/components/SiteImage";
 import { formatMoney } from "@/lib/money";
@@ -28,6 +28,26 @@ const DEPTHS = [
 ];
 
 const PARKED = { step: 2.9, rotate: 11, scale: 0.92, opacity: 0 };
+
+/**
+ * How wide a card is — and, since a card is square plus its caption band, how
+ * tall the stack is.
+ *
+ * The hero is exactly one screen tall and clips what doesn't fit, so the deck
+ * can't simply be sized off the viewport: the headline above it is set in `vw`,
+ * so a wide, short window spends the screen's height on type and leaves the
+ * bottom band nothing. The middle term is that leftover height, worked out in
+ * the same units the hero is laid out in — the screen, less the section's
+ * padding (`pt-32` + `pb-16`), less three lines of headline (`7vw` at a `0.95`
+ * leading), less the caption band the card carries under its photograph. The
+ * rem figures round that up a little, which is the deck's margin for error.
+ *
+ * So the cards take a comfortable share of the height when there is one, and
+ * shrink to what's actually left when there isn't, rather than being dropped
+ * the moment the window is short. The floor is the point where they stop being
+ * worth showing at all; the media queries on the deck itself take over there.
+ */
+const CARD_WIDTH = "clamp(7.5rem, min(23vh, 100vh - 17rem - 20vw), 15rem)";
 
 function placementStyle({ step, rotate, scale, opacity }: (typeof DEPTHS)[number]) {
   return {
@@ -83,23 +103,23 @@ export function HeroProductDeck({ products }: { products: Product[] }) {
 
   return (
     <div
+      // A card is as wide as `--card-w`, and one caption band taller — see
+      // `CARD_WIDTH` for how that width is arrived at.
+      style={{ "--card-w": CARD_WIDTH } as CSSProperties}
       // Below `sm` the hero has one column and the deck would sit on top of the
       // headline, so it is a desktop element only.
       //
-      // The hero is exactly one screen tall and clips what doesn't fit, so the
-      // cards are measured in `vh` between a floor and a ceiling: a short
-      // window shrinks them rather than pushing the stack out of view.
-      //
-      // Past a point that stops being enough. The headline is sized in `vw`,
-      // so a wide, short window spends the hero's height on type and leaves
-      // the deck nothing — and the deck is the tallest thing in the bottom
-      // band, so it is what spills. The three queries below are where
-      // measurement put that edge, per width, and drop the deck rather than
-      // show a card sliced off at the fold.
+      // Past a point the cards can't shrink any further and still be cards,
+      // which is the floor in `CARD_WIDTH`. Below it the deck is dropped rather
+      // than sliced off at the fold. That edge is one straight line — a window
+      // is too short when its height is under `392px + 20% of its width`, the
+      // same sum `CARD_WIDTH` is built from — but a media query can only ask
+      // about height and width separately, so it takes a step per width band to
+      // trace it. Extend the steps if the hero's type or padding change.
       // `--deck-x` / `--deck-y` are percentages so the fan scales with the
       // cards: a translate percentage resolves against the element's own size,
       // and the cards are sized off the viewport.
-      className="hidden w-[var(--card-w)] shrink-0 [--card-w:clamp(9rem,23vh,15rem)] [--deck-x:9%] [--deck-y:-4%] sm:block [@media(max-height:700px)]:hidden [@media(min-width:1400px)_and_(max-height:760px)]:hidden [@media(min-width:1700px)_and_(max-height:860px)]:hidden"
+      className="hidden w-[var(--card-w)] shrink-0 [--deck-x:9%] [--deck-y:-4%] sm:block [@media(max-height:660px)]:hidden [@media(min-width:1350px)_and_(max-height:700px)]:hidden [@media(min-width:1550px)_and_(max-height:760px)]:hidden [@media(min-width:1850px)_and_(max-height:800px)]:hidden [@media(min-width:2050px)_and_(max-height:900px)]:hidden [@media(min-width:2600px)_and_(max-height:1080px)]:hidden"
       onMouseEnter={() => setHeld(true)}
       onMouseLeave={() => setHeld(false)}
       onFocus={() => setHeld(true)}
