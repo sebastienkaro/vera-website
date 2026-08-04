@@ -42,11 +42,11 @@ export const CATEGORY_LABELS: Record<ProductCategory, string> = {
 export const FEATURED_LIMIT = 12;
 
 /**
- * How many machines the hero's rotating card deck cycles through. One card is
- * always parked out of sight behind the stack, so the deck shows one fewer
- * than this at rest.
+ * How many machines the hero's marquee runs through before repeating. Enough
+ * that a visitor is unlikely to see the same card twice while reading the
+ * headline, and few enough that the strip isn't the page's heaviest download.
  */
-export const HERO_DECK_LIMIT = 4;
+export const HERO_MARQUEE_LIMIT = 8;
 
 export type Product = {
   id: string;
