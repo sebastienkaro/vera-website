@@ -62,7 +62,7 @@ export async function Hero() {
 
           {/* Under the headline and hard left, so the eye runs down the same
               edge the type starts from rather than crossing the frame. */}
-          <div className="relative z-20 mt-[clamp(1.75rem,4.5vh,3rem)] flex flex-col items-start gap-6">
+          <div className="relative z-20 mt-[clamp(0.5rem,2vh,1.5rem)] flex flex-col items-start gap-5">
             <p className="text-base font-medium tracking-wide text-cream uppercase sm:text-sm">
               {kicker.map((line, i) => (
                 <span key={i}>

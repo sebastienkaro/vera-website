@@ -46,13 +46,13 @@ export function HeroProductMarquee({ products }: { products: Product[] }) {
       // The hero is exactly one screen tall and clips what doesn't fit, and the
       // strip is the last thing in the column, so it is what spills when the
       // window is short: the headline above it is set in `vw`, so a wide, short
-      // window spends the screen's height on type. A window is too short for
-      // the strip when its height is under `392px + 20% of its width` — the
+      // window spends the screen's height on type. Measured across widths, the
+      // strip stops fitting below `340px + 20% of the window's width` — the
       // hero's padding, three lines of headline, the call to action, and the
       // strip itself, added up. A media query can only ask about height and
       // width separately, so it takes a step per width band to trace that line;
-      // extend the steps if the hero's type or padding change.
-      className="group relative z-20 w-full [@media(max-height:660px)]:hidden [@media(min-width:1350px)_and_(max-height:700px)]:hidden [@media(min-width:1550px)_and_(max-height:760px)]:hidden [@media(min-width:1850px)_and_(max-height:800px)]:hidden [@media(min-width:2050px)_and_(max-height:900px)]:hidden [@media(min-width:2600px)_and_(max-height:1080px)]:hidden"
+      // re-measure the steps if the hero's type or spacing change.
+      className="group relative z-20 w-full [@media(max-height:600px)]:hidden [@media(min-width:1310px)_and_(max-height:650px)]:hidden [@media(min-width:1560px)_and_(max-height:700px)]:hidden [@media(min-width:1810px)_and_(max-height:750px)]:hidden [@media(min-width:2060px)_and_(max-height:860px)]:hidden [@media(min-width:2610px)_and_(max-height:1030px)]:hidden"
     >
       {/* The strip sits over whatever frame of the footage happens to be
           playing, so it brings its own soft floor of shade with it. */}
@@ -69,7 +69,12 @@ export function HeroProductMarquee({ products }: { products: Product[] }) {
               "--marquee-shift": `-${100 / copies}%`,
             } as React.CSSProperties
           }
-          className="flex w-max animate-[hero-marquee_var(--marquee-duration)_linear_infinite] group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused] motion-reduce:animate-none"
+          // `will-change` is what keeps the travel smooth: it hands the strip
+          // to the compositor as a texture up front, so the cards are drawn
+          // once and then moved — including between whole pixels. Without it
+          // the text is re-rasterised on the main thread every frame and snaps
+          // to the pixel grid, which at this speed reads as a stutter.
+          className="flex w-max transform-gpu animate-[hero-marquee_var(--marquee-duration)_linear_infinite] will-change-transform group-hover:[animation-play-state:paused] group-focus-within:[animation-play-state:paused] motion-reduce:animate-none motion-reduce:will-change-auto"
         >
           {Array.from({ length: copies }, (_, copy) =>
             products.map((product) => (
@@ -77,7 +82,11 @@ export function HeroProductMarquee({ products }: { products: Product[] }) {
                 key={`${copy}-${product.id}`}
                 href={`/products/${product.handle}`}
                 inert={copy > 0}
-                className="mr-4 flex h-20 w-[18rem] shrink-0 items-center gap-4 overflow-hidden rounded-xl border border-cream/20 bg-cream/10 pr-4 shadow-[0_0.5rem_1.5rem_-0.75rem_rgba(20,12,6,0.8)] backdrop-blur-md transition duration-300 hover:-translate-y-0.5 hover:border-cream/45 hover:bg-cream/20"
+                // A light blur rather than a deep one: the backdrop is a video
+                // that changes every frame, so every pixel of blur is paid for
+                // again on each one, and a wide radius is what makes the strip
+                // stutter as it travels.
+                className="mr-4 flex h-20 w-[18rem] shrink-0 items-center gap-4 overflow-hidden rounded-xl border border-cream/20 bg-cream/12 pr-4 backdrop-blur-sm transition-colors duration-300 hover:border-cream/45 hover:bg-cream/25"
               >
                 {/* The photo keeps a solid panel of its own, flush to the end
                     of the card: the catalog shoots on white, and a product cut
