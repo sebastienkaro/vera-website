@@ -31,6 +31,44 @@ export async function getHeroMachines(limit = HERO_DECK_LIMIT): Promise<Product[
   return featured.filter((product) => product.category === "machines").slice(0, limit);
 }
 
+/**
+ * The vendor the homepage's featured-machine section looks for. Matched
+ * loosely against `vendor`, since Shopify spells it a few ways.
+ */
+const FEATURED_MACHINE_VENDOR = "la marzocco";
+
+/**
+ * Pin the featured machine to one product by putting its handle here. Left
+ * null, the section shows whichever La Marzocco machine comes first in the
+ * featured selection — which is Shopify's own collection order, so the machine
+ * on the homepage can also be chosen by re-ordering the `machines` collection
+ * in the admin.
+ */
+const FEATURED_MACHINE_HANDLE: string | null = null;
+
+/**
+ * The single machine the homepage's featured section is built around: a real
+ * product, with its own photo, linking through to its own page.
+ *
+ * Returns undefined if the catalog has no photographed machine at all, in
+ * which case the section renders nothing rather than an empty frame.
+ */
+export async function getFeaturedMachine(): Promise<Product | undefined> {
+  if (FEATURED_MACHINE_HANDLE) {
+    const pinned = await getProduct(FEATURED_MACHINE_HANDLE);
+    if (pinned) return pinned;
+  }
+
+  const machines = (await getFeaturedShopifyProducts(FEATURED_LIMIT)).filter(
+    (product) => product.category === "machines",
+  );
+
+  return (
+    machines.find((product) => product.vendor.toLowerCase().includes(FEATURED_MACHINE_VENDOR)) ??
+    machines[0]
+  );
+}
+
 export async function getProduct(handle: string): Promise<Product | undefined> {
   const products = await getShopifyProducts();
   return products.find((product) => product.handle === handle);

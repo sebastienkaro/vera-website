@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Vera Coffee Solutions",
   shortName: "Vera",
   description:
-    "Commercial espresso equipment sold, installed and serviced by Vera Coffee Solutions. Long Island City, NY.",
+    "Commercial espresso equipment sold, installed and serviced by Vera Coffee Solutions. Bridgeport, CT.",
   navLeft: [
     { label: "Machines", href: "/machines" },
     { label: "Grinders", href: "/grinders" },
@@ -15,10 +15,10 @@ export const siteConfig = {
   ],
   contact: {
     phone: "615.397.3005",
-    phoneNote: "Text us — Long Island City, NY",
+    phoneNote: "Text us — Bridgeport, CT",
   },
   footer: {
-    blurb: "Commercial espresso equipment — sold, installed & serviced. Long Island City, NY.",
+    blurb: "Commercial espresso equipment — sold, installed & serviced. Bridgeport, CT.",
     tag: "Authorized dealer · Financing available",
     shop: [
       { label: "Machines", href: "/machines" },

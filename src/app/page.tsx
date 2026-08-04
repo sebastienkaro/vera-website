@@ -1,6 +1,7 @@
 import { Hero } from "@/components/home/Hero";
 import { Collection } from "@/components/home/Collection";
 import { WhyVera } from "@/components/home/WhyVera";
+import { FeaturedMachine } from "@/components/home/FeaturedMachine";
 import { AboutVera } from "@/components/home/AboutVera";
 import { EditorLogin } from "@/components/edit/EditorLogin";
 import { EditorProvider } from "@/components/edit/EditorContext";
@@ -21,6 +22,7 @@ export default async function Home({
       <Hero />
       <Collection />
       <WhyVera />
+      <FeaturedMachine />
       <AboutVera />
     </>
   );
