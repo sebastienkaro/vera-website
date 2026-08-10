@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import { Header } from "@/components/Header";
 import { ProductGrid } from "@/components/ProductGrid";
+import { CategoryBrowser } from "@/components/category/CategoryBrowser";
 import { CategoryNav } from "@/components/category/CategoryNav";
 import { getProductsByCategory } from "@/lib/products";
 import { siteConfig } from "@/lib/site-config";
@@ -44,9 +46,24 @@ export async function CategoryPage({ category }: { category: ProductCategory }) 
           <p className="mx-auto mt-6 max-w-2xl text-sm text-espresso/60">{INTRO[category]}</p>
         </div>
 
-        <div className="mt-16">
+        <div>
           {products.length > 0 ? (
-            <ProductGrid products={products} />
+            /*
+              `CategoryBrowser` reads the filters out of the URL, which opts
+              this subtree out of prerendering. The fallback is the plain
+              grid — so the built HTML still lists every product for a crawler
+              or a visitor whose JavaScript hasn't arrived, and the browser
+              takes over on hydration.
+            */
+            <Suspense
+              fallback={
+                <div className="mt-16">
+                  <ProductGrid products={products} />
+                </div>
+              }
+            >
+              <CategoryBrowser products={products} />
+            </Suspense>
           ) : (
             /* An emptied or renamed collection upstream, not a wrong URL — the
                shelf is real, so this is a message rather than a 404. */

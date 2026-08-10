@@ -100,6 +100,13 @@ export type Product = {
   vendor: string;
   title: string;
   category: ProductCategory;
+  /**
+   * Shopify's own product type — "Pressure Gauges", "Steam Components",
+   * "Espresso Machines". Finer-grained than `category`, which only has three
+   * values, and it is what the category pages filter on: Parts & Accessories
+   * is one category but fifteen product types.
+   */
+  productType: string;
   price: Money;
   compareAtPrice?: Money;
   images: ProductImage[];
