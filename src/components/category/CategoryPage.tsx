@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { Header } from "@/components/Header";
 import { ProductGrid } from "@/components/ProductGrid";
 import { CategoryBrowser } from "@/components/category/CategoryBrowser";
-import { CategoryNav } from "@/components/category/CategoryNav";
 import { getProductsByCategory } from "@/lib/products";
 import { siteConfig } from "@/lib/site-config";
 import { CATEGORY_LABELS, type ProductCategory } from "@/lib/types";
@@ -35,15 +34,20 @@ export async function CategoryPage({ category }: { category: ProductCategory }) 
     <>
       <Header variant="solid" />
 
-      <section className="px-8 py-24 sm:px-12">
+      <section className="px-8 py-16 sm:px-12">
         <div className="mx-auto max-w-4xl text-center">
           <p className="text-xs font-semibold tracking-[-0.02em] text-espresso uppercase">
             The Collection
           </p>
-          <div className="mt-4">
-            <CategoryNav current={category} />
-          </div>
-          <p className="mx-auto mt-6 max-w-2xl text-sm text-espresso/60">{INTRO[category]}</p>
+          {/*
+            The category's own name, rather than all three with this one picked
+            out. The header already lists the categories, and switching between
+            them now lives at the top of the filter column.
+          */}
+          <h1 className="mt-4 text-3xl leading-tight font-semibold tracking-[-0.02em] text-espresso uppercase sm:text-5xl">
+            {CATEGORY_LABELS[category]}
+          </h1>
+          <p className="mx-auto mt-5 max-w-2xl text-sm text-espresso/60">{INTRO[category]}</p>
         </div>
 
         <div>
@@ -62,7 +66,7 @@ export async function CategoryPage({ category }: { category: ProductCategory }) 
                 </div>
               }
             >
-              <CategoryBrowser products={products} />
+              <CategoryBrowser products={products} category={category} />
             </Suspense>
           ) : (
             /* An emptied or renamed collection upstream, not a wrong URL — the

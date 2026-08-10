@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useOptimistic, useRef, useState, useTransition } from "react";
+import {
+  useEffect,
+  useId,
+  useMemo,
+  useOptimistic,
+  useRef,
+  useState,
+  useTransition,
+} from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ProductGrid } from "@/components/ProductGrid";
+import { CategoryNav } from "@/components/category/CategoryNav";
 import { FilterPanel } from "@/components/category/FilterPanel";
 import {
   EMPTY_FILTERS,
@@ -17,7 +26,7 @@ import {
 } from "@/lib/catalog-filters";
 import { useBodyScrollLock } from "@/lib/use-body-scroll-lock";
 import { siteConfig } from "@/lib/site-config";
-import type { Product } from "@/lib/types";
+import { CATEGORY_LABELS, type Product, type ProductCategory } from "@/lib/types";
 
 /** How many products a shelf shows before asking to be opened further. */
 const PAGE_SIZE = 24;
@@ -34,7 +43,13 @@ const PAGE_SIZE = 24;
  * navigated back to. `replace` rather than `push`, so ticking four filters
  * doesn't leave four entries between the visitor and the page they came from.
  */
-export function CategoryBrowser({ products }: { products: Product[] }) {
+export function CategoryBrowser({
+  products,
+  category,
+}: {
+  products: Product[];
+  category: ProductCategory;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -71,11 +86,11 @@ export function CategoryBrowser({ products }: { products: Product[] }) {
   const fingerprint = serializeFilters(filters);
 
   return (
-    <div className="mx-auto mt-16 max-w-6xl">
+    <div className="mx-auto mt-12 max-w-6xl">
       <SearchField
         value={filters.query}
         onChange={(query) => setFilters({ query })}
-        total={products.length}
+        category={category}
       />
 
       <div className="mt-8 flex items-center justify-between gap-4 border-b border-espresso/10 pb-4">
@@ -113,7 +128,8 @@ export function CategoryBrowser({ products }: { products: Product[] }) {
       </div>
 
       <div className="mt-10 lg:grid lg:grid-cols-[16rem_1fr] lg:gap-12">
-        <aside className="hidden lg:block">
+        <aside className="hidden space-y-8 lg:block">
+          <CategoryNav current={category} />
           <FilterPanel
             filters={filters}
             facets={facets}
@@ -137,6 +153,9 @@ export function CategoryBrowser({ products }: { products: Product[] }) {
       </div>
 
       <FilterDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <div className="mb-8">
+          <CategoryNav current={category} />
+        </div>
         <FilterPanel
           filters={filters}
           facets={facets}
@@ -185,14 +204,15 @@ function Results({ products }: { products: Product[] }) {
 function SearchField({
   value,
   onChange,
-  total,
+  category,
 }: {
   value: string;
   onChange: (value: string) => void;
-  total: number;
+  category: ProductCategory;
 }) {
   const [draft, setDraft] = useState(value);
   const committed = useRef(value);
+  const id = useId();
 
   // Follow the URL when it changes from anywhere else — Clear all, a back
   // navigation — but not in response to this field's own writes.
@@ -215,18 +235,51 @@ function SearchField({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [draft]);
 
+  const label = CATEGORY_LABELS[category].toLowerCase();
+
   return (
-    <div className="mx-auto max-w-2xl">
-      <label className="block">
-        <span className="sr-only">Search products</span>
-        <input
-          type="search"
-          value={draft}
-          onChange={(event) => setDraft(event.target.value)}
-          placeholder={`Search ${total} products by model, manufacturer or type`}
-          className="w-full border-b border-espresso/20 bg-transparent py-3 text-center text-sm text-espresso placeholder:text-taupe focus:border-espresso focus:outline-none"
-        />
+    <div className="relative mx-auto max-w-xl">
+      <label htmlFor={id} className="sr-only">
+        Search {label}
       </label>
+
+      {/* The magnifier is what makes the field read as a search box at a
+          glance; the rule-under-centred-placeholder it replaces read as a
+          caption. Decorative, so it is hidden from assistive tech — the input
+          is already labelled and typed as a search. */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 18 18"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        className="pointer-events-none absolute top-1/2 left-4 size-4 -translate-y-1/2 text-espresso/45"
+      >
+        <circle cx="7.5" cy="7.5" r="5.25" />
+        <path d="M11.5 11.5 16 16" />
+      </svg>
+
+      <input
+        id={id}
+        type="search"
+        value={draft}
+        onChange={(event) => setDraft(event.target.value)}
+        placeholder={`Search ${label} by model, manufacturer or type`}
+        // The native WebKit clear affordance is suppressed in favour of the
+        // button below, which renders the same way in every browser.
+        className="w-full border border-espresso/20 bg-cream py-3.5 pr-20 pl-11 text-sm text-espresso placeholder:text-taupe focus:border-espresso focus:outline-none [&::-webkit-search-cancel-button]:appearance-none"
+      />
+
+      {draft !== "" && (
+        <button
+          type="button"
+          onClick={() => setDraft("")}
+          className="absolute top-1/2 right-4 -translate-y-1/2 text-xs tracking-wide text-taupe uppercase transition-colors hover:text-espresso"
+        >
+          Clear
+        </button>
+      )}
     </div>
   );
 }
