@@ -41,7 +41,14 @@ export function ProductGallery({ images }: { images: ProductImage[] }) {
                 alt={image.alt}
                 label={image.alt}
                 className="relative aspect-square"
-                sizes="25vw"
+                // A thumbnail is a quarter of the gallery column, which is
+                // itself half the page above `md`.
+                sizes="(min-width: 768px) 13vw, 25vw"
+                // Same treatment as the main image: a machine shot cropped to
+                // fill a square reads as a different photo from the one it
+                // switches to, which makes the row hard to scan.
+                fit="contain"
+                padding="p-2"
               />
             </button>
           ))}
