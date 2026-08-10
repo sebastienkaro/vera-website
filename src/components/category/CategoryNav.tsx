@@ -5,30 +5,39 @@ import { CATEGORY_LABELS, type ProductCategory } from "@/lib/types";
 const CATEGORIES: ProductCategory[] = ["machines", "grinders", "parts-accessories"];
 
 /**
- * The three categories as the page's own title.
+ * Moving between shelves, as the first group in the filter column.
  *
- * This is the homepage's collection heading turned into navigation: there, the
- * category words *are* the filter; here they are links, with the one you're on
- * in espresso and the others in taupe. Same gesture, so moving between shelves
- * feels like the same control the homepage taught.
+ * This used to be the page's title — all three categories set large, with the
+ * current one picked out. It read well and said nothing the header's nav wasn't
+ * already saying, while pushing the first product most of a screen down. As a
+ * list at the top of the filters it sits where a shopper looks for it, above
+ * the narrower cuts, and matches how the current site orders the same controls.
+ *
+ * Links rather than checkboxes on purpose: a category is a different shelf with
+ * its own facets, not another filter on this one, so switching starts clean.
  */
 export function CategoryNav({ current }: { current: ProductCategory }) {
   return (
-    <h1 className="flex flex-wrap justify-center gap-x-3 text-3xl leading-tight font-semibold tracking-[-0.02em] uppercase sm:text-5xl">
-      {CATEGORIES.map((category, i) => (
-        <span key={category}>
-          {category === current ? (
-            <span aria-current="page" className="text-espresso">
-              {CATEGORY_LABELS[category]}
-            </span>
-          ) : (
-            <Link href={`/${category}`} className="text-taupe transition-colors hover:text-espresso/70">
-              {CATEGORY_LABELS[category]}
-            </Link>
-          )}
-          {i < CATEGORIES.length - 1 && <span className="text-taupe">,</span>}
-        </span>
-      ))}
-    </h1>
+    <nav aria-label="Product categories">
+      <p className="text-xs font-medium tracking-wide text-espresso uppercase">Category</p>
+      <ul className="mt-4 space-y-2.5">
+        {CATEGORIES.map((category) => {
+          const active = category === current;
+          return (
+            <li key={category}>
+              <Link
+                href={`/${category}`}
+                aria-current={active ? "page" : undefined}
+                className={`text-sm transition-colors ${
+                  active ? "text-espresso" : "text-espresso/55 hover:text-espresso"
+                }`}
+              >
+                {CATEGORY_LABELS[category]}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
   );
 }
