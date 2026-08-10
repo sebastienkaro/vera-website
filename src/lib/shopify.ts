@@ -59,6 +59,7 @@ type ShopifyProduct = {
   handle: string;
   title: string;
   vendor: string;
+  productType: string;
   descriptionHtml: string;
   priceRange: { minVariantPrice: ShopifyMoney };
   images: { nodes: { url: string; altText: string | null }[] };
@@ -97,6 +98,7 @@ const COLLECTION_PRODUCTS_QUERY = /* GraphQL */ `
           handle
           title
           vendor
+          productType
           descriptionHtml
           priceRange {
             minVariantPrice {
@@ -295,6 +297,7 @@ function toProduct(product: ShopifyProduct, category: ProductCategory): Product 
     vendor: product.vendor,
     title: product.title,
     category,
+    productType: product.productType.trim(),
     // The catalog's configurable machines span a wide range, so the card
     // price is the "from" price rather than any one variant's.
     price: toMoney(product.priceRange.minVariantPrice),

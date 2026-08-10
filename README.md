@@ -70,6 +70,7 @@ cart can be exercised without credentials.
 - `src/components` — shared UI components (Header, Footer, Hero, ...)
 - `src/lib/shopify.ts` — Storefront API client, product mapping, caching
 - `src/lib/products.ts` — the app's catalog API (`getProducts`, `getProduct`)
+- `src/lib/catalog-filters.ts` — search, facets and sorting for the category pages
 - `src/lib/site-config.ts` — site name, nav links, tagline, contact info
 - `src/app/globals.css` — theme colors and fonts
 
