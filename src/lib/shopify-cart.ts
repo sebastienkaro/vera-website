@@ -186,22 +186,26 @@ export async function fetchCart(id: string): Promise<Cart | null> {
   return data.cart ? toCart(data.cart) : null;
 }
 
-export async function createCart(merchandiseId: string, quantity: number): Promise<Cart | null> {
-  const data = await storefrontUncached<{ cartCreate: CartMutationPayload }>(
-    CART_CREATE_MUTATION,
-    { lines: [{ merchandiseId, quantity }] },
-  );
+/**
+ * A line to add: a variant and how many of it. Both mutations below take a
+ * list rather than one line, because a configured machine goes in as one
+ * basket — the machine and the add-ons ticked with it. Adding those one call
+ * at a time would race for the cart cookie and could lose a line, and would
+ * show the visitor their cart growing in instalments.
+ */
+export type CartLineInput = { merchandiseId: string; quantity: number };
+
+export async function createCart(lines: CartLineInput[]): Promise<Cart | null> {
+  const data = await storefrontUncached<{ cartCreate: CartMutationPayload }>(CART_CREATE_MUTATION, {
+    lines,
+  });
   return unwrap(data.cartCreate, "create the cart");
 }
 
-export async function addCartLine(
-  cartId: string,
-  merchandiseId: string,
-  quantity: number,
-): Promise<Cart | null> {
+export async function addCartLines(cartId: string, lines: CartLineInput[]): Promise<Cart | null> {
   const data = await storefrontUncached<{ cartLinesAdd: CartMutationPayload }>(
     CART_LINES_ADD_MUTATION,
-    { cartId, lines: [{ merchandiseId, quantity }] },
+    { cartId, lines },
   );
   return unwrap(data.cartLinesAdd, "add that to the cart");
 }

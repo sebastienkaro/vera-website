@@ -26,6 +26,61 @@ export type ProductSpec = {
   value: string;
 };
 
+/**
+ * A titled block of specs — "Boilers", "Electrical", "In the box". A full
+ * manufacturer spec sheet runs to thirty-odd lines, which reads as a wall
+ * without headings to break it into what a buyer is actually looking for.
+ */
+export type ProductSpecGroup = {
+  title: string;
+  specs: ProductSpec[];
+};
+
+/**
+ * The specs that change with the configuration — height stays the same across
+ * a 1, 2 and 3 group machine, but width, weight and wattage don't. A table is
+ * how manufacturers publish these, and it doubles as the comparison a buyer
+ * makes before choosing a group count.
+ */
+export type ProductSpecTable = {
+  title: string;
+  /** Column headings, e.g. `["1 Group", "2 Group", "3 Group"]`. */
+  columns: string[];
+  /** One `values` entry per column, in the same order. */
+  rows: { label: string; values: string[] }[];
+};
+
+/** A short selling point, shown as a card rather than a spec line. */
+export type ProductHighlight = {
+  title: string;
+  description: string;
+};
+
+/**
+ * Something a buyer can add to the machine on its own product page: another
+ * product in the catalog, or a service Vera quotes separately.
+ *
+ * `merchandiseId` is what makes an add-on purchasable — with one, ticking the
+ * add-on puts that variant in the cart alongside the machine. Without one it
+ * is quote-only: still tickable, so it can be carried into a quote request,
+ * but priced by a human. `priceNote` is what stands in for the price there.
+ */
+export type ProductAddOn = {
+  id: string;
+  title: string;
+  description: string;
+  image?: ProductImage;
+  merchandiseId?: string;
+  price?: Money;
+  priceNote?: string;
+};
+
+/** A downloadable spec sheet, manual or parts catalog. */
+export type ProductDocument = {
+  label: string;
+  href: string;
+};
+
 export type ProductCategory = "machines" | "grinders" | "parts-accessories";
 
 export const CATEGORY_LABELS: Record<ProductCategory, string> = {
@@ -114,4 +169,24 @@ export type Product = {
   specs: ProductSpec[];
   options: ProductOption[];
   variants: ProductVariant[];
+  /**
+   * Everything below is optional and everything below is empty on a product
+   * that comes from Shopify: the Storefront API has no field for any of it,
+   * and this store defines no metafields for them yet. Each section renders
+   * nothing when its data is missing, so a listing can be filled in a piece at
+   * a time rather than all at once.
+   *
+   * `src/lib/sample-product.ts` is one product with all of it filled in —
+   * what a fully built-out listing looks like, and the shape the metafields
+   * would need to take to produce it from Shopify.
+   */
+  /** One line under the title, e.g. what the machine is for. */
+  subtitle?: string;
+  highlights?: ProductHighlight[];
+  addOns?: ProductAddOn[];
+  specGroups?: ProductSpecGroup[];
+  specTable?: ProductSpecTable;
+  documents?: ProductDocument[];
+  /** Reassurances shown under the buy buttons — warranty, lead time, install. */
+  purchaseNotes?: string[];
 };

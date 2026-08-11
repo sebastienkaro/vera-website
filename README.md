@@ -34,6 +34,29 @@ appears on the site only if it belongs to one of the collections listed in
 whether it shows under Machines, Grinders, or Parts & Accessories. To publish
 a product, add it to the relevant collection in Shopify.
 
+### The sample listing
+
+A product page can show more than Shopify currently gives it: highlights, an
+add-on picker, grouped specifications, a per-configuration table and the
+manufacturer's documents. Nothing in the catalog carries that data — the
+Storefront API has no field for it and the store defines no metafields — so
+`src/lib/sample-product.ts` is one listing with all of it filled in, served at
+
+```
+/products/sample-la-marzocco-linea-classic-s
+```
+
+It is built on a machine the store really sells, and its variants carry the
+real Shopify variant ids at the real prices, so the configuration picker and
+the cart behave exactly as they would on a live listing. It is reachable only
+by that URL: it is not in `getProducts`, so it appears in no category page, no
+search result and no related-products row, and it is marked `noindex`.
+
+Each block in that file maps to something Shopify can hold — see the comment at
+the top of it for what publishing this for real would take. Every one of those
+fields is optional on `Product`, and each section renders nothing without its
+data, so a real listing can be filled in one piece at a time.
+
 Pages revalidate hourly. To push a change through sooner, call
 `revalidateTag(PRODUCTS_CACHE_TAG, 'max')` from a Server Action or Route
 Handler — for example from a Shopify `products/update` webhook.
