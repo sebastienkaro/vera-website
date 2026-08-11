@@ -3,11 +3,12 @@
 import { cookies } from "next/headers";
 import { shopifyConfigured } from "@/lib/shopify";
 import {
-  addCartLine,
+  addCartLines,
   createCart,
   fetchCart,
   removeCartLines,
   updateCartLineQuantity,
+  type CartLineInput,
 } from "@/lib/shopify-cart";
 import type { Cart, CartResult } from "@/lib/types";
 
@@ -50,6 +51,13 @@ const CART_COOKIE_MAX_AGE = 60 * 60 * 24 * 14;
 
 /** More than anyone buys of one thing here, and a ceiling on a hostile caller. */
 const MAX_QUANTITY = 99;
+
+/**
+ * How many lines one add may carry. A machine plus every add-on offered with
+ * it is a handful; the limit is there so a direct POST can't ask Shopify for
+ * an unbounded mutation.
+ */
+const MAX_LINES_PER_ADD = 25;
 
 /** Shown instead of Shopify's own wording, which isn't ours to forward. */
 const GENERIC_ERROR = "Something went wrong with the cart. Please try again.";
@@ -127,26 +135,52 @@ export async function getCart(): Promise<CartResult> {
   });
 }
 
+/** Adds one variant. The single-line case of `addLinesToCart`. */
+export async function addToCart(merchandiseId: unknown, quantity: unknown = 1): Promise<CartResult> {
+  return addLinesToCart([{ merchandiseId, quantity }]);
+}
+
 /**
- * Adds a variant, starting a cart if there isn't one.
+ * Adds one or more variants, starting a cart if there isn't one.
+ *
+ * Several at once — a configured machine and the add-ons ticked with it — go
+ * in as a single change, so the cart moves once rather than in instalments and
+ * the lines cannot race each other for a cart that doesn't exist yet.
  *
  * A cookie can outlive the cart it points at: Shopify drops idle carts, and a
  * completed checkout retires one. Both come back as no cart, and both are
  * answered the same way — start a fresh cart, so the visitor sees an add that
  * simply worked.
+ *
+ * Lines that aren't a variant id are dropped rather than refused: a caller that
+ * sends nothing usable gets their cart back unchanged.
  */
-export async function addToCart(merchandiseId: unknown, quantity: unknown = 1): Promise<CartResult> {
-  if (!isGid(merchandiseId, "ProductVariant")) return getCart();
-  const amount = toQuantity(quantity, { min: 1 });
+export async function addLinesToCart(lines: unknown): Promise<CartResult> {
+  if (!Array.isArray(lines)) return getCart();
+
+  const valid: CartLineInput[] = lines
+    .slice(0, MAX_LINES_PER_ADD)
+    .filter(
+      (line): line is { merchandiseId: string; quantity?: unknown } =>
+        typeof line === "object" &&
+        line !== null &&
+        isGid((line as { merchandiseId?: unknown }).merchandiseId, "ProductVariant"),
+    )
+    .map((line) => ({
+      merchandiseId: line.merchandiseId,
+      quantity: toQuantity(line.quantity ?? 1, { min: 1 }),
+    }));
+
+  if (valid.length === 0) return getCart();
 
   return attempt(async () => {
     const existingId = await readCartId();
     if (existingId) {
-      const cart = await addCartLine(existingId, merchandiseId, amount);
+      const cart = await addCartLines(existingId, valid);
       if (cart) return cart;
     }
 
-    const cart = await createCart(merchandiseId, amount);
+    const cart = await createCart(valid);
     if (cart) await writeCartId(cart.id);
     return cart;
   });

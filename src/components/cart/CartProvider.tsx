@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from "react";
 import { CartDrawer } from "@/components/cart/CartDrawer";
-import { addToCart, getCart, removeCartLine, updateCartLine } from "@/lib/cart-actions";
+import { addLinesToCart, getCart, removeCartLine, updateCartLine } from "@/lib/cart-actions";
 import type { Cart } from "@/lib/types";
 
 /**
@@ -41,6 +41,8 @@ type CartContextValue = {
   open: () => void;
   close: () => void;
   add: (merchandiseId: string, quantity?: number) => void;
+  /** Adds several variants in one change — see `addLinesToCart`. */
+  addLines: (lines: { merchandiseId: string; quantity?: number }[]) => void;
   setQuantity: (lineId: string, quantity: number) => void;
   remove: (lineId: string) => void;
 };
@@ -143,12 +145,21 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [applyOptimistic],
   );
 
-  const add = useCallback(
-    (merchandiseId: string, quantity = 1) => {
+  const addLines = useCallback(
+    (lines: { merchandiseId: string; quantity?: number }[]) => {
+      if (lines.length === 0) return;
       setIsOpen(true);
-      run({ type: "add", quantity }, () => addToCart(merchandiseId, quantity));
+      const total = lines.reduce((sum, line) => sum + (line.quantity ?? 1), 0);
+      run({ type: "add", quantity: total }, () => addLinesToCart(lines));
     },
     [run],
+  );
+
+  const add = useCallback(
+    (merchandiseId: string, quantity = 1) => {
+      addLines([{ merchandiseId, quantity }]);
+    },
+    [addLines],
   );
 
   const setQuantity = useCallback(
@@ -184,6 +195,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         open,
         close,
         add,
+        addLines,
         setQuantity,
         remove,
       }}

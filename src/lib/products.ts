@@ -1,3 +1,4 @@
+import { SAMPLE_PRODUCT_HANDLE, getSampleProduct } from "@/lib/sample-product";
 import { getFeaturedShopifyProducts, getShopifyProducts } from "@/lib/shopify";
 import {
   FEATURED_LIMIT,
@@ -89,6 +90,11 @@ export async function getFeaturedMachine(): Promise<Product | undefined> {
 }
 
 export async function getProduct(handle: string): Promise<Product | undefined> {
+  // The demonstration listing is served by handle only — see
+  // `src/lib/sample-product.ts`. It is deliberately absent from `getProducts`,
+  // so it reaches no category page, no search result and no related row.
+  if (handle === SAMPLE_PRODUCT_HANDLE) return getSampleProduct();
+
   const products = await getShopifyProducts();
   return products.find((product) => product.handle === handle);
 }
