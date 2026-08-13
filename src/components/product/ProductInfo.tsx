@@ -99,13 +99,9 @@ export function ProductInfo({ product }: { product: Product }) {
       )}
       <p className="mt-4 text-xl text-espresso">{formatMoney(price)}</p>
 
-      {/* Only the opening prose — the rest of the description renders below the
-          gallery, so that the options and the buy button stay above the fold.
-          See `splitDescription` in `src/lib/shopify.ts`. */}
-      <div
-        className="mt-6 max-w-md text-sm text-espresso/70 [&_p]:leading-relaxed [&_p+p]:mt-3"
-        dangerouslySetInnerHTML={{ __html: product.summaryHtml }}
-      />
+      {/* The description renders below the gallery, not here: the buy column
+          has to stay short enough to keep the configuration and the buy button
+          on screen. */}
 
       {product.options.map((option) => (
         <div key={option.name} className="mt-8">
@@ -113,20 +109,25 @@ export function ProductInfo({ product }: { product: Product }) {
           <div className="mt-3 flex flex-wrap gap-2">
             {option.values.map((value) => {
               const isSelected = selected[option.name] === value;
+              // These are built to order, so a combination is never "sold out"
+              // in the sense a shopper would recognise — an unavailable one is
+              // a configuration Eversys does not offer. Dimming it says that
+              // without putting a stock message on a machine we would happily
+              // build.
               const isAvailable = isValueAvailable(option.name, value);
               return (
                 <button
                   key={value}
                   type="button"
+                  aria-pressed={isSelected}
                   onClick={() => setSelected((current) => ({ ...current, [option.name]: value }))}
                   className={`border px-4 py-2 text-sm transition-colors ${
                     isSelected
                       ? "border-espresso bg-espresso text-cream"
                       : "border-espresso/20 text-espresso hover:border-espresso"
-                  } ${!isAvailable ? "cursor-not-allowed opacity-40" : ""}`}
+                  } ${!isAvailable ? "opacity-40" : ""}`}
                 >
                   {value}
-                  {!isAvailable && " — Sold out"}
                 </button>
               );
             })}
@@ -176,7 +177,7 @@ export function ProductInfo({ product }: { product: Product }) {
           className="bg-espresso px-6 py-3.5 text-xs font-medium tracking-wide text-cream uppercase transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {!selectedVariant?.available
-            ? "Sold Out"
+            ? "Unavailable"
             : pending
               ? "Adding…"
               : purchasableAddOns.length > 0

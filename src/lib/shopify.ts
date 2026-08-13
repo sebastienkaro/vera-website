@@ -1,6 +1,5 @@
 import { createHash } from "node:crypto";
 import { cache } from "react";
-import { splitDescription } from "@/lib/description";
 import type {
   Money,
   Product,
@@ -8,6 +7,7 @@ import type {
   ProductCategory,
   ProductImage,
   ProductOption,
+  ProductSpecGroup,
   ProductVariant,
 } from "@/lib/types";
 
@@ -77,6 +77,7 @@ type ShopifyProduct = {
     }[];
   };
   addOns: { references: { nodes: ShopifyAddOnProduct[] } | null } | null;
+  specGroups: { value: string } | null;
 };
 
 /**
@@ -153,6 +154,9 @@ const COLLECTION_PRODUCTS_QUERY = /* GraphQL */ `
                 value
               }
             }
+          }
+          specGroups: metafield(namespace: "custom", key: "spec_groups") {
+            value
           }
           addOns: metafield(namespace: "custom", key: "add_ons") {
             references(first: 25) {
@@ -372,9 +376,49 @@ function toAddOns(product: ShopifyProduct): ProductAddOn[] {
   });
 }
 
+/**
+ * The grouped specifications from the `custom.spec_groups` metafield: titled
+ * blocks of label/value pairs, which `ProductSpecs` renders as the fine-print
+ * section under the listing.
+ *
+ * The metafield is JSON rather than a Shopify-typed structure because nothing
+ * in their type system describes a list of groups each holding a list of
+ * pairs. That puts the burden of validation here: a malformed value is dropped
+ * rather than allowed to take a build down, since one bad edit in the admin
+ * should cost one section on one product, not the whole site.
+ */
+function toSpecGroups(product: ShopifyProduct): ProductSpecGroup[] {
+  const raw = product.specGroups?.value;
+  if (!raw) return [];
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    return [];
+  }
+  if (!Array.isArray(parsed)) return [];
+
+  return parsed.flatMap((group) => {
+    if (typeof group !== "object" || group === null) return [];
+    const { title, specs } = group as { title?: unknown; specs?: unknown };
+    if (typeof title !== "string" || !Array.isArray(specs)) return [];
+
+    const entries = specs.flatMap((spec) => {
+      if (typeof spec !== "object" || spec === null) return [];
+      const { label, value } = spec as { label?: unknown; value?: unknown };
+      if (typeof label !== "string" || typeof value !== "string") return [];
+      return [{ label, value }];
+    });
+
+    return entries.length > 0 ? [{ title, specs: entries }] : [];
+  });
+}
+
 function toProduct(product: ShopifyProduct, category: ProductCategory): Product {
   const options = toOptions(product);
   const addOns = toAddOns(product);
+  const specGroups = toSpecGroups(product);
   const compareAt = product.variants.nodes.find((variant) => variant.compareAtPrice)?.compareAtPrice;
 
   return {
@@ -390,7 +434,6 @@ function toProduct(product: ShopifyProduct, category: ProductCategory): Product 
     ...(compareAt ? { compareAtPrice: toMoney(compareAt) } : {}),
     images: toImages(product),
     descriptionHtml: product.descriptionHtml,
-    ...splitDescription(product.descriptionHtml),
     // The store defines no metafield for the hand-written spec tables yet, so
     // products publish without specs and `ProductSpecs` renders nothing. The
     // machines carry their specifications in `descriptionHtml` meanwhile.
@@ -398,6 +441,7 @@ function toProduct(product: ShopifyProduct, category: ProductCategory): Product 
     options,
     variants: toVariants(product, options),
     ...(addOns.length > 0 ? { addOns } : {}),
+    ...(specGroups.length > 0 ? { specGroups } : {}),
   };
 }
 

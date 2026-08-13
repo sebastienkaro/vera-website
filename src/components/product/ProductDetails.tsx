@@ -1,11 +1,11 @@
 /**
- * The long half of a product description — everything from its first heading
- * on, which for a machine means inclusions, specifications and warranty.
+ * A product's description, in full.
  *
  * It sits below the gallery rather than beside the price so that the buy
- * column stays short enough to keep the buttons on screen. The styling lives
- * here because the markup comes from Shopify as a blob of HTML: there are no
- * class names to hook, so every element is reached through the parent.
+ * column stays short enough to keep the configuration and the buttons on
+ * screen. The styling lives here because the markup comes from Shopify as a
+ * blob of HTML: there are no class names to hook, so every element is reached
+ * through the parent.
  */
 export function ProductDetails({ html }: { html: string }) {
   if (!html.trim()) return null;
@@ -20,7 +20,9 @@ export function ProductDetails({ html }: { html: string }) {
         "[&_h2]:text-xs [&_h2]:font-medium [&_h2]:tracking-wide [&_h2]:text-taupe [&_h2]:uppercase",
         "[&_h2:first-child]:mt-0",
         "[&_h3]:mt-6 [&_h3]:text-sm [&_h3]:font-medium [&_h3]:text-espresso",
-        "[&_p]:mt-4",
+        // The opening prose runs at reading size; it is the first thing under
+        // the photograph and carries the pitch.
+        "[&>p]:mt-4 [&>p:first-child]:mt-0 [&>p:first-of-type]:text-base",
         // Two columns on wide screens: these lists are long and narrow, and a
         // single column of short items leaves most of the row empty.
         "[&_ul]:mt-4 [&_ul]:grid [&_ul]:gap-x-8 [&_ul]:gap-y-2 sm:[&_ul]:grid-cols-2",

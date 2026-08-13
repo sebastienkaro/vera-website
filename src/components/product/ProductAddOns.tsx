@@ -7,14 +7,14 @@ import type { ProductAddOn } from "@/lib/types";
  * The add-ons offered with a machine: other catalog products that go in the
  * cart alongside it, and services Vera prices by hand.
  *
- * Both are ticked the same way. A priced add-on carries a variant and is added
- * with the machine; a quote-only one has no price to add, and the panel that
- * owns this list says what happens to it instead — see `ProductInfo`.
+ * Laid out as a row that scrolls sideways rather than a stacked list. A machine
+ * can offer a dozen of these, and a dozen full-width rows pushes the total and
+ * the buy button off the screen — the one place on the site where they must not
+ * be. Sideways, the whole set costs a fixed amount of height whatever its
+ * length.
  *
- * A machine can offer a dozen of these, so the row is only what you need to
- * choose: name and price. The explanation sits behind a disclosure, because a
- * list of twelve paragraphs is not a list anyone reads — and it pushes the
- * rest of the page below the fold.
+ * Each card is only what you need in order to choose: name and price. The
+ * detail belongs in the specifications below, not stacked twelve deep here.
  */
 export function ProductAddOns({
   addOns,
@@ -27,37 +27,39 @@ export function ProductAddOns({
 }) {
   return (
     <div className="mt-8">
-      <p className="text-xs font-medium tracking-wide text-taupe uppercase">Add-ons &amp; upgrades</p>
+      <div className="flex items-baseline justify-between gap-4">
+        <p className="text-xs font-medium tracking-wide text-taupe uppercase">Add-ons &amp; upgrades</p>
+        <p className="text-xs text-espresso/40">{addOns.length} available</p>
+      </div>
 
-      <ul className="mt-3 divide-y divide-espresso/10 border-y border-espresso/10">
+      {/* Negative margin lets the row bleed to the edge of the column, so the
+          last card is visibly cut off — the cue that there is more sideways. */}
+      <ul className="-mx-1 mt-3 flex snap-x snap-mandatory gap-2 overflow-x-auto px-1 pb-2">
         {addOns.map((addOn) => {
           const isSelected = selectedIds.includes(addOn.id);
           return (
-            <li key={addOn.id} className={isSelected ? "bg-sand/30" : undefined}>
-              <label className="flex cursor-pointer items-center gap-3 py-2.5">
-                <input
-                  type="checkbox"
-                  checked={isSelected}
-                  onChange={() => onToggle(addOn.id)}
-                  className="h-4 w-4 shrink-0 accent-espresso"
-                />
-                <span className="min-w-0 flex-1 text-sm text-espresso">{addOn.title}</span>
-                <span className="shrink-0 text-sm tabular-nums text-espresso/70">
+            <li key={addOn.id} className="snap-start">
+              <label
+                title={addOn.description}
+                className={`flex h-full w-44 cursor-pointer flex-col justify-between gap-3 border p-3 transition-colors ${
+                  isSelected
+                    ? "border-espresso bg-sand/40"
+                    : "border-espresso/15 hover:border-espresso/40"
+                }`}
+              >
+                <span className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => onToggle(addOn.id)}
+                    className="mt-0.5 h-3.5 w-3.5 shrink-0 accent-espresso"
+                  />
+                  <span className="text-xs leading-snug text-espresso">{addOn.title}</span>
+                </span>
+                <span className="text-sm tabular-nums text-espresso/70">
                   {addOn.price ? `+ ${formatMoney(addOn.price)}` : addOn.priceNote}
                 </span>
               </label>
-
-              {addOn.description && (
-                <details className="group pb-2.5 pl-7">
-                  <summary className="inline-flex cursor-pointer list-none text-xs text-espresso/50 hover:text-espresso focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espresso">
-                    <span className="group-open:hidden">What this is</span>
-                    <span className="hidden group-open:inline">Hide</span>
-                  </summary>
-                  <p className="mt-1.5 max-w-prose text-xs leading-relaxed text-espresso/60">
-                    {addOn.description}
-                  </p>
-                </details>
-              )}
             </li>
           );
         })}

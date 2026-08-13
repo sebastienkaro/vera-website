@@ -61,7 +61,7 @@ export default async function ProductPage({
               buy column is the one that has to stay short. */}
           <div className="flex flex-col gap-12">
             <ProductGallery images={product.images} />
-            <ProductDetails html={product.detailsHtml} />
+            <ProductDetails html={product.descriptionHtml} />
           </div>
           <ProductInfo product={product} />
         </div>
