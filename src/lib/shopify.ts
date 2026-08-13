@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import { cache } from "react";
+import { splitDescription } from "@/lib/description";
 import type {
   Money,
   Product,
@@ -434,6 +435,7 @@ function toProduct(product: ShopifyProduct, category: ProductCategory): Product 
     ...(compareAt ? { compareAtPrice: toMoney(compareAt) } : {}),
     images: toImages(product),
     descriptionHtml: product.descriptionHtml,
+    ...splitDescription(product.descriptionHtml),
     // The store defines no metafield for the hand-written spec tables yet, so
     // products publish without specs and `ProductSpecs` renders nothing. The
     // machines carry their specifications in `descriptionHtml` meanwhile.
