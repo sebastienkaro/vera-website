@@ -3,6 +3,7 @@ import { cache } from "react";
 import type {
   Money,
   Product,
+  ProductAddOn,
   ProductCategory,
   ProductImage,
   ProductOption,
@@ -74,6 +75,23 @@ type ShopifyProduct = {
       selectedOptions: { name: string; value: string }[];
     }[];
   };
+  addOns: { references: { nodes: ShopifyAddOnProduct[] } | null } | null;
+};
+
+/**
+ * A product referenced by another product's `custom.add_ons` metafield: the
+ * optional extras a machine is offered with. Only the first variant is read —
+ * add-ons are single-variant products by construction, since an option that
+ * itself needed configuring would belong on the machine's own picker.
+ */
+type ShopifyAddOnProduct = {
+  id: string;
+  title: string;
+  description: string;
+  featuredImage: { url: string; altText: string | null } | null;
+  variants: {
+    nodes: { id: string; availableForSale: boolean; price: ShopifyMoney }[];
+  };
 };
 
 type CollectionProductsResponse = {
@@ -132,6 +150,31 @@ const COLLECTION_PRODUCTS_QUERY = /* GraphQL */ `
               selectedOptions {
                 name
                 value
+              }
+            }
+          }
+          addOns: metafield(namespace: "custom", key: "add_ons") {
+            references(first: 25) {
+              nodes {
+                ... on Product {
+                  id
+                  title
+                  description
+                  featuredImage {
+                    url
+                    altText
+                  }
+                  variants(first: 1) {
+                    nodes {
+                      id
+                      availableForSale
+                      price {
+                        amount
+                        currencyCode
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -287,8 +330,50 @@ function toVariants(product: ShopifyProduct, options: ProductOption[]): ProductV
   }));
 }
 
+/**
+ * The optional extras a machine is offered with, from its `custom.add_ons`
+ * metafield.
+ *
+ * These are ordinary catalog products rather than variants of the machine.
+ * That is forced by the shape of the data: the options on a price sheet are
+ * independent yes/no choices, and variants can only express a fixed set of
+ * combinations — the fourteen options an Enigma E'4m offers would need 2^14
+ * variants to enumerate, past Shopify's per-product ceiling. Keeping them as
+ * products means each carries its own price and part number, and the machine
+ * page adds the ticked ones to the cart alongside it.
+ *
+ * An add-on with no variant is dropped rather than rendered unbuyable.
+ */
+function toAddOns(product: ShopifyProduct): ProductAddOn[] {
+  const nodes = product.addOns?.references?.nodes ?? [];
+
+  return nodes.flatMap((addOn) => {
+    const variant = addOn.variants.nodes[0];
+    if (!variant) return [];
+
+    return [
+      {
+        id: addOn.id,
+        title: addOn.title,
+        description: addOn.description,
+        ...(addOn.featuredImage
+          ? {
+              image: {
+                url: addOn.featuredImage.url,
+                alt: addOn.featuredImage.altText ?? addOn.title,
+              },
+            }
+          : {}),
+        merchandiseId: variant.id,
+        price: toMoney(variant.price),
+      },
+    ];
+  });
+}
+
 function toProduct(product: ShopifyProduct, category: ProductCategory): Product {
   const options = toOptions(product);
+  const addOns = toAddOns(product);
   const compareAt = product.variants.nodes.find((variant) => variant.compareAtPrice)?.compareAtPrice;
 
   return {
@@ -304,12 +389,13 @@ function toProduct(product: ShopifyProduct, category: ProductCategory): Product 
     ...(compareAt ? { compareAtPrice: toMoney(compareAt) } : {}),
     images: toImages(product),
     descriptionHtml: product.descriptionHtml,
-    // The Storefront API has no equivalent of the hand-written spec tables,
-    // and this store defines no metafields for them, so products publish
-    // without specs and `ProductSpecs` renders nothing.
+    // The store defines no metafield for the hand-written spec tables yet, so
+    // products publish without specs and `ProductSpecs` renders nothing. The
+    // machines carry their specifications in `descriptionHtml` meanwhile.
     specs: [],
     options,
     variants: toVariants(product, options),
+    ...(addOns.length > 0 ? { addOns } : {}),
   };
 }
 

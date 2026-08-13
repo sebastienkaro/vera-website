@@ -36,11 +36,26 @@ a product, add it to the relevant collection in Shopify.
 
 ### The sample listing
 
-A product page can show more than Shopify currently gives it: highlights, an
+A product page can show more than Shopify gives it by default: highlights, an
 add-on picker, grouped specifications, a per-configuration table and the
-manufacturer's documents. Nothing in the catalog carries that data — the
-Storefront API has no field for it and the store defines no metafields — so
-`src/lib/sample-product.ts` is one listing with all of it filled in, served at
+manufacturer's documents.
+
+The add-on picker is live. A machine's optional extras come from a
+`custom.add_ons` metafield on the Shopify product — a list of references to
+other catalog products — read in `src/lib/shopify.ts` and mapped to
+`Product.addOns`. Ticking one adds its price to the configuration total and
+puts it in the cart alongside the machine. Every Eversys machine carries one,
+built from the manufacturer's price sheet. To add an option to a machine, add
+the option as its own product, publish it, and append it to that machine's
+`custom.add_ons` list.
+
+They are deliberately products rather than variants: price-sheet options are
+independent yes/no choices, and variants can only enumerate fixed combinations
+— the fourteen options on an Enigma E'4m would need 2^14 rows, past Shopify's
+per-product ceiling.
+
+The remaining sections still have no home in the catalog, so
+`src/lib/sample-product.ts` is one listing with all of them filled in, served at
 
 ```
 /products/sample-la-marzocco-linea-classic-s

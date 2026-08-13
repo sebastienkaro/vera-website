@@ -3,10 +3,10 @@ import type { Product } from "@/lib/types";
 /**
  * One product page with every optional field filled in.
  *
- * Nothing in the Shopify catalog carries highlights, grouped specs, a
- * configuration table, add-ons or documents yet — the Storefront API has no
- * field for any of it, and the store defines no metafields for them — so no
- * real listing can show what the product page is capable of. This is that
+ * Add-ons are now real: they come from a `custom.add_ons` metafield and every
+ * Eversys machine has one. The rest — highlights, grouped specs, the
+ * configuration table and documents — still has no home in the catalog, so no
+ * real listing shows the whole of what the product page can do. This is that
  * listing: a demonstration of the finished layout, and a worked example of the
  * data each section needs.
  *
@@ -29,8 +29,10 @@ import type { Product } from "@/lib/types";
  * - `options` / `variants` — the live listing has one "Configuration" option
  *   with six combined values; splitting it into "Groups" × "Control" is what
  *   produces the two-row picker here, and is done in the Shopify admin.
- * - `highlights`, `specGroups`, `specTable`, `addOns`, `documents` — product
- *   metafields, read in `src/lib/shopify.ts` and mapped in `toProduct`.
+ * - `addOns` — already wired: the `custom.add_ons` metafield, read in
+ *   `src/lib/shopify.ts` and mapped in `toProduct`.
+ * - `highlights`, `specGroups`, `specTable`, `documents` — the same pattern,
+ *   once the store defines a metafield for each.
  */
 
 export const SAMPLE_PRODUCT_HANDLE = "sample-la-marzocco-linea-classic-s";
