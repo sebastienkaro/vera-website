@@ -165,18 +165,12 @@ export type Product = {
   price: Money;
   compareAtPrice?: Money;
   images: ProductImage[];
-  descriptionHtml: string;
   /**
-   * The description split in two for the product page, which shows them in
-   * different places: the opening prose sits in the buy column, and everything
-   * from the first heading on moves below the gallery.
-   *
-   * The split keeps the buy button above the fold. A machine's full
-   * description runs to inclusions, options and specifications, and rendering
-   * all of it beside the price pushes everything actionable off the screen.
+   * Rendered below the gallery rather than beside the price. A machine's
+   * description runs long, and the buy column has to stay short enough that
+   * the configuration and the buy button are on screen without scrolling.
    */
-  summaryHtml: string;
-  detailsHtml: string;
+  descriptionHtml: string;
   specs: ProductSpec[];
   options: ProductOption[];
   variants: ProductVariant[];

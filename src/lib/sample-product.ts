@@ -1,4 +1,3 @@
-import { splitDescription } from "@/lib/description";
 import type { Product } from "@/lib/types";
 
 /**
@@ -123,7 +122,6 @@ const SAMPLE_PRODUCT: Product = {
     { url: `${IMAGE_DIR}/on-the-bar.jpg`, alt: "Linea Classic S installed on a cafe bar alongside two grinders" },
   ],
   descriptionHtml: SAMPLE_DESCRIPTION,
-  ...splitDescription(SAMPLE_DESCRIPTION),
   specs: [],
   options: [
     { name: "Groups", values: ["1 Group", "2 Group", "3 Group"] },
