@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
+import { ProductDetails } from "@/components/product/ProductDetails";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductHighlights } from "@/components/product/ProductHighlights";
 import { ProductInfo } from "@/components/product/ProductInfo";
@@ -56,7 +57,12 @@ export default async function ProductPage({
 
       <div className="mx-auto max-w-6xl px-8 py-16 sm:px-12">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
-          <ProductGallery images={product.images} />
+          {/* The gallery column carries the specifications underneath it: the
+              buy column is the one that has to stay short. */}
+          <div className="flex flex-col gap-12">
+            <ProductGallery images={product.images} />
+            <ProductDetails html={product.detailsHtml} />
+          </div>
           <ProductInfo product={product} />
         </div>
       </div>

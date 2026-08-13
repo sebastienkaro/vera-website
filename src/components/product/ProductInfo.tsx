@@ -99,9 +99,12 @@ export function ProductInfo({ product }: { product: Product }) {
       )}
       <p className="mt-4 text-xl text-espresso">{formatMoney(price)}</p>
 
+      {/* Only the opening prose — the rest of the description renders below the
+          gallery, so that the options and the buy button stay above the fold.
+          See `splitDescription` in `src/lib/shopify.ts`. */}
       <div
-        className="prose-sm mt-6 max-w-md text-sm text-espresso/70 [&_p]:leading-relaxed [&_p+p]:mt-3"
-        dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+        className="mt-6 max-w-md text-sm text-espresso/70 [&_p]:leading-relaxed [&_p+p]:mt-3"
+        dangerouslySetInnerHTML={{ __html: product.summaryHtml }}
       />
 
       {product.options.map((option) => (

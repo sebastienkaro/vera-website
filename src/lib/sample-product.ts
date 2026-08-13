@@ -1,3 +1,4 @@
+import { splitDescription } from "@/lib/description";
 import type { Product } from "@/lib/types";
 
 /**
@@ -89,6 +90,20 @@ const CONFIGURATIONS: {
   },
 ];
 
+const SAMPLE_DESCRIPTION = `
+  <p>The Linea Classic has occupied the cafes, roasteries and chains whose names defined
+  specialty coffee for three decades, and it earned that place by being reserved, reliable
+  and consistent. The Linea Classic S keeps the shape and adds what a modern bar asks of it:
+  dual PID control over separate coffee and steam boilers, per-group shot timers, and an
+  electronics board that talks to the La Marzocco Pro App.</p>
+  <p>Saturated brew groups hold temperature shot after shot through a rush. Insulated boilers
+  cut the energy the machine spends holding that temperature. The half-turn steam valve asks
+  less of a barista's wrist across a shift of milk drinks. Available in one, two and three
+  group bodies, in semi-automatic (EE) or auto-volumetric (AV) control.</p>
+  <p>Every machine Vera sells is delivered, installed and commissioned by our own certified
+  technicians, and backed by a 13-month parts warranty.</p>
+`;
+
 const SAMPLE_PRODUCT: Product = {
   id: "sample/la-marzocco-linea-classic-s",
   handle: SAMPLE_PRODUCT_HANDLE,
@@ -107,19 +122,8 @@ const SAMPLE_PRODUCT: Product = {
     { url: `${IMAGE_DIR}/detail-controls.jpg`, alt: "Close-up of the Linea Classic S control panel, shot timer and steam knob" },
     { url: `${IMAGE_DIR}/on-the-bar.jpg`, alt: "Linea Classic S installed on a cafe bar alongside two grinders" },
   ],
-  descriptionHtml: `
-    <p>The Linea Classic has occupied the cafes, roasteries and chains whose names defined
-    specialty coffee for three decades, and it earned that place by being reserved, reliable
-    and consistent. The Linea Classic S keeps the shape and adds what a modern bar asks of it:
-    dual PID control over separate coffee and steam boilers, per-group shot timers, and an
-    electronics board that talks to the La Marzocco Pro App.</p>
-    <p>Saturated brew groups hold temperature shot after shot through a rush. Insulated boilers
-    cut the energy the machine spends holding that temperature. The half-turn steam valve asks
-    less of a barista's wrist across a shift of milk drinks. Available in one, two and three
-    group bodies, in semi-automatic (EE) or auto-volumetric (AV) control.</p>
-    <p>Every machine Vera sells is delivered, installed and commissioned by our own certified
-    technicians, and backed by a 13-month parts warranty.</p>
-  `,
+  descriptionHtml: SAMPLE_DESCRIPTION,
+  ...splitDescription(SAMPLE_DESCRIPTION),
   specs: [],
   options: [
     { name: "Groups", values: ["1 Group", "2 Group", "3 Group"] },
