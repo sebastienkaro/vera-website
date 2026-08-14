@@ -137,6 +137,16 @@ Without `HUBSPOT_PORTAL_ID` there is no chat bubble; without
 message asking the visitor to call. Neither stops a build — unlike the catalog
 credentials, which do.
 
+Vera's portal is `39763716` and the form is **Request Price Form - Oct 2025**;
+both values are in `.env.example`. Neither is a secret, but neither is defaulted
+in code either, so a preview deploy stays silent until it is configured
+deliberately.
+
+The form must define every field listed above. HubSpot rejects a whole
+submission that names a field its form doesn't have, so when pointing this at a
+different form, check that form's fields first — the failure is a 400 on every
+submission, not a quietly dropped value.
+
 ## Project structure
 
 - `src/app` — pages and layout (Next.js App Router)
