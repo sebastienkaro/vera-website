@@ -102,6 +102,41 @@ it, then prints the checkout URL. Nothing is bought. It is the only check that
 proves the GraphQL still matches the store's schema — everything else about the
 cart can be exercised without credentials.
 
+## HubSpot
+
+Two things talk to HubSpot, both switched on by environment variables and both
+inert without them — see `.env.example` for where each value comes from.
+
+**The quote form** at `/quote` is our own markup, not HubSpot's embed, so the
+fields carry the site's type and spacing. It posts to `/api/quote`, which
+validates the request and forwards it to HubSpot's form-submission endpoint.
+That endpoint needs no API key, but the hop through our server is what lets one
+validation live on the side we control and what attaches the visitor's HubSpot
+cookie to the submission — which is what makes a quote request show up in
+HubSpot next to the pages that visitor read before sending it.
+
+Product pages link to `/quote?product=<handle>`, and the form opens with that
+machine already named.
+
+Answers land in HubSpot's default contact properties — `firstname`, `lastname`,
+`email`, `phone`, `company` and `message` — so the form works against an
+account with nothing configured on it. "What are you looking at?" is the
+exception: HubSpot has no default property for it, so it goes onto the first
+line of the message. To give it a column of its own, add a custom contact
+property and map it in `PROPERTIES` in `src/lib/hubspot.ts`. Note that a field
+naming a property the portal doesn't have fails the whole submission, not just
+that value.
+
+**The chat widget** loads sitewide from the root layout, during browser idle
+time so it doesn't compete with the hero. It is the same script that sets the
+tracking cookie above, so turning it off also costs the quote form its
+attribution.
+
+Without `HUBSPOT_PORTAL_ID` there is no chat bubble; without
+`HUBSPOT_QUOTE_FORM_GUID` the quote page still renders and submitting returns a
+message asking the visitor to call. Neither stops a build — unlike the catalog
+credentials, which do.
+
 ## Project structure
 
 - `src/app` — pages and layout (Next.js App Router)
@@ -109,6 +144,7 @@ cart can be exercised without credentials.
 - `src/lib/shopify.ts` — Storefront API client, product mapping, caching
 - `src/lib/products.ts` — the app's catalog API (`getProducts`, `getProduct`)
 - `src/lib/catalog-filters.ts` — search, facets and sorting for the category pages
+- `src/lib/hubspot.ts` — quote-request validation and submission, chat portal id
 - `src/lib/site-config.ts` — site name, nav links, tagline, contact info
 - `src/app/globals.css` — theme colors and fonts
 
