@@ -4,6 +4,7 @@ import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import { CartProvider } from "@/components/cart/CartProvider";
 import { Footer } from "@/components/Footer";
+import { HubSpotChat } from "@/components/HubSpotChat";
 
 const hostGrotesk = localFont({
   src: "../fonts/HostGrotesk-Variable.ttf",
@@ -34,6 +35,10 @@ export default function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
         </CartProvider>
+        {/* Sitewide, and outside the cart: the chat bubble belongs to the
+            window rather than to any one page, and mounting it here is what
+            keeps it from reloading on every navigation. */}
+        <HubSpotChat />
       </body>
     </html>
   );

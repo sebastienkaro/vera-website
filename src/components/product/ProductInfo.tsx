@@ -184,8 +184,10 @@ export function ProductInfo({ product }: { product: Product }) {
                 ? `Add ${purchasableAddOns.length + 1} items to cart`
                 : "Add to Cart"}
         </button>
+        {/* Carries the machine through, so the quote form opens already naming
+            what they were looking at rather than asking them to type it. */}
         <Link
-          href="/quote"
+          href={`/quote?product=${encodeURIComponent(product.handle)}`}
           className="border border-espresso px-6 py-3.5 text-xs font-medium tracking-wide text-espresso uppercase transition-colors hover:bg-espresso hover:text-cream"
         >
           Get a Quote
