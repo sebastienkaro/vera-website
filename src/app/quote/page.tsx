@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { PageHero } from "@/components/PageHero";
+import { Header } from "@/components/Header";
+import { SiteImage } from "@/components/SiteImage";
 import { QuoteForm } from "@/components/quote/QuoteForm";
 import { resolveAsset } from "@/lib/images";
 import { getProduct } from "@/lib/products";
@@ -18,27 +19,10 @@ const CONTENT = {
     lines: ["Tell us what", "you're pouring"],
     body: "Every bar is a different room with a different queue. Tell us about yours and we'll price the machine that suits it — installed, plumbed and serviced by the same people who sold it.",
   },
-  steps: [
-    {
-      number: "01",
-      title: "You tell us the shape of it",
-      body: "Covers a day, the space behind the counter, whether there's water and power where the machine needs to stand.",
-    },
-    {
-      number: "02",
-      title: "We put numbers to it",
-      body: "Machine, grinder, filtration and install, itemised — including the parts most quotes leave until the invoice.",
-    },
-    {
-      number: "03",
-      title: "We install and stay",
-      body: "Delivery, plumbing, calibration and training on the day, then a service plan with the same phone number behind it.",
-    },
-  ],
   form: {
     eyebrow: "The Request",
     heading: "A few details and we'll come back to you",
-    body: "Nothing here is binding, and a half-filled form is still worth sending — we'd rather start the conversation than wait for the complete picture.",
+    body: "Nothing here is binding, and a half-filled form is still worth sending.",
   },
 };
 
@@ -60,43 +44,50 @@ export default async function QuotePage({
   const product = handle ? await getProduct(handle) : undefined;
 
   return (
-    <>
-      <PageHero
+    /* Unlike the other interior pages, the hero here doesn't hand over to the
+       page below it — the form sits inside the opening band so the whole thing
+       is on screen without scrolling, which is the only reason anyone is here. */
+    <section className="relative flex min-h-svh flex-col overflow-hidden">
+      <SiteImage
         src={resolveAsset("barista-cafe-lamarzocco")}
         alt="A barista pulling a shot on a La Marzocco espresso machine"
         label="Quote — hero photo"
-        eyebrow={CONTENT.hero.eyebrow}
-        lines={CONTENT.hero.lines}
-        body={CONTENT.hero.body}
+        className="absolute inset-0"
+        preload
       />
+      {/* Heaviest on the left, where the title lands; the right only has to
+          hold the cream card apart from the photograph behind it. */}
+      <div className="absolute inset-0 bg-gradient-to-r from-espresso/80 via-espresso/65 to-espresso/45" />
 
-      <section className="px-8 py-24 sm:px-12">
-        <ol className="mx-auto grid max-w-6xl grid-cols-1 gap-x-6 gap-y-12 md:grid-cols-3">
-          {CONTENT.steps.map((step) => (
-            <li key={step.number} className="border-t border-espresso/15 pt-6">
-              <p className="text-xs font-medium tracking-wide text-taupe uppercase">{step.number}</p>
-              <h2 className="mt-3 text-lg font-semibold tracking-[-0.02em] text-espresso">
-                {step.title}
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-espresso/60">{step.body}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
+      <Header />
 
-      <section className="px-8 pb-24 sm:px-12">
-        <div className="mx-auto max-w-2xl">
-          <p className="text-xs font-medium tracking-wide text-taupe uppercase">
-            {CONTENT.form.eyebrow}
-          </p>
-          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-espresso sm:text-3xl">
-            {CONTENT.form.heading}
-          </h2>
-          <p className="mt-4 mb-10 text-sm leading-relaxed text-espresso/60">{CONTENT.form.body}</p>
+      <div className="relative z-10 mx-auto flex w-full max-w-[1800px] flex-1 items-center px-8 pt-24 pb-10 sm:px-12 lg:pt-28 lg:pb-12">
+        <div className="grid w-full grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div className="lg:pr-8">
+            <p className="text-xs font-semibold tracking-[-0.02em] text-cream/70 uppercase">
+              {CONTENT.hero.eyebrow}
+            </p>
+            <h1 className="mt-4 flex flex-col text-[max(2rem,4vw)] leading-[0.95] font-normal tracking-[-0.04em] text-cream uppercase">
+              {CONTENT.hero.lines.map((line, i) => (
+                <span key={i}>{line}</span>
+              ))}
+            </h1>
+            <p className="mt-6 max-w-lg text-sm text-cream/80 sm:text-base">{CONTENT.hero.body}</p>
+          </div>
 
-          <QuoteForm equipment={product?.title ?? ""} />
+          <div className="bg-cream p-6 sm:p-8 lg:w-full lg:max-w-xl lg:justify-self-end">
+            <p className="text-xs font-medium tracking-wide text-taupe uppercase">
+              {CONTENT.form.eyebrow}
+            </p>
+            <h2 className="mt-2 text-xl font-semibold tracking-[-0.02em] text-espresso sm:text-2xl">
+              {CONTENT.form.heading}
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-espresso/60">{CONTENT.form.body}</p>
+
+            <QuoteForm equipment={product?.title ?? ""} />
+          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }

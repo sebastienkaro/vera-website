@@ -5,7 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 
 /** Shared by every input so the fields read as one set. */
 const FIELD =
-  "mt-2 w-full border border-espresso/20 bg-cream px-3 py-2.5 text-sm text-espresso outline-none transition-colors placeholder:text-espresso/30 focus:border-espresso";
+  "mt-1.5 w-full border border-espresso/20 bg-cream px-3 py-2 text-sm text-espresso outline-none transition-colors placeholder:text-espresso/30 focus:border-espresso";
 
 const LABEL = "block text-xs font-medium tracking-wide text-taupe uppercase";
 
@@ -77,8 +77,8 @@ export function QuoteForm({ equipment = "" }: { equipment?: string }) {
 
   if (sent) {
     return (
-      <div className="border-t border-espresso/15 pt-8">
-        <h2 className="text-2xl font-semibold tracking-[-0.02em] text-espresso">{SENT.heading}</h2>
+      <div className="mt-6 border-t border-espresso/15 pt-6">
+        <h2 className="text-xl font-semibold tracking-[-0.02em] text-espresso">{SENT.heading}</h2>
         <p className="mt-3 max-w-md text-sm leading-relaxed text-espresso/60">
           {SENT.before}{" "}
           <a href={`tel:${siteConfig.contact.phone}`} className="text-espresso underline">
@@ -91,8 +91,8 @@ export function QuoteForm({ equipment = "" }: { equipment?: string }) {
   }
 
   return (
-    <form onSubmit={submit} className="border-t border-espresso/15 pt-8">
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+    <form onSubmit={submit} className="mt-5 border-t border-espresso/15 pt-5">
+      <div className="grid grid-cols-1 gap-x-5 gap-y-3.5 sm:grid-cols-2">
         <div>
           <label className={LABEL} htmlFor="quote-first-name">
             First name
@@ -175,7 +175,7 @@ export function QuoteForm({ equipment = "" }: { equipment?: string }) {
           </label>
           <textarea
             id="quote-message"
-            rows={5}
+            rows={3}
             className={`${FIELD} resize-y`}
             value={fields.message}
             onChange={set("message")}
@@ -185,16 +185,16 @@ export function QuoteForm({ equipment = "" }: { equipment?: string }) {
       </div>
 
       {error && (
-        <p role="alert" className="mt-6 text-sm text-red-700">
+        <p role="alert" className="mt-5 text-sm text-red-700">
           {error}
         </p>
       )}
 
-      <div className="mt-8 flex flex-wrap items-center gap-6">
+      <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
         <button
           type="submit"
           disabled={busy}
-          className="bg-espresso px-6 py-3.5 text-xs font-medium tracking-wide text-cream uppercase transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
+          className="bg-espresso px-6 py-3 text-xs font-medium tracking-wide text-cream uppercase transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
         >
           {busy ? "Sending…" : "Request a Quote"}
         </button>
