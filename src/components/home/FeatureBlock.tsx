@@ -44,11 +44,11 @@ export function FeatureBlock({
         </EditableImage>
       </ParallaxBackground>
 
-      {/* Dims the drifting photo so the cream copy stays legible over it — these
-          backgrounds include blown-out highlights that the text runs straight
-          across. Sits above the photo but below the block's content, so the
-          accent image keeps its own contrast. */}
-      <div className="pointer-events-none absolute inset-0 bg-espresso/65" />
+      {/* Takes the edge off the drifting photo so the cream copy reads against
+          it, kept light enough that the photo itself still carries the block.
+          Sits above the photo but below the block's content, so the accent
+          image keeps its own contrast. */}
+      <div className="pointer-events-none absolute inset-0 bg-espresso/45" />
 
       <div className="relative z-10 mx-auto flex max-w-6xl flex-col items-center gap-8 px-8 py-20 sm:block sm:h-full sm:px-0 sm:py-0">
         <div
