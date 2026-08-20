@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/cart/CartProvider";
 import { ProductAddOns } from "@/components/product/ProductAddOns";
+import { QuoteDialog } from "@/components/quote/QuoteDialog";
 import { formatMoney } from "@/lib/money";
 import { CATEGORY_LABELS, type Money, type Product } from "@/lib/types";
 
@@ -15,6 +16,7 @@ export function ProductInfo({ product }: { product: Product }) {
   const initialVariant = product.variants.find((variant) => variant.available) ?? product.variants[0];
   const [selected, setSelected] = useState<Record<string, string>>(initialVariant?.selectedOptions ?? {});
   const [selectedAddOnIds, setSelectedAddOnIds] = useState<string[]>([]);
+  const [quoteOpen, setQuoteOpen] = useState(false);
 
   const selectedVariant =
     product.variants.find((variant) =>
@@ -184,10 +186,22 @@ export function ProductInfo({ product }: { product: Product }) {
                 ? `Add ${purchasableAddOns.length + 1} items to cart`
                 : "Add to Cart"}
         </button>
-        {/* Carries the machine through, so the quote form opens already naming
-            what they were looking at rather than asking them to type it. */}
+        {/* The form opens over the listing rather than replacing it, so asking
+            the price doesn't cost the visitor the machine and the
+            configuration they had picked out.
+
+            Still the link it was: `/quote` is the page a new tab, a middle
+            click or a visitor without JavaScript gets, carrying the machine
+            through so the form names it either way. Only a plain left click —
+            the one that would otherwise navigate this tab away — is taken
+            over. */}
         <Link
           href={`/quote?product=${encodeURIComponent(product.handle)}`}
+          onClick={(event) => {
+            if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            event.preventDefault();
+            setQuoteOpen(true);
+          }}
           className="border border-espresso px-6 py-3.5 text-xs font-medium tracking-wide text-espresso uppercase transition-colors hover:bg-espresso hover:text-cream"
         >
           Get a Quote
@@ -210,6 +224,12 @@ export function ProductInfo({ product }: { product: Product }) {
           ))}
         </ul>
       )}
+
+      <QuoteDialog
+        open={quoteOpen}
+        onClose={() => setQuoteOpen(false)}
+        equipment={product.title}
+      />
     </div>
   );
 }
