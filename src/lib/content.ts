@@ -52,7 +52,16 @@ export type HomeContent = {
   // words around it live here. Keep the body true of any La Marzocco espresso
   // machine: which one is featured is decided in `getFeaturedMachine`, and can
   // change without anyone editing this copy.
-  featuredMachine: { eyebrow: string; body: string; buttonLabel: string };
+  featuredMachine: {
+    eyebrow: string;
+    // One sentence. The section is a photograph with a small panel over it,
+    // and the panel has room for a line, not a paragraph.
+    body: string;
+    buttonLabel: string;
+    // The machine in a bar, filling the section behind the panel — not the
+    // catalog's cut-out product shot, which is on the product's own page.
+    background: ImageRef;
+  };
   whyVera: {
     eyebrow: string;
     heading: HeadingSegment[];
@@ -62,7 +71,11 @@ export type HomeContent = {
     eyebrow: string;
     heading: HeadingSegment[];
     body: string;
+    // The large photo, on the right of the section.
     image: ImageRef;
+    // The smaller one above the copy, on the left. The pair is the section's
+    // whole layout, so both are always shown.
+    secondaryImage: ImageRef;
     buttons: LinkButton[];
   };
 };
@@ -89,8 +102,13 @@ export const homeContent: HomeContent = {
 
   featuredMachine: {
     eyebrow: "Featured Machine",
-    body: "Built in Florence and specified bar by bar, a La Marzocco is the machine most cafés end up building their program around — saturated groups, temperature that holds through a rush, and parts we stock and service ourselves. Tell us your volume and we'll spec the configuration to match.",
+    body: "Built in Florence and specified bar by bar, a La Marzocco is the machine most cafés end up building their program around.",
     buttonLabel: "Learn More",
+    background: {
+      ref: "asset:cafe-interior",
+      alt: "A La Marzocco on the bar of a café",
+      label: "Machine on the bar",
+    },
   },
 
   whyVera: {
@@ -162,6 +180,11 @@ export const homeContent: HomeContent = {
       ref: "slot:about/roastery",
       alt: "Vera Coffee Solutions roastery — Long Island City",
       label: "Roastery — Long Island City",
+    },
+    secondaryImage: {
+      ref: "asset:barista-espresso-eversys",
+      alt: "Pulling a shot on an Eversys machine",
+      label: "Barista at an Eversys machine",
     },
     buttons: [
       { label: "Read Our Story", href: "/about" },

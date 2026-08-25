@@ -30,8 +30,13 @@
   },
   "featuredMachine": {
     "eyebrow": "Featured Machine",
-    "body": "Built in Florence and specified bar by bar, a La Marzocco is the machine most cafés end up building their program around — saturated groups, temperature that holds through a rush, and parts we stock and service ourselves. Tell us your volume and we'll spec the configuration to match.",
-    "buttonLabel": "Learn More"
+    "body": "Built in Florence and specified bar by bar, a La Marzocco is the machine most cafés end up building their program around.",
+    "buttonLabel": "Learn More",
+    "background": {
+      "ref": "asset:cafe-interior",
+      "alt": "A La Marzocco on the bar of a café",
+      "label": "Machine on the bar"
+    }
   },
   "whyVera": {
     "eyebrow": "Why Vera",
@@ -113,6 +118,11 @@
       "ref": "slot:about/roastery",
       "alt": "Vera Coffee Solutions roastery — Long Island City",
       "label": "Roastery — Long Island City"
+    },
+    "secondaryImage": {
+      "ref": "asset:barista-espresso-eversys",
+      "alt": "Pulling a shot on an Eversys machine",
+      "label": "Barista at an Eversys machine"
     },
     "buttons": [
       {
