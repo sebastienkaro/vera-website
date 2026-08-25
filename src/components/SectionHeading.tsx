@@ -22,12 +22,15 @@ export function SectionHeading({
   as?: "h1" | "h2";
 }) {
   return (
-    <div className={`mx-auto max-w-4xl ${align === "center" ? "text-center" : "text-left"}`}>
+    // Centred headings are centred in their container; left-aligned ones sit
+    // against its left edge, so they line up with whatever the section lays
+    // out below them rather than floating in from a centred block.
+    <div className={`max-w-4xl ${align === "center" ? "mx-auto text-center" : "text-left"}`}>
       <p className={`text-xs font-semibold tracking-[-0.02em] uppercase ${eyebrowColor}`}>
         {path ? <Editable path={`${path}.eyebrow`}>{eyebrow}</Editable> : eyebrow}
       </p>
       <Tag
-        className={`mt-4 flex flex-col text-3xl leading-tight font-semibold tracking-[-0.02em] uppercase sm:text-5xl ${
+        className={`mt-4 flex flex-col text-3xl leading-[1.05] font-semibold tracking-[-0.02em] uppercase sm:text-5xl ${
           align === "center" ? "items-center" : "items-start"
         }`}
       >

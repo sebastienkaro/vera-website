@@ -1,5 +1,5 @@
 import { SectionHeading } from "@/components/SectionHeading";
-import { FeatureBlock } from "@/components/home/FeatureBlock";
+import { FeatureRail } from "@/components/home/FeatureRail";
 import { resolveRef } from "@/lib/content";
 import { getHomeContent } from "@/lib/content-store";
 
@@ -8,28 +8,25 @@ export function WhyVera() {
 
   return (
     <section>
-      <div className="px-8 py-24 sm:px-12">
-        <SectionHeading eyebrow={eyebrow} segments={heading} path="whyVera" />
+      {/* The rail below centres its cards in a full screen, and that centring
+          is nearly all of the air under this heading — so there is barely any
+          padding of its own here. */}
+      <div className="px-8 pt-24 pb-2 sm:px-12">
+        <SectionHeading eyebrow={eyebrow} segments={heading} path="whyVera" align="left" />
       </div>
 
-      <div className="flex flex-col">
-        {blocks.map((block, i) => (
-          <FeatureBlock
-            key={i}
-            path={`whyVera.blocks.${i}`}
-            bgSrc={resolveRef(block.background)}
-            bgLabel={block.background.label}
-            bgAlt={block.background.alt}
-            accentSrc={resolveRef(block.accent)}
-            accentLabel={block.accent.label}
-            accentAlt={block.accent.alt}
-            accentSide={block.accentSide}
-            textSide={block.textSide}
-            heading={block.heading}
-            body={block.body}
-          />
-        ))}
-      </div>
+      {/* The photos are resolved here, in the server component, because the
+          rail runs on the client and `resolveRef` reads the filesystem. */}
+      <FeatureRail
+        items={blocks.map((block, i) => ({
+          path: `whyVera.blocks.${i}`,
+          src: resolveRef(block.background),
+          alt: block.background.alt,
+          label: block.background.label,
+          heading: block.heading,
+          body: block.body,
+        }))}
+      />
     </section>
   );
 }

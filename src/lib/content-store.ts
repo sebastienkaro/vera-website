@@ -80,6 +80,10 @@ export function parseHomeContent(value: unknown): HomeContent | null {
           eyebrow: featuredMachine.eyebrow,
           body: featuredMachine.body,
           buttonLabel: featuredMachine.buttonLabel,
+          // The photo came later still than the rest of this section, so it
+          // falls back on its own rather than dragging the copy down with it.
+          background:
+            parseImage(featuredMachine.background) ?? homeContent.featuredMachine.background,
         }
       : homeContent.featuredMachine;
 
@@ -93,6 +97,11 @@ export function parseHomeContent(value: unknown): HomeContent | null {
   if (!isString(about.eyebrow) || !isString(about.body) || !aboutHeading || !aboutImage || !aboutButtons) {
     return null;
   }
+
+  // Added after the first files were stored, so — like `featuredMachine` above
+  // — an older save falls back to the default photo rather than failing
+  // validation and taking the rest of the file down with it.
+  const aboutSecondaryImage = parseImage(about.secondaryImage) ?? homeContent.about.secondaryImage;
 
   return {
     hero: {
@@ -109,6 +118,7 @@ export function parseHomeContent(value: unknown): HomeContent | null {
       heading: aboutHeading,
       body: about.body,
       image: aboutImage,
+      secondaryImage: aboutSecondaryImage,
       buttons: aboutButtons,
     },
   };
