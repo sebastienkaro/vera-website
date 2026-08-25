@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/cart/CartProvider";
+import { ApproveFinancing } from "@/components/product/ApproveFinancing";
 import { ProductAddOns } from "@/components/product/ProductAddOns";
 import { QuoteDialog } from "@/components/quote/QuoteDialog";
 import { formatMoney } from "@/lib/money";
@@ -11,7 +12,14 @@ import { CATEGORY_LABELS, type Money, type Product } from "@/lib/types";
 /** "the filtration package and the maintenance plan" — for the quote note. */
 const LIST_FORMAT = new Intl.ListFormat("en", { style: "long", type: "conjunction" });
 
-export function ProductInfo({ product }: { product: Product }) {
+export function ProductInfo({
+  product,
+  approveId,
+}: {
+  product: Product;
+  /** Vera's Approve account, or null on a deploy without financing. */
+  approveId: string | null;
+}) {
   const { add, addLines, pending } = useCart();
   const initialVariant = product.variants.find((variant) => variant.available) ?? product.variants[0];
   const [selected, setSelected] = useState<Record<string, string>>(initialVariant?.selectedOptions ?? {});
@@ -207,6 +215,19 @@ export function ProductInfo({ product }: { product: Product }) {
           Get a Quote
         </Link>
       </div>
+
+      {/* Financing sits under the buy buttons rather than beside them: it is
+          the third way to leave this page with the machine, and the one a
+          buyer weighs after seeing what the configuration costs. */}
+      {approveId && (
+        <ApproveFinancing
+          approveId={approveId}
+          product={product}
+          options={selected}
+          addOns={purchasableAddOns}
+          price={total}
+        />
+      )}
 
       {quotedNote && (
         <p className="mt-4 max-w-md text-xs leading-relaxed text-espresso/60">{quotedNote}</p>

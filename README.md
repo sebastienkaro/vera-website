@@ -147,6 +147,40 @@ submission that names a field its form doesn't have, so when pointing this at a
 different form, check that form's fields first — the failure is a 400 on every
 submission, not a quietly dropped value.
 
+## Approve financing
+
+Every product page carries "Finance for as low as $x/mo" under the buy
+buttons, from [Approve](https://www.approvepayments.com) (by Kwipped). Set
+`APPROVE_ID` to switch it on; without it no financing appears anywhere and
+nothing else changes.
+
+Approve quotes the payment and runs the application itself. Nothing about the
+applicant, their credit or the lender's answer passes through this site — all
+this end sends is what the visitor configured and what it costs.
+
+The price quoted is the **configuration total**, not the machine's list price:
+add-ons that go in the cart are part of what's being financed and move the
+monthly figure, while add-ons Vera prices by hand are left out of it. Options
+and add-ons are also written into the description Approve carries into the
+application, so a lender sees the machine that was actually configured.
+
+Two things keep the button off a page: an account id that isn't set, and a
+configuration under $500, which is below the smallest term worth quoting. The
+second is what keeps it off spare parts, and off any machine listed at nothing.
+
+Approve's plugin can instead find the price and the machine name by reading
+the page, driven by CSS selectors stored on the Approve account. That is how
+the Webflow site does it, and it is deliberately not how this one does: those
+selectors live outside this repository, so renaming a class would break
+financing with nothing in the diff to show for it. `ApproveFinancing` feeds
+Approve's `<approve-button>` element directly from the same state the rest of
+the buy column renders from.
+
+The account id is scoped to the domains registered with Approve. A new
+deploy — a preview URL, a staging domain, the production domain when it
+cuts over — needs that domain added on Approve's side first, or the button
+renders and quotes nothing.
+
 ## Project structure
 
 - `src/app` — pages and layout (Next.js App Router)
@@ -155,6 +189,7 @@ submission, not a quietly dropped value.
 - `src/lib/products.ts` — the app's catalog API (`getProducts`, `getProduct`)
 - `src/lib/catalog-filters.ts` — search, facets and sorting for the category pages
 - `src/lib/hubspot.ts` — quote-request validation and submission, chat portal id
+- `src/lib/approve.ts` — the financing account id and the widget's endpoints
 - `src/lib/site-config.ts` — site name, nav links, tagline, contact info
 - `src/app/globals.css` — theme colors and fonts
 

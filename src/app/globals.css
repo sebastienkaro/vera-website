@@ -40,3 +40,36 @@ body {
     transform: translate3d(var(--marquee-shift), 0, 0);
   }
 }
+
+/**
+ * Approve's financing button, which draws itself in a shadow root and can only
+ * be themed through these custom properties. Left alone it arrives as a lime
+ * pill in Arial, so the values below are the site's own buttons restated in
+ * Approve's vocabulary — see `ApproveFinancing` for the two rules no property
+ * here can reach. Custom properties cross the shadow boundary, which is why
+ * the theme colors can be named rather than copied.
+ */
+approve-button {
+  display: block;
+
+  --button_color: var(--color-espresso);
+  --button_hover_color: color-mix(in srgb, var(--color-espresso) 90%, var(--color-cream));
+  --button_font_color: var(--color-cream);
+  --button_font_hover_color: var(--color-cream);
+  --button_background_gradient: none;
+  --button_background_gradient_hover: none;
+
+  --button_border: none;
+  --button_border_radius: 0;
+  /* Padding inside the button is fixed at 12px, so 20px here is the 44px tall
+     button the Add to Cart and Get a Quote buttons beside it come out at. */
+  --button_height: 20px;
+
+  --button_font: var(--font-host-grotesk), sans-serif;
+  --button_font_size: 12px;
+  --button_font_weight: 500;
+  --button_text_transform: uppercase;
+
+  --button_powered_by_size: 12px;
+  --button_powered_by_color: color-mix(in srgb, var(--color-espresso) 60%, transparent);
+}
