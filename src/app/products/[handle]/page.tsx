@@ -8,6 +8,7 @@ import { ProductInfo } from "@/components/product/ProductInfo";
 import { ProductSpecs } from "@/components/product/ProductSpecs";
 import { RelatedProducts } from "@/components/product/RelatedProducts";
 import { SampleNotice } from "@/components/product/SampleNotice";
+import { approveId } from "@/lib/approve";
 import { getProduct, getProducts, getRelatedProducts } from "@/lib/products";
 import { SAMPLE_PRODUCT_HANDLE } from "@/lib/sample-product";
 
@@ -63,7 +64,7 @@ export default async function ProductPage({
             <ProductGallery images={product.images} />
             <ProductDetails html={product.descriptionHtml} />
           </div>
-          <ProductInfo product={product} />
+          <ProductInfo product={product} approveId={approveId()} />
         </div>
       </div>
 
