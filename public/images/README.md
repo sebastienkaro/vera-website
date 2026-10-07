@@ -16,14 +16,20 @@ changes needed either way.
 | Slot | Where it shows |
 | --- | --- |
 | `hero/background` | Homepage hero — the still behind the hero video. It is what paints first, and what stays on screen whenever the video doesn't play: no footage in `public/videos/`, a video that fails to load, or a visitor who has asked for reduced motion. Worth keeping it a frame the hero reads well on. |
-| `about/roastery` | "About Vera" section background |
-| `why-vera/2/background` | 2nd "Why Vera" feature block background |
-| `why-vera/3/background`, `why-vera/3/accent` | 3rd "Why Vera" feature block |
 
-The rest of the "Why Vera" photos come out of the shared pool instead of a
-slot — the 1st block's background and accent, and the 2nd block's accent.
-They're picked in `WhyVera.tsx` by name, so to change one, change the name
-there rather than moving files around.
+Only `hero/background` is still in use. The other slot files (`about/roastery`,
+`why-vera/2/*`, `why-vera/3/*`) are left over from before the Vera shoot.
+Nothing points at them any more, and they can be deleted.
+
+Every other photo on the site comes from the shared pool, picked by name:
+
+| Where it shows | Set in |
+| --- | --- |
+| Homepage: featured machine, the three "Why Vera" cards, About Vera | `content/home.json` |
+| White Label page: hero and the two photo blocks | `src/app/white-label/page.tsx` |
+| Resources page: hero and the six guide cards | `src/app/resources/page.tsx` |
+| Quote page: hero | `src/app/quote/page.tsx` |
+| Menu panels (Machines, Grinders, Parts & Accessories) | `src/lib/nav-menu.ts` |
 
 ## Shared pool (`assets/`)
 

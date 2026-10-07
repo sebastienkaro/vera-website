@@ -39,37 +39,37 @@ const CONTENT = {
       eyebrow: "Buying guide",
       title: "Sizing a machine to your volume",
       body: "Group count, boiler capacity and recovery — how to read a spec sheet against the morning you actually have.",
-      asset: "barista-cafe-lamarzocco",
+      asset: "in-context-cafe/vera-in-context-cafe-bar-grinders-espresso-machine",
     },
     {
       eyebrow: "Maintenance",
       title: "The service calendar",
       body: "Daily, weekly and annual. What your team can do, and what needs a technician on site.",
-      asset: "espresso-machine-2",
+      asset: "in-context-cafe/vera-in-context-cafe-espresso-machine-gauge-closeup",
     },
     {
       eyebrow: "Water",
       title: "Treatment and scale",
       body: "The single largest cause of the service calls we take. Testing, filtration and what your warranty expects of you.",
-      asset: "office-coffee-3",
+      asset: "white-label-roastery/vera-white-label-roastery-cupping-lab-batch-brewer",
     },
     {
       eyebrow: "Workflow",
       title: "Laying out the bar",
       body: "Where the grinder goes, how far the barista walks, and why the drain matters more than the counter.",
-      asset: "barista-making-espresso-coffee-shop",
+      asset: "in-context-cafe/vera-in-context-cafe-bar-wide-record-shelf",
     },
     {
       eyebrow: "Training",
       title: "Onboarding a new team",
       body: "Dialing in, milk technique and the daily reset — the shape of the training that comes with every install.",
-      asset: "barista-espresso-eversys",
+      asset: "in-context-cafe/vera-in-context-cafe-barista-dosing-grinder",
     },
     {
       eyebrow: "Support",
       title: "Parts and lead times",
       body: "What we stock in Bridgeport, what ships same day, and what to keep in your own cupboard.",
-      asset: "espresso-machine",
+      asset: "white-label-roastery/vera-white-label-roastery-warehouse-aisle-shelving",
     },
   ],
   help: {
@@ -88,8 +88,8 @@ export default function ResourcesPage() {
   return (
     <>
       <PageHero
-        src={resolveAsset("barista-making-espresso-coffee-shop")}
-        alt="A barista working an espresso bar"
+        src={resolveAsset("in-context-cafe/vera-in-context-cafe-interior-bar-wide-02")}
+        alt="Baristas working the espresso bar of a busy café"
         label="Resources — hero photo"
         eyebrow={CONTENT.hero.eyebrow}
         lines={CONTENT.hero.lines}

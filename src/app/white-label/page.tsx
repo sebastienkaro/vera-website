@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SiteImage } from "@/components/SiteImage";
-import { resolveAsset, resolveImage } from "@/lib/images";
+import { resolveAsset } from "@/lib/images";
 import { siteConfig } from "@/lib/site-config";
 
 /**
@@ -51,15 +51,13 @@ const CONTENT = {
       eyebrow: "The Roastery",
       heading: "Long Island City",
       body: "Small enough to roast a profile for one account, equipped well enough to keep it identical every week. Every batch is logged, and you're welcome on the floor whenever you want to taste one.",
-      asset: null as string | null,
-      slot: "about/roastery",
+      asset: "white-label-roastery/vera-white-label-roastery-roasting-team-at-control-station",
     },
     {
       eyebrow: "Who It's For",
       heading: "Cafés, restaurants, offices",
       body: "Anyone pouring enough coffee that the bag on the shelf says something about them. If you're not sure whether the volume works, ask — the answer is usually a shorter conversation than you'd think.",
-      asset: "office-coffee-2",
-      slot: null as string | null,
+      asset: "in-context-cafe/vera-in-context-cafe-retail-bags-warm-shelf",
     },
   ],
   cta: {
@@ -78,8 +76,8 @@ export default function WhiteLabelPage() {
   return (
     <>
       <PageHero
-        src={resolveImage("about/roastery")}
-        alt="The Vera Coffee Solutions roastery in Long Island City"
+        src={resolveAsset("white-label-roastery/vera-white-label-roastery-roastery-floor-wide")}
+        alt="The Vera Coffee Solutions roastery floor in Long Island City"
         label="White label — hero photo"
         eyebrow={CONTENT.hero.eyebrow}
         lines={CONTENT.hero.lines}
@@ -116,7 +114,7 @@ export default function WhiteLabelPage() {
           >
             <figure className="relative aspect-[4/3] overflow-hidden">
               <SiteImage
-                src={block.slot ? resolveImage(block.slot) : resolveAsset(block.asset ?? "")}
+                src={resolveAsset(block.asset)}
                 alt=""
                 label={block.heading}
                 className="absolute inset-0"

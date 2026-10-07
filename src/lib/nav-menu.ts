@@ -103,8 +103,8 @@ export const NAV_MENUS: Record<string, NavMenu> = {
       },
     ],
     feature: {
-      image: "/images/assets/cafe-interior.avif",
-      alt: "A commercial espresso machine on a tiled café bar",
+      image: "/images/assets/in-context-cafe/vera-in-context-cafe-espresso-machine-branded-panel.webp",
+      alt: "An espresso machine with a custom-branded panel on a café bar",
       eyebrow: "Not sure which",
       title: "Spec'd to your bar",
       body: "Tell us your covers a day and we'll match the machine, install it and keep it running.",
@@ -137,8 +137,8 @@ export const NAV_MENUS: Record<string, NavMenu> = {
       },
     ],
     feature: {
-      image: "/images/assets/barista.avif",
-      alt: "A barista dosing from a commercial grinder",
+      image: "/images/assets/in-context-cafe/vera-in-context-cafe-grinder-barista-background.webp",
+      alt: "A commercial espresso grinder on a café bar",
       eyebrow: "Dialed in",
       title: "Matched to the machine",
       body: "The grinder decides the shot. We pair it, install it and calibrate it on site.",
@@ -218,7 +218,7 @@ export const NAV_MENUS: Record<string, NavMenu> = {
       },
     ],
     feature: {
-      image: "/images/assets/barista-espresso-eversys.avif",
+      image: "/images/assets/in-context-cafe/vera-in-context-cafe-barista-locking-portafilter.webp",
       alt: "A portafilter locked into the group head of an espresso machine",
       eyebrow: "Can't find it",
       title: "Send us the serial",
