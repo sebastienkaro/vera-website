@@ -55,9 +55,9 @@
         "heading": "The VCS difference",
         "body": "At VCS we understand how complex and expensive it can be to purchase a machine which is why we offer free shipping and consultation on all equipment.",
         "background": {
-          "ref": "asset:in-context-cafe/vera-in-context-cafe-interior-counter-customer",
-          "alt": "A customer at the counter of a café",
-          "label": "Café counter"
+          "ref": "asset:in-context-cafe/vera-in-context-cafe-interior-bar-wide-02",
+          "alt": "Baristas working the espresso bar of a busy café",
+          "label": "Café espresso bar"
         },
         "accent": {
           "ref": "asset:in-context-cafe/vera-in-context-cafe-espresso-shot-pulling-into-cup",
@@ -71,9 +71,9 @@
         "heading": "4 hour emergency response window",
         "body": "We provide a 4 hour emergency response window for contract customers across our full service area.",
         "background": {
-          "ref": "asset:in-context-cafe/vera-in-context-cafe-la-marzocco-cups-on-top",
-          "alt": "A La Marzocco espresso machine with cups stacked on top",
-          "label": "La Marzocco espresso machine"
+          "ref": "asset:white-label-roastery/vera-white-label-roastery-roasting-team-at-control-station",
+          "alt": "Two of the Vera team at the roaster's control station",
+          "label": "Roasting team"
         },
         "accent": {
           "ref": "asset:in-context-cafe/vera-in-context-cafe-espresso-machine-moody",
@@ -87,9 +87,9 @@
         "heading": "85+ parts on the shelf",
         "body": "La Marzocco service kits, gaskets, sensors, boilers, electronics, stocked in Long Island City. No factory wait.",
         "background": {
-          "ref": "asset:white-label-roastery/vera-white-label-roastery-warehouse-bins-and-sacks",
-          "alt": "Stocked shelves and bins in the Vera warehouse",
-          "label": "Warehouse shelves"
+          "ref": "asset:white-label-roastery/vera-white-label-roastery-cupping-lab-tool-shelf",
+          "alt": "Espresso tools and parts lined up on a shelf in the Vera lab",
+          "label": "Tools on the shelf"
         },
         "accent": {
           "ref": "asset:white-label-roastery/vera-white-label-roastery-warehouse-aisle-bins",
