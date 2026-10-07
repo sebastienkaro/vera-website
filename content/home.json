@@ -115,14 +115,14 @@
     ],
     "body": "Vera Coffee Solutions is built by operators, for operators. From our Bridgeport, CT facility we sell, install and service the world's best commercial espresso equipment — and at our Long Island City roastery we roast coffee for cafés, restaurants and corporate accounts who want a program built around their brand.",
     "image": {
-      "ref": "asset:white-label-roastery/vera-white-label-roastery-roaster-portrait-standing-loring",
-      "alt": "A Vera roaster standing beside the Loring roaster in Long Island City",
+      "ref": "asset:white-label-roastery/vera-white-label-roastery-roasting-team-duo-portrait",
+      "alt": "Aric and Konstantin beside the Loring roaster in Long Island City",
       "label": "Roastery — Long Island City"
     },
     "secondaryImage": {
-      "ref": "asset:in-context-cafe/vera-in-context-cafe-barista-steaming-milk",
-      "alt": "A barista steaming milk",
-      "label": "Barista steaming milk"
+      "ref": "asset:white-label-roastery/vera-white-label-roastery-retail-bag-on-conveyor",
+      "alt": "A bag of coffee on the packing line at the Vera roastery",
+      "label": "Bag on the packing line"
     },
     "buttons": [
       {
