@@ -33,8 +33,8 @@
     "body": "Built in Florence and specified bar by bar, a La Marzocco is the machine most cafés end up building their program around.",
     "buttonLabel": "Learn More",
     "background": {
-      "ref": "asset:cafe-interior",
-      "alt": "A La Marzocco on the bar of a café",
+      "ref": "asset:in-context-cafe/vera-in-context-cafe-interior-bar-wide-01",
+      "alt": "A La Marzocco on a marble café bar",
       "label": "Machine on the bar"
     }
   },
@@ -55,14 +55,14 @@
         "heading": "The VCS difference",
         "body": "At VCS we understand how complex and expensive it can be to purchase a machine which is why we offer free shipping and consultation on all equipment.",
         "background": {
-          "ref": "asset:barista-cafe-lamarzocco",
-          "alt": "La Marzocco espresso machine",
-          "label": "La Marzocco espresso machine"
+          "ref": "asset:in-context-cafe/vera-in-context-cafe-interior-counter-customer",
+          "alt": "A customer at the counter of a café",
+          "label": "Café counter"
         },
         "accent": {
-          "ref": "asset:Sipping-Espresso-LaMarzocco",
-          "alt": "Sipping an espresso",
-          "label": "Sipping an espresso"
+          "ref": "asset:in-context-cafe/vera-in-context-cafe-espresso-shot-pulling-into-cup",
+          "alt": "An espresso shot pulling into a cup",
+          "label": "Espresso shot"
         },
         "accentSide": "right",
         "textSide": "left"
@@ -71,14 +71,14 @@
         "heading": "4 hour emergency response window",
         "body": "We provide a 4 hour emergency response window for contract customers across our full service area.",
         "background": {
-          "ref": "asset:espresso-machine-2",
-          "alt": "Concrete counter with plants",
-          "label": "Concrete counter with plants"
+          "ref": "asset:in-context-cafe/vera-in-context-cafe-la-marzocco-cups-on-top",
+          "alt": "A La Marzocco espresso machine with cups stacked on top",
+          "label": "La Marzocco espresso machine"
         },
         "accent": {
-          "ref": "asset:barista-espresso-eversys",
-          "alt": "Barista at an Eversys machine",
-          "label": "Barista at an Eversys machine"
+          "ref": "asset:in-context-cafe/vera-in-context-cafe-espresso-machine-moody",
+          "alt": "An espresso machine on a café bar",
+          "label": "Espresso machine"
         },
         "accentSide": "left",
         "textSide": "right"
@@ -87,14 +87,14 @@
         "heading": "85+ parts on the shelf",
         "body": "La Marzocco service kits, gaskets, sensors, boilers, electronics, stocked in Long Island City. No factory wait.",
         "background": {
-          "ref": "asset:barista-making-espresso-coffee-shop",
-          "alt": "Wood slat wall with seating",
-          "label": "Wood slat wall with seating"
+          "ref": "asset:white-label-roastery/vera-white-label-roastery-warehouse-bins-and-sacks",
+          "alt": "Stocked shelves and bins in the Vera warehouse",
+          "label": "Warehouse shelves"
         },
         "accent": {
-          "ref": "asset:office-coffee-3",
-          "alt": "Machine servicing",
-          "label": "Machine servicing"
+          "ref": "asset:white-label-roastery/vera-white-label-roastery-warehouse-aisle-bins",
+          "alt": "A warehouse aisle lined with stock",
+          "label": "Warehouse aisle"
         },
         "accentSide": "right",
         "textSide": "left"
@@ -115,14 +115,14 @@
     ],
     "body": "Vera Coffee Solutions is built by operators, for operators. From our Bridgeport, CT facility we sell, install and service the world's best commercial espresso equipment — and at our Long Island City roastery we roast coffee for cafés, restaurants and corporate accounts who want a program built around their brand.",
     "image": {
-      "ref": "slot:about/roastery",
-      "alt": "Vera Coffee Solutions roastery — Long Island City",
+      "ref": "asset:white-label-roastery/vera-white-label-roastery-roaster-portrait-standing-loring",
+      "alt": "A Vera roaster standing beside the Loring roaster in Long Island City",
       "label": "Roastery — Long Island City"
     },
     "secondaryImage": {
-      "ref": "asset:barista-espresso-eversys",
-      "alt": "Pulling a shot on an Eversys machine",
-      "label": "Barista at an Eversys machine"
+      "ref": "asset:in-context-cafe/vera-in-context-cafe-barista-steaming-milk",
+      "alt": "A barista steaming milk",
+      "label": "Barista steaming milk"
     },
     "buttons": [
       {

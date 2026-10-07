@@ -49,8 +49,8 @@ export default async function QuotePage({
        is on screen without scrolling, which is the only reason anyone is here. */
     <section className="relative flex min-h-svh flex-col overflow-hidden">
       <SiteImage
-        src={resolveAsset("barista-cafe-lamarzocco")}
-        alt="A barista pulling a shot on a La Marzocco espresso machine"
+        src={resolveAsset("in-context-cafe/vera-in-context-cafe-interior-bar-wide-03")}
+        alt="A café bar with a La Marzocco espresso machine and pastry case"
         label="Quote — hero photo"
         className="absolute inset-0"
         preload
