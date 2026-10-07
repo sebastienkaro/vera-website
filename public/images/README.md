@@ -66,3 +66,97 @@ deleted.
 
 The `.gitkeep` files just keep these empty folders in git — delete one once
 you've added a real image to that folder.
+
+## Photo library
+
+The Vera shoot lives in two subfolders of the pool. To use one anywhere on the
+site, ask for it by the name below (for example "swap the About background for
+`white-label-roastery/vera-white-label-roastery-cupping-lab-wide`"). Shortened
+forms are fine too: "the cupping-lab-wide roastery shot" is enough to find it.
+
+### `in-context-cafe/` (33 photos)
+
+- `in-context-cafe/vera-in-context-cafe-bar-grinder-matcha-whisk`
+- `in-context-cafe/vera-in-context-cafe-bar-grinders-espresso-machine`
+- `in-context-cafe/vera-in-context-cafe-bar-reflection-through-window`
+- `in-context-cafe/vera-in-context-cafe-bar-through-glass`
+- `in-context-cafe/vera-in-context-cafe-bar-wide-record-shelf`
+- `in-context-cafe/vera-in-context-cafe-barista-dosing-grinder`
+- `in-context-cafe/vera-in-context-cafe-barista-espresso-machine-prep`
+- `in-context-cafe/vera-in-context-cafe-barista-locking-portafilter`
+- `in-context-cafe/vera-in-context-cafe-barista-pouring-grinders-cup-stacks`
+- `in-context-cafe/vera-in-context-cafe-barista-steaming-milk`
+- `in-context-cafe/vera-in-context-cafe-brass-roaster-detail`
+- `in-context-cafe/vera-in-context-cafe-espresso-grinder-on-counter`
+- `in-context-cafe/vera-in-context-cafe-espresso-machine-branded-panel`
+- `in-context-cafe/vera-in-context-cafe-espresso-machine-detail`
+- `in-context-cafe/vera-in-context-cafe-espresso-machine-gauge-closeup`
+- `in-context-cafe/vera-in-context-cafe-espresso-machine-glassware`
+- `in-context-cafe/vera-in-context-cafe-espresso-machine-group-head-detail`
+- `in-context-cafe/vera-in-context-cafe-espresso-machine-moody`
+- `in-context-cafe/vera-in-context-cafe-espresso-machine-record-shelf`
+- `in-context-cafe/vera-in-context-cafe-espresso-shot-pulling-into-cup`
+- `in-context-cafe/vera-in-context-cafe-grinder-barista-background`
+- `in-context-cafe/vera-in-context-cafe-grinders-cup-stacks`
+- `in-context-cafe/vera-in-context-cafe-interior-bar-wide-01`
+- `in-context-cafe/vera-in-context-cafe-interior-bar-wide-02`
+- `in-context-cafe/vera-in-context-cafe-interior-bar-wide-03`
+- `in-context-cafe/vera-in-context-cafe-interior-counter-customer`
+- `in-context-cafe/vera-in-context-cafe-la-marzocco-cups-on-top`
+- `in-context-cafe/vera-in-context-cafe-pastry-counter-retail-bag`
+- `in-context-cafe/vera-in-context-cafe-retail-bag-cup-stacks-01`
+- `in-context-cafe/vera-in-context-cafe-retail-bag-cup-stacks-02`
+- `in-context-cafe/vera-in-context-cafe-retail-bags-warm-shelf`
+- `in-context-cafe/vera-in-context-cafe-retail-shelving-books`
+- `in-context-cafe/vera-in-context-cafe-wholesale-bags-on-shelves`
+
+### `white-label-roastery/` (48 photos)
+
+- `white-label-roastery/vera-white-label-roastery-bag-lineup-on-conveyor`
+- `white-label-roastery/vera-white-label-roastery-cooling-tray-beans-dropping`
+- `white-label-roastery/vera-white-label-roastery-cooling-tray-beans-motion`
+- `white-label-roastery/vera-white-label-roastery-cooling-tray-beans-stirring`
+- `white-label-roastery/vera-white-label-roastery-cooling-tray-chute-scale`
+- `white-label-roastery/vera-white-label-roastery-cupping-breaking-crust`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-batch-brewer`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-brew-station`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-cup-shelves`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-cup-shelves-wide`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-espresso-machine-detail`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-grinder-detail`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-grinder-espresso`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-grinder-kettle`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-tool-shelf`
+- `white-label-roastery/vera-white-label-roastery-cupping-lab-wide`
+- `white-label-roastery/vera-white-label-roastery-cupping-slurping-spoon`
+- `white-label-roastery/vera-white-label-roastery-green-coffee-sacks-pallets`
+- `white-label-roastery/vera-white-label-roastery-green-coffee-sacks-shelving`
+- `white-label-roastery/vera-white-label-roastery-green-coffee-sacks-storage-bins`
+- `white-label-roastery/vera-white-label-roastery-lab-moisture-meter-shelf`
+- `white-label-roastery/vera-white-label-roastery-retail-bag-on-conveyor`
+- `white-label-roastery/vera-white-label-roastery-retail-bags-on-conveyor-closeup`
+- `white-label-roastery/vera-white-label-roastery-roasted-beans-pouring-from-hopper-01`
+- `white-label-roastery/vera-white-label-roastery-roasted-beans-pouring-from-hopper-02`
+- `white-label-roastery/vera-white-label-roastery-roasted-beans-pouring-front-view`
+- `white-label-roastery/vera-white-label-roastery-roasted-beans-pouring-low-angle`
+- `white-label-roastery/vera-white-label-roastery-roasted-beans-weigh-bin-scale`
+- `white-label-roastery/vera-white-label-roastery-roaster-candid-through-machinery`
+- `white-label-roastery/vera-white-label-roastery-roaster-checking-cooling-tray-01`
+- `white-label-roastery/vera-white-label-roastery-roaster-checking-cooling-tray-02`
+- `white-label-roastery/vera-white-label-roastery-roaster-operating-loring`
+- `white-label-roastery/vera-white-label-roastery-roaster-over-shoulder-destoner`
+- `white-label-roastery/vera-white-label-roastery-roaster-portrait-seated-loring-01`
+- `white-label-roastery/vera-white-label-roastery-roaster-portrait-seated-loring-02`
+- `white-label-roastery/vera-white-label-roastery-roaster-portrait-seated-wide`
+- `white-label-roastery/vera-white-label-roastery-roaster-portrait-standing-loring`
+- `white-label-roastery/vera-white-label-roastery-roaster-portrait-warehouse`
+- `white-label-roastery/vera-white-label-roastery-roaster-sight-glass-detail`
+- `white-label-roastery/vera-white-label-roastery-roastery-floor-wide`
+- `white-label-roastery/vera-white-label-roastery-roasting-team-at-control-station`
+- `white-label-roastery/vera-white-label-roastery-roasting-team-duo-portrait`
+- `white-label-roastery/vera-white-label-roastery-sample-roaster`
+- `white-label-roastery/vera-white-label-roastery-warehouse-aisle-bins`
+- `white-label-roastery/vera-white-label-roastery-warehouse-aisle-bulk-bags`
+- `white-label-roastery/vera-white-label-roastery-warehouse-aisle-green-coffee`
+- `white-label-roastery/vera-white-label-roastery-warehouse-aisle-shelving`
+- `white-label-roastery/vera-white-label-roastery-warehouse-bins-and-sacks`
